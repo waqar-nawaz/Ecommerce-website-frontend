@@ -1,0 +1,125 @@
+/* From Uiverse.io by Yaya12085 */
+.card {
+  width: 324px;
+
+  margin: 15px;
+  text-align: center;
+  position: relative;
+  cursor: pointer;
+  box-shadow: 0 10px 15px -3px rgba(33, 150, 243, 0.4),
+    0 4px 6px -4px rgba(33, 150, 243, 0.4);
+  border-radius: 10px;
+  background-color: #6b6ecc;
+  background: linear-gradient(45deg, #04051dea 0%, #2b566e 100%);
+}
+
+.container {
+  display: flex;
+  flex-wrap: wrap;
+  scroll-behavior: smooth;
+  /* justify-content: center; */
+}
+
+.content {
+  padding: 20px;
+  width: 326px;
+}
+
+.content .price {
+  color: white;
+  font-weight: 800;
+  font-size: 50px;
+  text-shadow: 0px 0px 10px rgba(0, 0, 0, 0.42);
+}
+
+.content .description {
+  color: rgba(255, 255, 255, 0.6);
+  margin-top: 10px;
+  font-size: 14px;
+}
+
+.content .title {
+  font-weight: 800;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.64);
+  margin-top: 10px;
+  font-size: 25px;
+  letter-spacing: 1px;
+}
+
+button {
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  user-select: none;
+  border: none;
+  outline: none;
+  color: rgb(255 255 255);
+  text-transform: uppercase;
+  font-weight: 700;
+  font-size: 0.75rem;
+  padding: 0.75rem 1.5rem;
+  background-color: rgb(33 150 243);
+  border-radius: 0.5rem;
+  width: 90%;
+  text-shadow: 0px 4px 18px #2c3442;
+}
+
+.actionbtn {
+  display: flex; /* Use flexbox to arrange items in a row */
+  justify-content: center; /* Center the buttons horizontally */
+  align-items: center; /* Center the buttons vertically (if needed) */
+  gap: 10px; /* Space between each button */
+  padding: 20px; /* Add padding around the entire container */
+}
+
+.actionbtn button {
+  padding: 10px 20px; /* Add padding inside the button (optional) */
+  border: none;
+  background-color: #3498db; /* Button background color */
+  color: white; /* Button text color */
+  cursor: pointer;
+  border-radius: 5px; /* Rounded corners */
+}
+
+.actionbtn button:hover {
+  background-color: #2980b9; /* Darken background color on hover */
+}
+
+.description {
+  width: 100%; /* Ensure the description takes full width of its container */
+  overflow: hidden; /* Hide overflow text */
+  white-space: nowrap; /* Prevent text from wrapping to the next line */
+  text-overflow: ellipsis;
+}
+
+.title {
+  width: 100%; /* Ensure the description takes full width of its container */
+  overflow: hidden; /* Hide overflow text */
+  white-space: nowrap; /* Prevent text from wrapping to the next line */
+  text-overflow: ellipsis;
+}
+
+.image-container {
+  width: 288px;
+  height: 189px;
+}
+
+.image-container img {
+  object-fit: cover;
+  max-width: 100%;
+  max-height: 100%;
+}
+
+.image-container {
+  overflow: hidden; /* Ensures that the image doesn't overflow out of its container */
+  width: 100%; /* Adjust width to match the container */
+  height: 200px; /* Set a fixed height */
+}
+
+.image-container img {
+  transition: transform 0.3s ease-in-out; /* Smooth zoom transition */
+}
+
+.image-container:hover img {
+  transform: scale(1.1); /* Zoom in on hover */
+}

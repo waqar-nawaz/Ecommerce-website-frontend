@@ -1,0 +1,22 @@
+<p>contact works!</p>
+<app-modal></app-modal>
+
+
+<label for="browser">Choose your browser from the list:</label>
+<input list="browsers" class="text-black" [(ngModel)]="list" name="browser" id="browser">
+
+<datalist id="browsers">
+    @for (item of data; track $index) {
+    <option [value]="item.name">
+
+        }
+
+
+</datalist>
+
+
+<div class="flex flex-wrap gap-3">
+    List: {{list}}
+</div>
+
+<dialog></dialog>

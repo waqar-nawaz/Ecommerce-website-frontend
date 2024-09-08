@@ -1,0 +1,18 @@
+<div class="container">
+    <div class="card">
+        <div class="content">
+            <div class="image-container flex justify-center">
+                <img [src]="fileUrl + data?.imageUrl" alt="Product Image" />
+            </div>
+            <div class="title">{{ data?.title }}</div>
+            <div class="price">${{ data?.price }}</div>
+            <div class="description">{{ data?.description }}</div>
+        </div>
+
+        <div class="actionbtn">
+            <button [routerLink]="['/product-detail']" [queryParams]="{post: data?._id}">View</button>
+            <button (click)="deleteProduct(data)">Delete</button>
+            <button (click)="EditProduct(data)">Edit</button>
+        </div>
+    </div>
+</div>
