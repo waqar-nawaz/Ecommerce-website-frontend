@@ -56,10 +56,29 @@
                                 </div>
 
                                 <!-- Image Preview -->
+
+                                @if (isUpdate && imagePreview) {
+                                <div class="w-full sm:w-1/2 mt-4 sm:mt-0 sm:pl-4">
+                                    <img [src]="imagePreview" alt="Image Preview"
+                                        class="w-full h-32 object-cover rounded-lg" />
+                                </div>
+
+                                } @else if(isUpdate ) {
+                                <div class="w-full sm:w-1/2 mt-4 sm:mt-0 sm:pl-4">
+                                    <img *ngIf="existingImageUrl" [src]="fileUrl + existingImageUrl" alt="Image Preview"
+                                        class="w-full h-32 object-cover rounded-lg" />
+                                </div>
+
+
+                                } @else {
+
                                 <div class="w-full sm:w-1/2 mt-4 sm:mt-0 sm:pl-4">
                                     <img *ngIf="imagePreview" [src]="imagePreview" alt="Image Preview"
                                         class="w-full h-32 object-cover rounded-lg" />
                                 </div>
+                                }
+
+
                             </div>
                         </div>
 
