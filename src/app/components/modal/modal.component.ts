@@ -6,6 +6,7 @@ import { RefreshService } from '../../services/refresh-service.service';
 import Swal from 'sweetalert2';
 import { environment } from '../../../../eviroments/enviroment';
 import { CommonModule } from '@angular/common';
+import { RouterOutlet } from '@angular/router';
 
 @Component({
   selector: 'app-modal',
@@ -44,11 +45,17 @@ export class ModalComponent {
     });
   }
 
+  isMobileMenuOpen: boolean = false;
+
+  toggleMobileMenu() {
+    this.isMobileMenuOpen = !this.isMobileMenuOpen;
+  }
+
   myFormFun() {
     this.myForm = this.fb.group({
       title: ['', Validators.required],
-      price: ['', [Validators.required, Validators.email]],
-      imageUrl: ['', [Validators.required]],
+      price: ['', Validators.required],
+      imageUrl: [''],
       description: ['', [Validators.required]],
 
       // Add more form controls as needed
@@ -57,24 +64,27 @@ export class ModalComponent {
 
   isLoading: boolean = false;
   submit() {
-    // debugger;
+    debugger;
+    if (this.myForm.invalid) {
+      // this.myForm.markAllAsTouched();
+      return;
+    }
+
     this.isLoading = true;
     const formData = new FormData();
-    if (this.myForm.invalid) {
-      formData.append('title', this.myForm.value.title);
-      formData.append('price', this.myForm.value.price);
-      formData.append('description', this.myForm.value.description);
-      if (this.selectedFile) {
-        formData.append('imageUrl', this.selectedFile, this.selectedFile.name);
-      } else if (this.existingImageUrl) {
-        formData.append('imageUrl', this.existingImageUrl);
-      }
+
+    formData.append('title', this.myForm.value.title);
+    formData.append('price', this.myForm.value.price);
+    formData.append('description', this.myForm.value.description);
+    if (this.selectedFile) {
+      formData.append('imageUrl', this.selectedFile, this.selectedFile.name);
+    } else if (this.existingImageUrl) {
+      formData.append('imageUrl', this.existingImageUrl);
     }
 
     if (this.isUpdate) {
-      this.prodcutService
-        .updateProduct(this.updateid, formData)
-        .subscribe((res: any) => {
+      this.prodcutService.updateProduct(this.updateid, formData).subscribe(
+        (res: any) => {
           this.maketoster({ success: 'success', message: res?.message });
           this.refreshService.triggerRefresh(res);
           this.closeModal();
@@ -83,18 +93,29 @@ export class ModalComponent {
           this.imagePreview = null;
           this.myForm.reset();
           // this.selectedFile = null;
-        });
+        },
+        (err) => {
+          this.maketoster({ success: 'error', message: err?.error?.message });
+          this.isLoading = false;
+        }
+      );
     } else {
-      this.prodcutService.createProduct(formData).subscribe((res: any) => {
-        this.maketoster({ success: 'success', message: res?.message });
-        this.myForm.reset();
-        this.selectedFile = null;
-        this.imagePreview = null;
-        this.isLoading = false;
+      this.prodcutService.createProduct(formData).subscribe(
+        (res: any) => {
+          this.maketoster({ success: 'success', message: res?.message });
+          this.myForm.reset();
+          this.selectedFile = null;
+          this.imagePreview = null;
+          this.isLoading = false;
 
-        this.refreshService.triggerRefresh(res);
-        this.closeModal();
-      });
+          this.refreshService.triggerRefresh(res);
+          this.closeModal();
+        },
+        (err) => {
+          this.maketoster({ success: 'error', message: err?.error?.message });
+          this.isLoading = false;
+        }
+      );
     }
   }
 

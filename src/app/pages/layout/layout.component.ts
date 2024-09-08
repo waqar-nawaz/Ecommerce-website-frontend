@@ -19,7 +19,9 @@ export class LayoutComponent implements OnInit {
   token: any;
   user: object | any;
   authService = inject(AuthService);
-
+  router = inject(Router);
+  isDropdownOpen = false;
+  isMobileMenuOpen: boolean = false;
   ngOnInit(): void {
     if (typeof localStorage !== 'undefined') {
       this.token = localStorage.getItem('token');
@@ -27,16 +29,15 @@ export class LayoutComponent implements OnInit {
     }
   }
 
-  router = inject(Router);
-
   logout() {
     localStorage.removeItem('token');
     localStorage.removeItem('user');
     this.router.navigate(['/login']);
   }
 
-  isDropdownOpen = false;
-
+  toggleMobileMenu() {
+    this.isMobileMenuOpen = !this.isMobileMenuOpen;
+  }
   toggleDropdown() {
     this.isDropdownOpen = !this.isDropdownOpen;
   }
