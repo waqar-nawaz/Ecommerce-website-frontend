@@ -64,7 +64,6 @@ export class ModalComponent {
 
   isLoading: boolean = false;
   submit() {
-    debugger;
     if (this.myForm.invalid) {
       // this.myForm.markAllAsTouched();
       return;
