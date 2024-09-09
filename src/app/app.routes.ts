@@ -14,7 +14,7 @@ export const routes: Routes = [
     path: '',
     component: LayoutComponent, // Use HeaderLayoutComponent for these routes
     children: [
-      { path: 'dashbord', component: HomeComponent, canActivate: [AuthGuard] },
+      { path: 'dashboard', component: HomeComponent, canActivate: [AuthGuard] },
       {
         path: 'contact',
         component: ContactComponent,

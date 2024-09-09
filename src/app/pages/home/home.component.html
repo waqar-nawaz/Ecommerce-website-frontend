@@ -1,0 +1,65 @@
+<div class="bg-gray-900 min-h-screen text-gray-100">
+
+    <!-- Main Content Area -->
+    <div class="p-6">
+        <!-- Overview Cards -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
+            <div class="bg-gray-800 shadow-lg rounded-lg p-6 text-center">
+                <h3 class="text-xl font-bold text-gray-300">Total Products</h3>
+                <p class="text-4xl font-semibold text-blue-400 mt-4">150</p>
+            </div>
+            <div class="bg-gray-800 shadow-lg rounded-lg p-6 text-center">
+                <h3 class="text-xl font-bold text-gray-300">Total Sales</h3>
+                <p class="text-4xl font-semibold text-green-400 mt-4">$25,000</p>
+            </div>
+            <div class="bg-gray-800 shadow-lg rounded-lg p-6 text-center">
+                <h3 class="text-xl font-bold text-gray-300">Out of Stock</h3>
+                <p class="text-4xl font-semibold text-red-400 mt-4">10</p>
+            </div>
+        </div>
+
+        <!-- Product List with Search and Add Product -->
+        <div class="bg-gray-800 shadow-md rounded p-6 mb-6">
+            <div class="flex justify-between items-center mb-4">
+                <h2 class="text-2xl font-bold text-gray-100">Products</h2>
+                <div class="flex space-x-2">
+                    <input type="text" placeholder="Search products"
+                        class="px-4 py-2 border border-gray-600 bg-gray-700 text-gray-100 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+                    <button class="bg-blue-500 text-white px-4 py-2 rounded-md">Add New Product</button>
+                </div>
+            </div>
+
+            <!-- Product Table -->
+            <div class="overflow-x-auto">
+                <table class="min-w-full bg-gray-800 border border-gray-700">
+                    <thead class="bg-gray-700">
+                        <tr>
+                            <th class="text-left py-3 px-4 text-gray-300 font-semibold">Product Name</th>
+                            <th class="text-left py-3 px-4 text-gray-300 font-semibold">Price</th>
+                            <th class="text-left py-3 px-4 text-gray-300 font-semibold">Stock</th>
+                            <th class="text-left py-3 px-4 text-gray-300 font-semibold">Category</th>
+                            <th class="text-center py-3 px-4 text-gray-300 font-semibold">Actions</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        @for (item of [1,2,3,4,5,6,7]; track $index) {
+                        <tr class="border-b border-gray-600">
+                            <td class="py-3 px-4 text-gray-200">Product 1</td>
+                            <td class="py-3 px-4 text-gray-200">$49.99</td>
+                            <td class="py-3 px-4 text-gray-200">25</td>
+                            <td class="py-3 px-4 text-gray-200">Category A</td>
+                            <td class="py-3 px-4 text-center">
+                                <button class="text-green-400 hover:text-green-500 mr-2">Edit</button>
+                                <button class="text-red-400 hover:text-red-500">Delete</button>
+                            </td>
+                        </tr>
+                        }
+
+                        <!-- Add more products here -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+    </div>

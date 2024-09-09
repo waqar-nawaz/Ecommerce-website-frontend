@@ -60,7 +60,7 @@ export class LoginComponent implements OnInit {
           success: 'success',
           message: res?.message,
         });
-        this.router.navigate(['/dashbord']);
+        this.router.navigate(['/dashboard']);
       },
       (error: any) => {
         this.loader = false;
