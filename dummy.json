@@ -1,62 +1,72 @@
 [
     {
         "id": 1,
-        "name": "Alice",
-        "age": 30,
-        "email": "alice@example.com"
+        "product_name": "Laptop",
+        "price": 1200,
+        "stock": 15,
+        "category": "Electronics"
     },
     {
         "id": 2,
-        "name": "Bob",
-        "age": 25,
-        "email": "bob@example.com"
+        "product_name": "Smartphone",
+        "price": 800,
+        "stock": 25,
+        "category": "Electronics"
     },
     {
         "id": 3,
-        "name": "Charlie",
-        "age": 35,
-        "email": "charlie@example.com"
+        "product_name": "Headphones",
+        "price": 150,
+        "stock": 50,
+        "category": "Accessories"
     },
     {
         "id": 4,
-        "name": "David",
-        "age": 28,
-        "email": "david@example.com"
+        "product_name": "Coffee Maker",
+        "price": 75,
+        "stock": 30,
+        "category": "Home Appliances"
     },
     {
         "id": 5,
-        "name": "Eve",
-        "age": 22,
-        "email": "eve@example.com"
+        "product_name": "Running Shoes",
+        "price": 90,
+        "stock": 40,
+        "category": "Footwear"
     },
     {
         "id": 6,
-        "name": "Frank",
-        "age": 40,
-        "email": "frank@example.com"
+        "product_name": "T-shirt",
+        "price": 25,
+        "stock": 100,
+        "category": "Apparel"
     },
     {
         "id": 7,
-        "name": "Grace",
-        "age": 27,
-        "email": "grace@example.com"
+        "product_name": "Desk Chair",
+        "price": 180,
+        "stock": 10,
+        "category": "Furniture"
     },
     {
         "id": 8,
-        "name": "Henry",
-        "age": 33,
-        "email": "henry@example.com"
+        "product_name": "Backpack",
+        "price": 60,
+        "stock": 20,
+        "category": "Accessories"
     },
     {
         "id": 9,
-        "name": "Ivy",
-        "age": 29,
-        "email": "ivy@example.com"
+        "product_name": "Microwave",
+        "price": 200,
+        "stock": 15,
+        "category": "Home Appliances"
     },
     {
         "id": 10,
-        "name": "Jack",
-        "age": 31,
-        "email": "jack@example.com"
+        "product_name": "Blender",
+        "price": 85,
+        "stock": 25,
+        "category": "Kitchen"
     }
 ]
