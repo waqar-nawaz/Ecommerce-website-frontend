@@ -24,7 +24,7 @@ export class ModalComponent {
 
   refreshService = inject(RefreshService);
   prodcutService = inject(ProductServiceService);
-  selectedFile: File | null = null;
+  selectedFile: any;
   isUpdate: boolean = false;
   updateid: any;
   existingImageUrl: string | null = null;
@@ -91,7 +91,7 @@ export class ModalComponent {
 
           this.imagePreview = null;
           this.myForm.reset();
-          // this.selectedFile = null;
+          this.selectedFile = null;
         },
         (err) => {
           this.maketoster({ success: 'error', message: err?.error?.message });
@@ -106,7 +106,7 @@ export class ModalComponent {
           this.selectedFile = null;
           this.imagePreview = null;
           this.isLoading = false;
-
+          res.status = 'create';
           this.refreshService.triggerRefresh(res);
           this.closeModal();
         },

@@ -35,12 +35,25 @@ export class AboutComponent implements OnInit {
   search: FormControl = new FormControl();
 
   ngOnInit() {
-    this.refreshService.getRefreshObservable().subscribe(() => {
-      // this.getProduct();
+    this.refreshService.getRefreshObservable().subscribe((data: any) => {
+      if (data?.status == 'update') {
+      } else {
+        this.data = this.data.filter((val: any) => {
+          return val._id != data.result._id;
+        });
+        this.data.push(data?.result);
+      }
+      console.log('final data', this.data);
     });
     this.getProduct();
-    // socketClient('http://localhost:8080');
+    const io = socketClient('http://localhost:8080/');
 
+    io.on('posts', (socketdata: any) => {
+      this.data.push(socketdata?.result);
+      console.log('socketdata', socketdata);
+    });
+
+    //
     this.search.valueChanges
       .pipe(
         debounceTime(500),
@@ -56,6 +69,7 @@ export class AboutComponent implements OnInit {
 
   totalpages: any;
   getProduct() {
+    this.data = [];
     this.loader = true;
     this.products.getProduct(1).subscribe(
       (data: any) => {

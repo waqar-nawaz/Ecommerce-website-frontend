@@ -30,6 +30,7 @@ export class CardsComponent implements OnInit {
     this.dataEmitter.emit(data);
   }
   EditProduct(data: any) {
+    data.status = 'update';
     this.refreshService.triggerRefresh(data);
   }
 }

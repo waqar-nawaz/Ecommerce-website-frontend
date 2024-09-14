@@ -29,7 +29,7 @@ export class ProductServiceService {
   }
 
   getProduct(currentPage: any) {
-    console.log(currentPage);
+    // console.log(currentPage);
     const params = new HttpParams()
       .set('currentPage', currentPage)
       .set('perPage', 10);
