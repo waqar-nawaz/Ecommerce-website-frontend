@@ -10,6 +10,7 @@ import { LoaderComponent } from '../../loader/loader.component';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { debounceTime, distinctUntilChanged, iif, of, switchMap } from 'rxjs';
 import { SharedService } from '../../services/shared.service';
+import socketClient from 'socket.io-client';
 
 @Component({
   selector: 'app-about',
@@ -38,6 +39,7 @@ export class AboutComponent implements OnInit {
       // this.getProduct();
     });
     this.getProduct();
+    // socketClient('http://localhost:8080');
 
     this.search.valueChanges
       .pipe(

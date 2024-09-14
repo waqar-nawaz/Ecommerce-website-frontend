@@ -6,9 +6,8 @@ import {
   OnInit,
   Output,
 } from '@angular/core';
-import { environment } from '../../../../eviroments/enviroment';
+import { environment } from '../../../../environments/environment';
 import { ProductServiceService } from '../../services/product.service.service';
-import Swal from 'sweetalert2';
 import { RefreshService } from '../../services/refresh-service.service';
 import { Router, RouterLink, RouterStateSnapshot } from '@angular/router';
 

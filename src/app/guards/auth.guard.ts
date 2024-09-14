@@ -3,11 +3,13 @@ import { inject } from '@angular/core';
 import { AuthService } from '../services/auth.service';
 
 export const AuthGuard: CanActivateFn = (route, state) => {
-  if (inject(AuthService).isAuthenticated()) {
+  const router = inject(Router);
+  const authService = inject(AuthService);
+  if (authService.isAuthenticated()) {
     return true;
   } else {
     setTimeout(() => {
-      inject(Router).navigateByUrl('/login');
+      router.navigateByUrl('/login');
     }, 100);
 
     return false;

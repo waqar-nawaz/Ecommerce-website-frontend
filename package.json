@@ -24,6 +24,7 @@
     "@angular/ssr": "^18.1.4",
     "express": "^4.18.2",
     "rxjs": "~7.8.0",
+    "socket.io-client": "^4.7.5",
     "sweetalert2": "^11.12.4",
     "tslib": "^2.3.0",
     "zone.js": "~0.14.3"

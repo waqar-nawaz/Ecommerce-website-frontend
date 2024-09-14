@@ -4,7 +4,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ProductServiceService } from '../../services/product.service.service';
 import { RefreshService } from '../../services/refresh-service.service';
 import Swal from 'sweetalert2';
-import { environment } from '../../../../eviroments/enviroment';
+import { environment } from '../../../../environments/environment';
 import { CommonModule } from '@angular/common';
 import { RouterOutlet } from '@angular/router';
 

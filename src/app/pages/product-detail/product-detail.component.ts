@@ -1,7 +1,7 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { ProductServiceService } from '../../services/product.service.service';
 import { ActivatedRoute } from '@angular/router';
-import { environment } from '../../../../eviroments/enviroment';
+import { environment } from '../../../../environments/environment';
 import { LoaderComponent } from '../../loader/loader.component';
 
 @Component({
