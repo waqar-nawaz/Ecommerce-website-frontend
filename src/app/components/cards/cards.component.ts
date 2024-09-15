@@ -9,18 +9,20 @@ import {
 import { environment } from '../../../../environments/environment';
 import { ProductServiceService } from '../../services/product.service.service';
 import { RefreshService } from '../../services/refresh-service.service';
-import { Router, RouterLink, RouterStateSnapshot } from '@angular/router';
+import { RouterLink } from '@angular/router';
+import { LazyLoadImageModule } from 'ng-lazyload-image';
 
 @Component({
   selector: 'app-cards',
   standalone: true,
-  imports: [RouterLink],
+  imports: [RouterLink, LazyLoadImageModule],
   templateUrl: './cards.component.html',
   styleUrl: './cards.component.css',
 })
 export class CardsComponent implements OnInit {
   @Input() data: any;
   fileUrl: any = environment.fileUrl;
+  defaultImage: any = environment.defaultImage;
   products = inject(ProductServiceService);
   refreshService = inject(RefreshService);
   @Output() dataEmitter = new EventEmitter<string>();
