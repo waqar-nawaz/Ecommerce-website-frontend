@@ -123,3 +123,7 @@ button {
 .image-container:hover img {
   transform: scale(1.1); /* Zoom in on hover */
 }
+
+.des-width {
+  width: 270px;
+}
