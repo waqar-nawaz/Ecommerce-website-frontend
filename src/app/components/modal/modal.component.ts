@@ -28,6 +28,7 @@ export class ModalComponent {
   isUpdate: boolean = false;
   updateid: any;
   existingImageUrl: string | null = null;
+  submitted: boolean = false;
   ngOnInit() {
     this.myFormFun();
     this.refreshService.getRefreshObservable().subscribe((res: any) => {
@@ -53,21 +54,31 @@ export class ModalComponent {
 
   myFormFun() {
     this.myForm = this.fb.group({
-      title: ['', Validators.required],
+      title: [
+        '',
+        [
+          Validators.required,
+          Validators.minLength(3),
+          Validators.maxLength(100),
+        ],
+      ],
       price: ['', Validators.required],
       imageUrl: [''],
-      description: ['', [Validators.required]],
-
+      description: ['', [Validators.required, Validators.minLength(10)]],
       // Add more form controls as needed
     });
   }
-
+  get formControl() {
+    return this.myForm.controls;
+  }
   isLoading: boolean = false;
   submit() {
+    this.submitted = true;
     if (this.myForm.invalid) {
-      // this.myForm.markAllAsTouched();
+      this.myForm.markAllAsTouched();
       return;
     }
+    console.log(this.myForm);
 
     this.isLoading = true;
     const formData = new FormData();

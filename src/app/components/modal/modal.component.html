@@ -27,6 +27,24 @@
                                 <input type="text" id="title" formControlName="title"
                                     class="w-full px-4 py-2 text-gray-900 border rounded-lg focus:outline-none focus:ring focus:ring-blue-300"
                                     placeholder="Enter product title" />
+                                @if (submitted && formControl['title'].errors?.['required']) {
+                                <p class="text-red-700 text-sm peer-invalid:block">
+                                    This field is required
+                                </p>
+                                }
+
+                                @if (submitted && formControl['title'].errors?.['minlength']) {
+                                <p class="text-red-700 text-sm peer-invalid:block">
+                                    Minimum length is {{ formControl['title'].errors?.['minlength'].requiredLength }}
+                                    characters
+                                </p>
+                                }
+                                @if (submitted && formControl['title'].errors?.['maxlength']) {
+                                <p class="text-red-700 text-sm peer-invalid:block">
+                                    Maximum length is {{ formControl['title'].errors?.['maxlength'].requiredLength }}
+                                    characters
+                                </p>
+                                }
                             </div>
 
                             <!-- Price Field -->
@@ -35,6 +53,11 @@
                                 <input type="number" id="price" formControlName="price"
                                     class="w-full px-4 py-2 text-gray-900 border rounded-lg focus:outline-none focus:ring focus:ring-blue-300"
                                     placeholder="Enter product price" />
+                                @if (submitted && formControl['price'].errors?.['required']) {
+                                <p class="text-red-700 text-sm peer-invalid:block">
+                                    This field is required
+                                </p>
+                                }
                             </div>
 
                             <!-- Description Field -->
@@ -44,6 +67,18 @@
                                     class="w-full px-4 py-2 text-gray-900 border rounded-lg focus:outline-none focus:ring focus:ring-blue-300"
                                     placeholder="Enter product description" rows="4">
                                     </textarea>
+                                @if (submitted && formControl['description'].errors?.['required']) {
+                                <p class="text-red-700 text-sm peer-invalid:block">
+                                    This field is required
+                                </p>
+                                }
+                                @if (submitted && formControl['description'].errors?.['minlength']) {
+                                <p class="text-red-700 text-sm peer-invalid:block">
+                                    Minimum length is {{ formControl['description'].errors?.['minlength'].requiredLength
+                                    }} characters
+                                </p>
+                                }
+
                             </div>
 
                             <!-- Image Upload and Preview Row -->
