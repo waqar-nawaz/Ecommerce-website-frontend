@@ -46,13 +46,32 @@ export class AboutComponent implements OnInit {
       console.log('final data', this.data);
     });
     this.getProduct();
+    // const io = socketClient('http://localhost:8080/');
     const io = socketClient(
       'https://ecommerce-website-backend-1-52ky.onrender.com/'
     );
 
     io.on('posts', (socketdata: any) => {
-      this.data.push(socketdata?.result);
-      console.log('socketdata', socketdata);
+      if (socketdata.action == 'create') {
+        this.data.push(socketdata?.result);
+      }
+      if (socketdata.action == 'delete') {
+        // alert('delete is called');
+        this.data = this.data.filter((val: any) => {
+          return val._id != socketdata?.result._id;
+        });
+      }
+      if (socketdata.action == 'update') {
+        this.data = this.data.map((val: any) => {
+          if (val._id == socketdata?.result._id) {
+            return socketdata?.result;
+          } else {
+            return val;
+          }
+        });
+      }
+
+      // this.getProduct();
     });
 
     //
@@ -122,7 +141,7 @@ export class AboutComponent implements OnInit {
 
   loading = false;
   onScroll(event: any) {
-    console.log(event.target);
+    // console.log(event.target);
     const element = event.target;
     if (
       element.scrollHeight - element.scrollTop === element.clientHeight &&
