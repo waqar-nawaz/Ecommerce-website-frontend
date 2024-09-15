@@ -46,7 +46,9 @@ export class AboutComponent implements OnInit {
       console.log('final data', this.data);
     });
     this.getProduct();
-    const io = socketClient('http://localhost:8080/');
+    const io = socketClient(
+      'https://ecommerce-website-backend-1-52ky.onrender.com/'
+    );
 
     io.on('posts', (socketdata: any) => {
       this.data.push(socketdata?.result);
