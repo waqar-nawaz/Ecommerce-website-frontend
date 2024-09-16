@@ -11,4 +11,5 @@ export const environment = {
 //   production: false,
 //   apiUrl: 'http://localhost:8080/',
 //   fileUrl: 'http://localhost:8080/',
+//   defaultImage: 'https://loading.io/assets/mod/spinner/spinner/lg.gif',
 // };
