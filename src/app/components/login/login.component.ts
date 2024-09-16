@@ -23,21 +23,21 @@ export class LoginComponent implements OnInit {
   sharedService = inject(SharedService);
   fb = inject(FormBuilder);
   router = inject(Router);
-  myForm!: FormGroup;
+  loginForm!: FormGroup;
   submitted: boolean = false;
   loader: boolean = false;
 
   ngOnInit(): void {
-    this.myFormFun();
+    this.loginFormFun();
   }
 
   get formControl() {
-    return this.myForm.controls;
+    return this.loginForm.controls;
   }
-  myFormFun() {
-    this.myForm = this.fb.group({
+  loginFormFun() {
+    this.loginForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
-      password: ['', [Validators.required]],
+      password: ['', [Validators.required, Validators.minLength(6)]],
 
       // Add more form controls as needed
     });
@@ -45,12 +45,12 @@ export class LoginComponent implements OnInit {
 
   login() {
     this.submitted = true;
-    if (this.myForm.invalid) {
-      this.myForm.markAllAsTouched();
+    if (this.loginForm.invalid) {
+      this.loginForm.markAllAsTouched();
       return;
     }
     this.loader = true;
-    this.authService.login(this.myForm.value).subscribe(
+    this.authService.login(this.loginForm.value).subscribe(
       (res: any) => {
         this.loader = false;
         localStorage.setItem('token', res.token);

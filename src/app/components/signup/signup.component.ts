@@ -9,54 +9,69 @@ import {
 } from '@angular/forms';
 import Swal from 'sweetalert2';
 import { SharedService } from '../../services/shared.service';
+import { LoaderComponent } from '../../loader/loader.component';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-signup',
   standalone: true,
   templateUrl: './signup.component.html',
   styleUrl: './signup.component.css',
-  imports: [RouterLink, ReactiveFormsModule],
+  imports: [RouterLink, ReactiveFormsModule, LoaderComponent, CommonModule],
 })
 export class SignupComponent implements OnInit {
   authService = inject(AuthService);
   sharedService = inject(SharedService);
   fb = inject(FormBuilder);
   router = inject(Router);
-  myForm!: FormGroup;
+  signUpForm!: FormGroup;
   submitted: boolean = false;
+  loader: boolean = false;
 
   ngOnInit(): void {
-    this.myFormFun();
+    this.signUpFormFun();
   }
 
-  myFormFun() {
-    this.myForm = this.fb.group({
+  signUpFormFun() {
+    this.signUpForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
       name: ['', [Validators.required]],
-      password: ['', [Validators.required]],
+      // rememberMe: [''],
+      password: ['', [Validators.required, Validators.minLength(6)]],
 
       // Add more form controls as needed
     });
   }
 
   get formControl() {
-    return this.myForm.controls;
+    return this.signUpForm.controls;
   }
 
   signup() {
     this.submitted = true;
-    if (this.myForm.invalid) {
-      this.myForm.markAllAsTouched();
+    if (this.signUpForm.invalid) {
+      this.signUpForm.markAllAsTouched();
       return;
     }
-    this.authService.signup(this.myForm.value).subscribe((res: any) => {
-      console.log(res);
-      this.sharedService.maketoster({
-        success: 'success',
-        message: res?.message,
-      });
-      this.submitted = false;
-      this.router.navigate(['/login']);
-    });
+    this.loader = true;
+    this.authService.signup(this.signUpForm.value).subscribe(
+      (res: any) => {
+        // console.log(res);
+        this.loader = false;
+        this.sharedService.maketoster({
+          success: 'success',
+          message: res?.message,
+        });
+        this.submitted = false;
+        this.router.navigate(['/login']);
+      },
+      (error) => {
+        this.loader = false;
+        this.sharedService.maketoster({
+          success: 'error',
+          message: error?.error?.message,
+        });
+      }
+    );
   }
 }
