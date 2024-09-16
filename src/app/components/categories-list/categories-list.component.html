@@ -1,0 +1,8 @@
+<div class="flex flex-wrap justify-center gap-4">
+    <div *ngFor="let category of categories" class="category-circle">
+        <div class="category-icon">
+            <i [class]="category.icon"></i>
+        </div>
+        <span class="category-text">{{ category.name }}</span>
+    </div>
+</div>

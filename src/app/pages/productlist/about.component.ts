@@ -122,14 +122,15 @@ export class AboutComponent implements OnInit {
       if (result.isConfirmed) {
         this.products.deleteProduct(data._id).subscribe(
           (res: any) => {
-            console.log('delet images', res?.message);
-            // this.maketoster();
+            this.data.filter((val) => {
+              return val._id != data._id;
+            });
             this.sharedService.maketoster({
               success: 'success',
               message: res?.message,
             });
 
-            this.getProduct();
+            // this.getProduct();
           },
           (err) => {
             console.log('error', err);

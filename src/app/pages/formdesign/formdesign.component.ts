@@ -6,11 +6,12 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
+import { CategoriesListComponent } from '../../components/categories-list/categories-list.component';
 
 @Component({
   selector: 'app-formdesign',
   standalone: true,
-  imports: [ReactiveFormsModule, CommonModule],
+  imports: [ReactiveFormsModule, CommonModule, CategoriesListComponent],
   templateUrl: './formdesign.component.html',
   styleUrl: './formdesign.component.css',
 })
