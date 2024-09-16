@@ -10,9 +10,9 @@ import { Component } from '@angular/core';
 })
 export class CategoriesListComponent {
   categories = [
-    { name: 'Electronics', icon: 'fa fa-laptop' },
-    { name: 'Clothing', icon: 'fa fa-tshirt' },
-    { name: 'Home Goods', icon: 'fa fa-home' },
+    { name: 'Electronics', icon: 'fas fa-laptop' },
+    { name: 'Clothing', icon: 'fas fa-tshirt' },
+    { name: 'Home Goods', icon: 'fas fa-home' },
     // Add more categories as needed
   ];
 }
