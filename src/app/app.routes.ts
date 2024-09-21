@@ -12,7 +12,8 @@ import { FormdesignComponent } from './pages/formdesign/formdesign.component';
 export const routes: Routes = [
   {
     path: '',
-    component: LayoutComponent, // Use HeaderLayoutComponent for these routes
+    component: LayoutComponent,
+    canActivate: [AuthGuard], // Use HeaderLayoutComponent for these routes
     children: [
       { path: 'dashboard', component: HomeComponent, canActivate: [AuthGuard] },
       {
