@@ -33,6 +33,13 @@ export const routes: Routes = [
         component: FormdesignComponent,
         canActivate: [AuthGuard],
       },
+      {
+        path: 'prodcut',
+        loadChildren: () =>
+          import('./prodcut-module/prodcut-module.module').then(
+            (m) => m.ProdcutModuleModule
+          ),
+      },
     ],
   },
 

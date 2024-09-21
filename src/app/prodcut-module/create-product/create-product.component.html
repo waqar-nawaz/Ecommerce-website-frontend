@@ -1,0 +1,89 @@
+<div class="min-h-screen flex items-center justify-center bg-gray-900 py-12 px-4 sm:px-6 lg:px-8">
+    <div class="max-w-3xl w-full bg-gray-800 p-6 rounded-lg shadow-md">
+
+
+        <div class="max-w-3xl mx-auto  p-8 shadow-md rounded-lg mt-5">
+            <form [formGroup]="productForm" (ngSubmit)="onSubmit()">
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+
+                    <div class="mb-4">
+                        <label for="title" class="block text-white">Title</label>
+                        <input type="text" id="title" formControlName="title"
+                            class="w-full px-4 py-2 bg-gray-800 text-white border border-gray-600 rounded-lg focus:outline-none focus:ring focus:ring-blue-300"
+                            placeholder="Enter product title" />
+                    </div>
+
+                    <div class="mb-4">
+                        <label for="price" class="block text-white">Price</label>
+                        <input type="number" id="price" formControlName="price"
+                            class="w-full px-4 py-2 bg-gray-800 text-white border border-gray-600 rounded-lg focus:outline-none focus:ring focus:ring-blue-300"
+                            placeholder="Enter product price" />
+                    </div>
+
+                    <div class="mb-4 col-span-full">
+                        <label for="description" class="block text-white">Description</label>
+                        <textarea id="description" formControlName="description"
+                            class="w-full px-4 py-2 bg-gray-800 text-white border border-gray-600 rounded-lg focus:outline-none focus:ring focus:ring-blue-300"
+                            placeholder="Enter product description" rows="4">
+          </textarea>
+                    </div>
+
+                    <div class="mb-4 col-span-full">
+                        <label for="about" class="block text-white">About</label>
+                        <textarea id="about" formControlName="about"
+                            class="w-full px-4 py-2 bg-gray-800 text-white border border-gray-600 rounded-lg focus:outline-none focus:ring focus:ring-blue-300"
+                            placeholder="Enter details about the product" rows="3">
+          </textarea>
+                    </div>
+
+                    <div class="mb-4">
+                        <label for="sku" class="block text-white">SKU</label>
+                        <input type="text" id="sku" formControlName="sku"
+                            class="w-full px-4 py-2 bg-gray-800 text-white border border-gray-600 rounded-lg focus:outline-none focus:ring focus:ring-blue-300"
+                            placeholder="Enter SKU" />
+                    </div>
+
+                    <div class="mb-4">
+                        <label for="field1" class="block text-white">Field 1</label>
+                        <input type="text" id="field1" formControlName="field1"
+                            class="w-full px-4 py-2 bg-gray-800 text-white border border-gray-600 rounded-lg focus:outline-none focus:ring focus:ring-blue-300"
+                            placeholder="Enter field 1" />
+                    </div>
+
+                    <div class="mb-4">
+                        <label for="field2" class="block text-white">Field 2</label>
+                        <input type="text" id="field2" formControlName="field2"
+                            class="w-full px-4 py-2 bg-gray-800 text-white border border-gray-600 rounded-lg focus:outline-none focus:ring focus:ring-blue-300"
+                            placeholder="Enter field 2" />
+                    </div>
+
+                    <div class="mb-4">
+                        <label for="field3" class="block text-white">Field 3</label>
+                        <input type="text" id="field3" formControlName="field3"
+                            class="w-full px-4 py-2 bg-gray-800 text-white border border-gray-600 rounded-lg focus:outline-none focus:ring focus:ring-blue-300"
+                            placeholder="Enter field 3" />
+                    </div>
+
+                    <div class="mb-4 col-span-full flex items-center">
+                        <div class="w-1/2">
+                            <label for="image" class="block text-white">Image</label>
+                            <input type="file" id="image" (change)="onFileSelected($event)"
+                                class="w-full px-4 py-2 bg-gray-800 text-white border border-gray-600 rounded-lg focus:outline-none focus:ring focus:ring-blue-300" />
+                        </div>
+
+                        <div class="w-1/2 pl-4">
+                            <img *ngIf="imageUrl" [src]="imageUrl" alt="Image Preview"
+                                class="w-50 h-32 object-cover rounded-lg" />
+                        </div>
+                    </div>
+
+                </div>
+
+                <button type="submit"
+                    class="w-full bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 focus:outline-none focus:ring focus:ring-blue-300">
+                    Submit
+                </button>
+            </form>
+        </div>
+    </div>
+</div>
