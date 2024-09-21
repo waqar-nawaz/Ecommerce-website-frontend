@@ -28,18 +28,24 @@
 <div class="container flex justify-center max-w-full overflow-y-auto" style="height: 100vh;"
     (scroll)="onScroll($event)">
 
-    <!-- <div *ngIf="loader" class="flex justify-center items-center">
-        
-    </div> -->
+    <div *ngIf="loader" class="flex justify-center items-center">
+        <app-loader></app-loader>
 
+    </div>
+
+    <!-- @for (item of data; track $index) {
+
+    <app-cards [data]="item" (dataEmitter)="receiveData($event)"></app-cards>
+    } -->
     @for (item of data; track $index) { @defer {
 
     <app-cards [data]="item" (dataEmitter)="receiveData($event)"></app-cards>
-    }@placeholder() {
+    <!-- }@placeholder() {
     <app-loader></app-loader>
     } @loading {
     <app-loader></app-loader>
     } @error {
     <div>Some Issue Found in App card</div>
+    }-->
     } }
 </div>
