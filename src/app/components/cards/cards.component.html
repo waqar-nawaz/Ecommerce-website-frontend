@@ -22,7 +22,7 @@
         <!-- <img class="w-full h-48 object-cover transform transition-transform duration-300 hover:scale-105"
             [src]="fileUrl + data?.imageUrl" alt="Sample Image"> -->
         <img class="w-full h-48 object-cover transform transition-transform duration-300 hover:scale-105"
-            [defaultImage]="defaultImage" [lazyLoad]="fileUrl + data?.imageUrl" [useSrcset]="false" />
+            [defaultImage]="defaultImage" [lazyLoad]="data?.imageUrl" [useSrcset]="false" />
         <div class="px-6 py-4">
             <!-- Truncated title -->
             <h2 class="text-lg font-bold text-white mb-2 truncate overflow-hidden whitespace-nowrap">

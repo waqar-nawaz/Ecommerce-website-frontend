@@ -11,6 +11,7 @@ import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { debounceTime, distinctUntilChanged, iif, of, switchMap } from 'rxjs';
 import { SharedService } from '../../services/shared.service';
 import socketClient from 'socket.io-client';
+import { environment } from '../../../../environments/environment';
 
 @Component({
   selector: 'app-about',
@@ -47,9 +48,7 @@ export class AboutComponent implements OnInit {
     });
     this.getProduct();
     // const io = socketClient('http://localhost:8080/');
-    const io = socketClient(
-      'https://ecommerce-website-backend-1-52ky.onrender.com/'
-    );
+    const io = socketClient(environment.domainPath);
 
     io.on('posts', (socketdata: any) => {
       if (socketdata.action == 'create') {

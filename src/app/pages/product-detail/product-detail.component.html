@@ -3,7 +3,7 @@
     <div class="bg-white shadow-lg rounded-lg overflow-hidden md:flex md:items-center">
         <!-- Product Image -->
         <div class="relative md:w-1/2">
-            <img [src]="fileUrl+product?.imageUrl" alt="Product Image" class="w-full h-full object-cover">
+            <img [src]="product?.imageUrl" alt="Product Image" class="w-full h-full object-cover">
             @if (loader){
             <div class="absolute inset-0 flex items-center justify-center bg-white opacity-75 z-10">
                 <app-loader></app-loader>

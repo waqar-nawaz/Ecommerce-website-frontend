@@ -6,7 +6,6 @@ import { RefreshService } from '../../services/refresh-service.service';
 import Swal from 'sweetalert2';
 import { environment } from '../../../../environments/environment';
 import { CommonModule } from '@angular/common';
-import { RouterOutlet } from '@angular/router';
 
 @Component({
   selector: 'app-modal',
