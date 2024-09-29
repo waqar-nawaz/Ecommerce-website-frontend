@@ -4,6 +4,7 @@ import { CreateProductComponent } from './create-product/create-product.componen
 import { ListProductComponent } from './list-product/list-product.component';
 import { CategoriesListComponent } from './categories-list/categories-list.component';
 import { ProductCartComponent } from './product-cart/product-cart.component';
+import { ProductDetailComponent } from './product-detail/product-detail.component';
 
 const routes: Routes = [
   {
@@ -21,6 +22,10 @@ const routes: Routes = [
   {
     path: 'product-cart',
     component: ProductCartComponent,
+  },
+  {
+    path: 'product-detail',
+    component: ProductDetailComponent,
   },
 ];
 

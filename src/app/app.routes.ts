@@ -6,7 +6,7 @@ import { AboutComponent } from './pages/productlist/about.component';
 import { LoginComponent } from './components/login/login.component';
 import { AuthGuard } from './guards/auth.guard';
 import { SignupComponent } from './components/signup/signup.component';
-import { ProductDetailComponent } from './pages/product-detail/product-detail.component';
+import { ProductDetailComponent } from './pages/post-detail/post-detail.component';
 import { FormdesignComponent } from './pages/formdesign/formdesign.component';
 
 export const routes: Routes = [

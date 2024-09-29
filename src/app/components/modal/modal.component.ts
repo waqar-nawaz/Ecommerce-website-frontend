@@ -109,7 +109,7 @@ export class ModalComponent {
         }
       );
     } else {
-      this.prodcutService.createProduct(formData).subscribe(
+      this.prodcutService.createPost(formData).subscribe(
         (res: any) => {
           this.maketoster({ success: 'success', message: res?.message });
           this.myForm.reset();

@@ -1,0 +1,59 @@
+<div class="container mx-auto px-4 py-10 max-w-6xl">
+    <!-- Product Detail Container -->
+    <h2 class="flex justify-center mb-5 text-4xl ">Product Detail</h2>
+    <div class="bg-white shadow-md rounded-lg overflow-hidden grid grid-cols-1 md:grid-cols-2 gap-6">
+        <!-- Product Image Section -->
+        <div class="relative">
+            <img [src]="product?.imageUrl" alt="{{ product?.name }}"
+                class="w-full h-full object-cover transition-transform duration-500 hover:scale-105" />
+            <div *ngIf="loader" class="absolute inset-0 flex items-center justify-center bg-white bg-opacity-75 z-10">
+                <app-loader></app-loader>
+            </div>
+        </div>
+
+        <!-- Product Information Section -->
+        <div class="p-6 flex flex-col justify-between">
+            <!-- Product Title -->
+            <h1 class="text-4xl font-semibold text-gray-900 mb-2">{{ product?.name }}</h1>
+
+            <!-- Price -->
+            <p class="text-2xl text-blue-600 font-medium mb-4">${{ product?.price }}</p>
+
+            <!-- Description -->
+            <p class="text-base text-gray-700 leading-relaxed mb-6">
+                {{ product?.description }}
+            </p>
+
+            <!-- Additional Details (Stock, Brand, Category) -->
+            <div class="mb-6 space-y-2">
+                <p class="text-sm text-gray-600">
+                    <span class="font-semibold">In Stock:</span> {{ product?.stock }}
+                </p>
+                <p class="text-sm text-gray-600">
+                    <span class="font-semibold">Brand:</span> {{ product?.brand }}
+                </p>
+                <p class="text-sm text-gray-600">
+                    <span class="font-semibold">Category:</span> {{ product?.category }}
+                </p>
+            </div>
+
+            <!-- Ratings and Actions -->
+            <div class="flex items-center justify-between mt-auto">
+                <!-- Rating -->
+                <div class="flex items-center space-x-1">
+                    <span class="text-gray-600 font-semibold">Rating:</span>
+                    <span class="flex items-center text-yellow-400">
+                        <!-- Static 4-star rating -->
+                        ★★★★☆
+                    </span>
+                </div>
+
+                <!-- Add to Cart Button -->
+                <button
+                    class="bg-blue-600 text-white px-6 py-2 rounded-lg shadow-md hover:bg-blue-700 transition-colors duration-300">
+                    Add to Cart
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

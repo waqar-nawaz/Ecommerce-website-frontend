@@ -1,6 +1,5 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
-import product from '../../../../dummy.json';
 import { CategoriesListComponent } from '../categories-list/categories-list.component';
 import {
   FormBuilder,
@@ -9,6 +8,7 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
+import { environment } from '../../../../environments/environment';
 
 @Component({
   selector: 'app-create-product',
@@ -25,6 +25,11 @@ import {
 export class CreateProductComponent implements OnInit {
   productForm!: FormGroup;
   imageUrl: string | ArrayBuffer | null = null;
+  isUpdate: any;
+  isModalOpen = false;
+  fileUrl: any = environment.fileUrl;
+  imagePreview: string | ArrayBuffer | null = null;
+  isLoading: boolean = false;
 
   constructor(private fb: FormBuilder) {
     this.productForm = this.fb.group({
@@ -54,10 +59,21 @@ export class CreateProductComponent implements OnInit {
     }
   }
 
-  onSubmit(): void {
+  Submit(): void {
+    this.isLoading = true;
     if (this.productForm.valid) {
       const formData = this.productForm.value;
       console.log(formData);
     }
+  }
+  openModal() {
+    this.isModalOpen = true;
+  }
+
+  closeModal() {
+    this.isModalOpen = false;
+    this.isUpdate = false;
+    this.productForm.reset();
+    this.imagePreview = null;
   }
 }

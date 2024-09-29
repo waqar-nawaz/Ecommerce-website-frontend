@@ -1,18 +1,19 @@
-import { Component, inject, OnInit } from '@angular/core';
-import { ProductServiceService } from '../../services/product.service.service';
+import { Component, inject } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { environment } from '../../../../environments/environment';
+import { ProductServiceService } from '../../services/product.service.service';
 import { LoaderComponent } from '../../loader/loader.component';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-product-detail',
   standalone: true,
-  imports: [LoaderComponent],
+  imports: [LoaderComponent, CommonModule],
   templateUrl: './product-detail.component.html',
   styleUrl: './product-detail.component.css',
 })
-export class ProductDetailComponent implements OnInit {
-  postId: string | null = null;
+export class ProductDetailComponent {
+  productObject: string | null = null;
   product: any;
   route = inject(ActivatedRoute);
   prodcutService = inject(ProductServiceService);
@@ -22,14 +23,16 @@ export class ProductDetailComponent implements OnInit {
   ngOnInit(): void {
     // Get the query parameter 'post'
     this.route.queryParamMap.subscribe((params) => {
-      this.postId = params.get('post');
-      console.log(this.postId);
-      if (this.postId) {
+      this.productObject = params.get('product');
+
+      if (this.productObject) {
         // Fetch product details using the product ID
         this.loader = true;
-        this.prodcutService.getProductById(this.postId).subscribe(
+        console.log('product object', this.productObject);
+        this.prodcutService.getProductById(this.productObject).subscribe(
           (product: any) => {
             this.product = product?.result;
+            console.log('get single product', this.product);
             this.loader = false;
           },
           (err) => {

@@ -1,0 +1,55 @@
+<div class="container mx-auto px-4 py-10 max-w-6xl">
+    <h2 class="flex justify-center mb-5 text-4xl ">Post Detail</h2>
+
+    <!-- Post Detail Container -->
+    <div class="bg-white shadow-lg rounded-lg overflow-hidden grid grid-cols-1 md:grid-cols-2 gap-6">
+        <!-- Post Image Section -->
+        <div class="relative">
+            <img [src]="post?.imageUrl" alt="{{ post?.title }}"
+                class="w-full h-full object-cover transition-transform duration-500 hover:scale-105" />
+            <div *ngIf="loader" class="absolute inset-0 flex items-center justify-center bg-white bg-opacity-75 z-10">
+                <app-loader></app-loader>
+            </div>
+        </div>
+
+        <!-- Post Information Section -->
+        <div class="p-6 flex flex-col justify-between">
+            <!-- Post Title -->
+            <h1 class="text-4xl font-bold text-gray-900 mb-2">{{ post?.title }}</h1>
+
+            <!-- Author and Date -->
+            <div class="flex items-center text-sm text-gray-600 mb-4 space-x-2">
+                <span class="font-medium">{{ post?.author?.name }}</span>
+                <span>•</span>
+                <!-- <span>{{ post?.createdAt | date: 'longDate' }}</span> -->
+            </div>
+
+            <!-- Post Description -->
+            <p class="text-lg text-gray-700 leading-relaxed mb-6">
+                {{ post?.description }}
+            </p>
+
+            <!-- Post Category -->
+            <div class="mb-6">
+                <p class="text-sm text-gray-600">
+                    <span class="font-semibold">Category:</span> {{ post?.category }}
+                </p>
+            </div>
+
+            <!-- Interaction Buttons -->
+            <div class="flex items-center justify-start space-x-4 mt-auto">
+                <!-- Like Button -->
+                <button
+                    class="bg-blue-600 text-white px-6 py-2 rounded-lg shadow-md hover:bg-blue-700 transition-colors duration-300">
+                    Like
+                </button>
+
+                <!-- Comment Button -->
+                <button
+                    class="bg-gray-200 text-gray-700 px-6 py-2 rounded-lg border border-gray-300 hover:bg-gray-300 transition duration-300">
+                    Comment
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

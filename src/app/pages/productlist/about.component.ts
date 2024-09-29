@@ -91,7 +91,7 @@ export class AboutComponent implements OnInit {
   getProduct() {
     this.data = [];
     this.loader = true;
-    this.products.getProduct(1).subscribe(
+    this.products.getPost(1).subscribe(
       (data: any) => {
         this.data = data?.result;
         this.totalpages = data.totalPages;

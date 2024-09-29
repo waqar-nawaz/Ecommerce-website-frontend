@@ -28,7 +28,7 @@ export class ProductServiceService {
     return headers;
   }
 
-  getProduct(currentPage: any) {
+  getPost(currentPage: any) {
     // console.log(currentPage);
     const params = new HttpParams()
       .set('currentPage', currentPage)
@@ -39,9 +39,27 @@ export class ProductServiceService {
       params: params,
     });
   }
+  getProduct(currentPage: any) {
+    // console.log(currentPage);
+    // const params = new HttpParams()
+    //   .set('currentPage', currentPage)
+    //   .set('perPage', 10);
 
-  createProduct(data: any) {
+    return this.http.get(`${this.apiUrl}api/product`, {
+      headers: this.getHeaders(),
+      // params: params,
+    });
+  }
+
+  createPost(data: any) {
     return this.http.post(`${this.apiUrl}feed/post`, data, {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem('token')}`, // Include token
+      },
+    });
+  }
+  createProduct(data: any) {
+    return this.http.post(`${this.apiUrl}api/product`, data, {
       headers: {
         Authorization: `Bearer ${localStorage.getItem('token')}`, // Include token
       },
@@ -70,8 +88,13 @@ export class ProductServiceService {
     });
   }
 
-  getProductById(id: any) {
+  getPostById(id: any) {
     return this.http.get(`${this.apiUrl}feed/post/${id}`, {
+      headers: this.getHeaders(),
+    });
+  }
+  getProductById(id: any) {
+    return this.http.get(`${this.apiUrl}api/product/${id}`, {
       headers: this.getHeaders(),
     });
   }

@@ -2,7 +2,7 @@
     <!-- <div class=" w-full bg-gray-800 p-6 rounded-lg shadow-md"> -->
     <div class="m-5 flex flex-col items-center">
         <h2 class="text-2xl font-bold text-gray-100 mb-4">Categories</h2>
-        <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-12 gap-4">
+        <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-12 gap-4 cursor-pointer">
             <div [routerLink]="['/prodcut/list-product']" routerLinkActive="bg-gray-900" class="category-card"
                 *ngFor="let category of categories">
                 <div class="icon-container">
