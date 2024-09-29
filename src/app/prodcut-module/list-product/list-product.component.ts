@@ -13,6 +13,7 @@ import { RefreshService } from '../../services/refresh-service.service';
 import { ProductServiceService } from '../../services/product.service.service';
 import Swal from 'sweetalert2';
 import { LazyLoadImageModule } from 'ng-lazyload-image';
+import { LoaderComponent } from '../../loader/loader.component';
 
 @Component({
   selector: 'app-list-product',
@@ -23,6 +24,7 @@ import { LazyLoadImageModule } from 'ng-lazyload-image';
     ModalComponent,
     ReactiveFormsModule,
     LazyLoadImageModule,
+    LoaderComponent,
   ],
   templateUrl: './list-product.component.html',
   styleUrl: './list-product.component.css',
@@ -45,6 +47,7 @@ export class ListProductComponent implements OnInit {
   submitted: boolean = false;
   data: any[] = [];
   user: any;
+  loader: boolean = false;
 
   ngOnInit(): void {
     this.myFormFun();
@@ -70,10 +73,17 @@ export class ListProductComponent implements OnInit {
   }
 
   getProduct() {
-    this.prodcutService.getProduct(1).subscribe((val: any) => {
-      console.log('Product data', val?.result);
-      this.data = val?.result;
-    });
+    this.loader = true;
+    this.prodcutService.getProduct(1).subscribe(
+      (val: any) => {
+        console.log('Product data', val?.result);
+        this.data = val?.result;
+        this.loader = false;
+      },
+      (err) => {
+        this.loader = false;
+      }
+    );
   }
 
   fileupload(event: any): void {
@@ -112,7 +122,7 @@ export class ListProductComponent implements OnInit {
       this.productForm.markAllAsTouched();
       return;
     }
-    console.log(this.productForm);
+    // console.log(this.productForm);
 
     this.isLoading = true;
     const formData = new FormData();
