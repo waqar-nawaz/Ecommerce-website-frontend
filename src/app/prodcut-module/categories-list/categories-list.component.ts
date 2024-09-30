@@ -13,6 +13,7 @@ import {
   Validators,
 } from '@angular/forms';
 import { RouterLink } from '@angular/router';
+import { ProductServiceService } from '../../services/product.service.service';
 
 @Component({
   selector: 'app-categories-list',
@@ -26,6 +27,7 @@ export class CategoriesListComponent implements OnInit {
   fb = inject(FormBuilder);
   selectedFile: any;
   imagePreview: string | ArrayBuffer | null = null;
+  productService = inject(ProductServiceService);
 
   categories = [
     { name: 'Electronics', icon: 'fas fa-laptop' },
@@ -47,7 +49,7 @@ export class CategoriesListComponent implements OnInit {
     const formData = new FormData();
     formData.append('name', this.categoryForm.get('name')?.value);
     if (this.selectedFile) {
-      formData.append('image', this.selectedFile);
+      formData.append('imageUrl', this.selectedFile);
     }
   }
 

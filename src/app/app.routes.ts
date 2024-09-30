@@ -34,7 +34,7 @@ export const routes: Routes = [
         canActivate: [AuthGuard],
       },
       {
-        path: 'prodcut',
+        path: 'product',
         loadChildren: () =>
           import('./prodcut-module/prodcut-module.module').then(
             (m) => m.ProdcutModuleModule

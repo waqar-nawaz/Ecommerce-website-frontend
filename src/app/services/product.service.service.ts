@@ -28,7 +28,7 @@ export class ProductServiceService {
     return headers;
   }
 
-  getPost(currentPage: any) {
+  getPost(currentPage: any): Observable<any> {
     // console.log(currentPage);
     const params = new HttpParams()
       .set('currentPage', currentPage)
@@ -39,7 +39,7 @@ export class ProductServiceService {
       params: params,
     });
   }
-  getProduct(currentPage: any) {
+  getProduct(currentPage: any): Observable<any> {
     // console.log(currentPage);
     // const params = new HttpParams()
     //   .set('currentPage', currentPage)
@@ -51,22 +51,29 @@ export class ProductServiceService {
     });
   }
 
-  createPost(data: any) {
+  createPost(data: any): Observable<any> {
     return this.http.post(`${this.apiUrl}feed/post`, data, {
       headers: {
         Authorization: `Bearer ${localStorage.getItem('token')}`, // Include token
       },
     });
   }
-  createProduct(data: any) {
+  createProduct(data: any): Observable<any> {
     return this.http.post(`${this.apiUrl}api/product`, data, {
       headers: {
         Authorization: `Bearer ${localStorage.getItem('token')}`, // Include token
       },
     });
   }
+  createCategory(data: any): Observable<any> {
+    return this.http.post(`${this.apiUrl}api/product/category`, data, {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem('token')}`, // Include token
+      },
+    });
+  }
 
-  updateProduct(id: any, data: any) {
+  updateProduct(id: any, data: any): Observable<any> {
     return this.http.put(`${this.apiUrl}feed/post/${id}`, data, {
       headers: {
         Authorization: `Bearer ${localStorage.getItem('token')}`, // Include token
@@ -74,7 +81,7 @@ export class ProductServiceService {
     });
   }
 
-  deleteProduct(id: any) {
+  deleteProduct(id: any): Observable<any> {
     return this.http.delete(`${this.apiUrl}feed/post/${id}`, {
       headers: this.getHeaders(),
     });
@@ -88,12 +95,12 @@ export class ProductServiceService {
     });
   }
 
-  getPostById(id: any) {
+  getPostById(id: any): Observable<any> {
     return this.http.get(`${this.apiUrl}feed/post/${id}`, {
       headers: this.getHeaders(),
     });
   }
-  getProductById(id: any) {
+  getProductById(id: any): Observable<any> {
     return this.http.get(`${this.apiUrl}api/product/${id}`, {
       headers: this.getHeaders(),
     });
