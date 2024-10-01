@@ -48,10 +48,12 @@ export class ListProductComponent implements OnInit {
   data: any[] = [];
   user: any;
   loader: boolean = false;
+  categorydata: any;
 
   ngOnInit(): void {
     this.myFormFun();
     this.getProduct();
+    this.getCategory();
     this.user = JSON.parse(localStorage.getItem('user') || 'null');
   }
 
@@ -175,6 +177,16 @@ export class ListProductComponent implements OnInit {
         }
       );
     }
+  }
+
+  getCategory() {
+    this.prodcutService.getCategory(1).subscribe(
+      (res: any) => {
+        this.categorydata = res?.result;
+        console.log('response of the category', res);
+      },
+      (error) => {}
+    );
   }
 
   maketoster(...res: any) {

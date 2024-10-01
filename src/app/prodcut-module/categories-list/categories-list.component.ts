@@ -14,11 +14,21 @@ import {
 } from '@angular/forms';
 import { RouterLink } from '@angular/router';
 import { ProductServiceService } from '../../services/product.service.service';
+import Swal from 'sweetalert2';
+import { LazyLoadImageModule } from 'ng-lazyload-image';
+import { environment } from '../../../../environments/environment';
+import { LoaderComponent } from '../../loader/loader.component';
 
 @Component({
   selector: 'app-categories-list',
   standalone: true,
-  imports: [CommonModule, RouterLink, ReactiveFormsModule],
+  imports: [
+    CommonModule,
+    RouterLink,
+    ReactiveFormsModule,
+    LazyLoadImageModule,
+    LoaderComponent,
+  ],
   templateUrl: './categories-list.component.html',
   styleUrl: './categories-list.component.css',
 })
@@ -28,6 +38,10 @@ export class CategoriesListComponent implements OnInit {
   selectedFile: any;
   imagePreview: string | ArrayBuffer | null = null;
   productService = inject(ProductServiceService);
+  categorydata: any[] = [];
+  defaultImage: any = environment.defaultImage;
+  isLoading: boolean = false;
+  loader: boolean = true;
 
   categories = [
     { name: 'Electronics', icon: 'fas fa-laptop' },
@@ -39,18 +53,50 @@ export class CategoriesListComponent implements OnInit {
 
   ngOnInit(): void {
     this.myForm();
+    this.getCategory();
   }
 
   onAddCategory() {
-    if (this.categoryForm.valid) {
-      console.log(this.categoryForm.value);
-      this.closeDialog();
+    this.isLoading = true;
+    if (this.categoryForm.invalid) {
+      return;
     }
     const formData = new FormData();
     formData.append('name', this.categoryForm.get('name')?.value);
     if (this.selectedFile) {
       formData.append('imageUrl', this.selectedFile);
     }
+
+    this.productService.createCategory(formData).subscribe(
+      (res: any) => {
+        // console.log('response of the category', res);
+        this.categoryForm.reset();
+        this.selectedFile = null;
+        this.categorydata.push(res.result);
+        this.isLoading = false;
+        this.imagePreview = '';
+        this.maketoster({ success: 'success', message: res?.message });
+        this.closeDialog();
+      },
+      (error) => {
+        this.isLoading = false;
+        this.closeDialog();
+      }
+    );
+  }
+
+  getCategory() {
+    this.loader = true;
+    this.productService.getCategory(1).subscribe(
+      (res: any) => {
+        this.categorydata = res?.result;
+        console.log('response of the category', res);
+        this.loader = false;
+      },
+      (error) => {
+        this.loader = false;
+      }
+    );
   }
 
   myForm() {
@@ -82,5 +128,16 @@ export class CategoriesListComponent implements OnInit {
       this.imagePreview = reader.result;
     };
     reader.readAsDataURL(file);
+  }
+
+  maketoster(...res: any) {
+    // debugger;
+    Swal.fire({
+      position: 'top-end',
+      icon: res[0].success,
+      title: res[0].message,
+      showConfirmButton: false,
+      timer: 1500,
+    });
   }
 }

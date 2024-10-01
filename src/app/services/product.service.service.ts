@@ -66,10 +66,22 @@ export class ProductServiceService {
     });
   }
   createCategory(data: any): Observable<any> {
-    return this.http.post(`${this.apiUrl}api/product/category`, data, {
+    return this.http.post(`${this.apiUrl}api/category`, data, {
       headers: {
         Authorization: `Bearer ${localStorage.getItem('token')}`, // Include token
       },
+    });
+  }
+
+  getCategory(currentPage: any): Observable<any> {
+    // console.log(currentPage);
+    // const params = new HttpParams()
+    //   .set('currentPage', currentPage)
+    //   .set('perPage', 10);
+
+    return this.http.get(`${this.apiUrl}api/category`, {
+      headers: this.getHeaders(),
+      // params: params,
     });
   }
 

@@ -156,10 +156,26 @@
                             <!-- Category Field -->
                             <div class="mb-4">
                                 <label for="category" class="block text-white">Category</label>
-                                <input type="text" id="category" formControlName="category"
-                                    class="w-full px-4 py-2 bg-gray-800 text-white border border-gray-600 rounded-lg focus:outline-none focus:ring focus:ring-blue-300"
-                                    placeholder="Enter category" />
+                                <div class="relative">
+                                    <select id="category" formControlName="category"
+                                        class="block appearance-none customcolor w-full bg-gray-800 text-white border border-gray-600 py-2 px-4 pr-8 rounded-lg leading-tight focus:outline-none focus:ring focus:ring-blue-300">
+                                        <option value="" disabled selected hidden>Add category
+                                        </option>
+                                        <option *ngFor="let category of categorydata" [value]="category._id">
+                                            {{ category.name }}
+                                        </option>
+                                    </select>
+                                    <div
+                                        class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-white">
+                                        <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg"
+                                            viewBox="0 0 20 20">
+                                            <path
+                                                d="M5.23 7.21a.75.75 0 011.06.02L10 10.93l3.71-3.7a.75.75 0 011.06 1.06l-4 4a.75.75 0 01-1.06 0l-4-4a.75.75 0 01.02-1.06z" />
+                                        </svg>
+                                    </div>
+                                </div>
                             </div>
+
 
                             <!-- Brand Field -->
                             <div class="mb-4">
