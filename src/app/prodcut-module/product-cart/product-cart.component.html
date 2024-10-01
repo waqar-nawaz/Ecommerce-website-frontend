@@ -1,39 +1,85 @@
-<div class="max-w-4xl mx-auto p-4">
-    <h1 class="text-2xl font-bold mb-4">Your Cart</h1>
+<div class="container mx-auto mt-5 p-4 bg-gray-900 rounded-lg text-white">
+    <h1 class="text-2xl flex justify-center mt-5 font-semibold mb-4">Your Cart (4 items)</h1>
 
-    <!-- Cart Item -->
-    <div class="flex items-center justify-between p-4 border-b">
-        <img src="../../../assets/BB1msBaF.png" alt="Pi Pizza Oven" class="w-16 h-16 object-cover">
-        <div class="flex-1 ml-4">
-            <h2 class="text-lg font-semibold">Pi Pizza Oven</h2>
-            <p class="text-sm text-gray-500">Fuel Source: Wood Only</p>
-            <p class="text-sm text-gray-500">(Estimated Ship Date: June 6th)</p>
-        </div>
-        <div class="flex items-center mr-5">
-            <span class="text-lg font-semibold mr-4">$48.99</span>
-            <input type="number" (change)="countProduct($event,'48.99')" class="w-12 text-center bg-gray-900 border"
-                value="1">
-        </div>
-        <span class="text-lg font-semibold">${{total}}</span>
+    <!-- Cart table -->
+    <div class="overflow-x-auto">
+        <table class="w-full table-auto">
+            <thead>
+                <tr class="border-b border-gray-700">
+                    <th class="text-left p-3 text-gray-300">Product Name</th>
+                    <th class="text-center p-3 text-gray-300">Price</th>
+                    <th class="text-center p-3 text-gray-300">Quantity</th>
+                    <th class="text-right p-3 text-gray-300">Total</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Item 1 -->
+
+                @for (item of cartItems; track $index) {
+                <tr class="border-b border-gray-700">
+                    <td class="p-3 flex items-center">
+                        <img src={{item?.imageUrl}} alt="Pizza Oven" class="w-20 h-20 object-cover mr-4">
+                        <div>
+                            <h2 class="text-lg font-semibold">{{item?.name}}</h2>
+                            <p class="text-orange-400">Estimated Ship Date: June 6th</p>
+                            <p class="text-sm text-gray-400">Fuel Source: Wood Only</p>
+                        </div>
+                    </td>
+
+                    <!-- price -->
+                    <td class="text-center text-lg">${{item?.price}}</td>
+
+                    <!-- Quantity -->
+                    <td class="text-center">
+                        <div class="flex items-center justify-center">
+                            <button (click)="decrementQuantity(item)"
+                                class="border border-gray-500 text-white px-2">-</button>
+                            <input type="text" [value]="item?.quantity"
+                                class="w-12 text-center border border-gray-500 mx-2 bg-gray-800 text-white" readonly>
+                            <button (click)="incrementQuantity(item)" [disabled]="isDisabled"
+                                class="border border-gray-500 text-white px-2">+</button>
+                        </div>
+                    </td>
+
+                    <!-- Total -->
+                    <td class="text-right text-lg pr-2">${{item?.total | number: '1.3-3'}}</td>
+                    <td class="text-right">
+                        <button (click)="removeItem(item.id)"
+                            class="text-red-500 bg-gray-800 p-2 w-8 h-8 flex items-center justify-center rounded-full hover:underline">x
+                        </button>
+                    </td>
+
+                </tr>
+                }
+
+
+                <!-- More items here as needed -->
+            </tbody>
+        </table>
     </div>
 
-    <!-- Repeat the above block for each item in the cart -->
-
-
-    <!-- Cart Summary -->
-    <div class="p-4 border-t">
-        <div class="flex justify-between">
-            <span>Subtotal:</span>
-            <span>$1,019.98</span>
+    <!-- Summary Section -->
+    <div class="w-full lg:w-1/4 mt-5 bg-gray-900  justify-end rounded-lg p-4 ml-auto">
+        <div class="text-lg font-semibold mb-4">Order Summary</div>
+        <div class="flex justify-between text-lg font-semibold">
+            <p>Subtotal:</p>
+            <p>${{subtotal | number: '1.3-3'}}</p>
         </div>
-        <div class="flex justify-between">
-            <span>Sales Tax:</span>
-            <span>$102.00</span>
+        <div class="flex justify-between text-lg font-semibold">
+            <p>Sales Tax:</p>
+            <p>${{tax | number: '1.3-3' }}</p>
         </div>
-        <div class="flex justify-between font-bold">
-            <span>Total:</span>
-            <span>$1,121.98</span>
+        <!-- <div class="flex justify-between text-lg font-semibold">
+            <p>Coupon Code:</p>
+            <button class="text-blue-400 hover:underline">Add Coupon</button>
+        </div> -->
+        <div class="flex justify-between text-2xl font-bold mt-4">
+            <p>Grand Total:</p>
+            <p>${{ grandTotal | number: '1.3-3' }}</p>
         </div>
-        <button class="w-full mt-4 bg-blue-500 text-white py-2">Checkout</button>
+        <p *ngIf="false" class="text-green-400 mt-2">Congrats, you're eligible for Free Shipping</p>
+        <button (click)="addItem(1)"
+            class="bg-gray-700 text-white px-4 rounded py-2 mt-4 w-full hover:bg-gray-600">Check out</button>
     </div>
+
 </div>
