@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, inject, OnInit } from '@angular/core';
-import { RouterLink } from '@angular/router';
+import { ActivatedRoute, RouterLink } from '@angular/router';
 import { ModalComponent } from '../../components/modal/modal.component';
 import {
   FormBuilder,
@@ -50,11 +50,37 @@ export class ListProductComponent implements OnInit {
   loader: boolean = false;
   categorydata: any;
 
+  categoryId: string | null = null;
+  category: any;
+  route = inject(ActivatedRoute);
+
   ngOnInit(): void {
     this.myFormFun();
     this.getProduct();
     this.getCategory();
     this.user = JSON.parse(localStorage.getItem('user') || 'null');
+
+    // Get the query parameter 'post'
+    this.route.queryParamMap.subscribe((params) => {
+      this.categoryId = params.get('category');
+
+      if (this.categoryId) {
+        // Fetch product details using the product ID
+        this.loader = true;
+        console.log('Category id ', this.categoryId);
+        // this.prodcutService.getProductById(this.categoryId).subscribe(
+        //   (product: any) => {
+        //     this.category = product?.result;
+        //     console.log('get single product', this.category);
+        //     this.loader = false;
+        //   },
+        //   (err) => {
+        //     console.log(err);
+        //     this.loader = false;
+        //   }
+        // );
+      }
+    });
   }
 
   myFormFun() {

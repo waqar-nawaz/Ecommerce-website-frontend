@@ -16,7 +16,8 @@
 
         <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-12 gap-4 cursor-pointer">
             @for (category of categorydata; track $index) {
-            <div [routerLink]="['/product/list-product']" routerLinkActive="bg-gray-900" class="category-card">
+            <div [routerLink]="['/product/list-product']" [queryParams]="{category: category._id}"
+                routerLinkActive="bg-gray-900" class="category-card">
                 <div class="icon-container relative w-20 h-20 mx-auto">
                     <img [defaultImage]="defaultImage" [lazyLoad]="category?.imageUrl" [useSrcset]="false"
                         alt="category Image"

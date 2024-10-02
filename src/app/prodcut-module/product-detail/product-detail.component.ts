@@ -1,5 +1,5 @@
 import { Component, inject } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, RouterLink } from '@angular/router';
 import { environment } from '../../../../environments/environment';
 import { ProductServiceService } from '../../services/product.service.service';
 import { LoaderComponent } from '../../loader/loader.component';
@@ -8,7 +8,7 @@ import { CommonModule } from '@angular/common';
 @Component({
   selector: 'app-product-detail',
   standalone: true,
-  imports: [LoaderComponent, CommonModule],
+  imports: [LoaderComponent, CommonModule, RouterLink],
   templateUrl: './product-detail.component.html',
   styleUrl: './product-detail.component.css',
 })
