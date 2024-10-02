@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, inject } from '@angular/core';
 import { SharedService } from '../../services/shared.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-product-cart',
@@ -16,8 +17,18 @@ export class ProductCartComponent {
   grandTotal: number | undefined;
   shareService = inject(SharedService);
 
-  constructor() {
+  constructor(private toastr: ToastrService) {
     this.calculateTotals();
+  }
+  showSuccess() {
+    this.toastr.success('Hello world!', 'Toastr fun!', {
+      closeButton: true,
+      // positionClass: 'toast-top-left',
+      timeOut: 3000,
+      progressBar: true,
+      progressAnimation: 'decreasing',
+      // toastClass: 'bg-gray-500 text-white rounded-lg shadow-md w-full p-2',
+    });
   }
 
   countProduct(event: any, price: number) {
