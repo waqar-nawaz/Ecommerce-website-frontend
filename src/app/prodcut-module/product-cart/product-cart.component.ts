@@ -77,9 +77,9 @@ export class ProductCartComponent {
     {
       id: 1,
       name: 'Pi Pizza Oven',
-      price: 469.99,
+      price: 5.99,
       quantity: 1,
-      total: 469.99,
+      total: 5.99,
       imageUrl:
         'https://res.cloudinary.com/divsj2d5e/image/upload/v1727542854/Post/product_077ef2cf-1f47-42d7-83cc-f98da300d8c9.jpg',
       shipDate: 'June 6th',
@@ -89,9 +89,9 @@ export class ProductCartComponent {
     {
       id: 2,
       name: 'Solo Stove Grill Ultimate Bundle',
-      price: 549.99,
+      price: 7.99,
       quantity: 1,
-      total: 549.99,
+      total: 7.99,
       imageUrl:
         'https://res.cloudinary.com/divsj2d5e/image/upload/v1727542854/Post/product_077ef2cf-1f47-42d7-83cc-f98da300d8c9.jpg',
     },

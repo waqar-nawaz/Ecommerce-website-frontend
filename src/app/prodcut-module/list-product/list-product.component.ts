@@ -104,7 +104,7 @@ export class ListProductComponent implements OnInit {
     this.loader = true;
     this.prodcutService.getProduct(1).subscribe(
       (val: any) => {
-        console.log('Product data', val?.result);
+        // console.log('Product data', val?.result);
         this.data = val?.result;
         this.loader = false;
       },
@@ -209,7 +209,7 @@ export class ListProductComponent implements OnInit {
     this.prodcutService.getCategory(1).subscribe(
       (res: any) => {
         this.categorydata = res?.result;
-        console.log('response of the category', res);
+        // console.log('response of the category', res);
       },
       (error) => {}
     );
