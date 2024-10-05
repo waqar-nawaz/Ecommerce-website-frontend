@@ -30,6 +30,16 @@
 
 
     </div>
+
+    <div class="text-center mt-10">
+        <h2 class="text-2xl font-bold text-white mb-5 mt-5">
+
+            Product List
+        </h2>
+
+        <app-list-product [restriction]="showProduct"></app-list-product>
+    </div>
+
 </div>
 
 <div *ngIf="loader" class="flex justify-center items-center">

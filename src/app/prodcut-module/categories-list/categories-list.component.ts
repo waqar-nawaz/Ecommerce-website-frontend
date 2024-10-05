@@ -18,6 +18,7 @@ import Swal from 'sweetalert2';
 import { LazyLoadImageModule } from 'ng-lazyload-image';
 import { environment } from '../../../../environments/environment';
 import { LoaderComponent } from '../../loader/loader.component';
+import { ListProductComponent } from '../list-product/list-product.component';
 
 @Component({
   selector: 'app-categories-list',
@@ -28,6 +29,7 @@ import { LoaderComponent } from '../../loader/loader.component';
     ReactiveFormsModule,
     LazyLoadImageModule,
     LoaderComponent,
+    ListProductComponent,
   ],
   templateUrl: './categories-list.component.html',
   styleUrl: './categories-list.component.css',
@@ -42,7 +44,7 @@ export class CategoriesListComponent implements OnInit {
   defaultImage: any = environment.defaultImage;
   isLoading: boolean = false;
   loader: boolean = true;
-
+  showProduct: any = false;
   categories = [
     { name: 'Electronics', icon: 'fas fa-laptop' },
     { name: 'Clothing', icon: 'fas fa-tshirt' },

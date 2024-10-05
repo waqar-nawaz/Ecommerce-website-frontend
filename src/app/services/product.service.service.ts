@@ -41,7 +41,7 @@ export class ProductServiceService {
   }
   getProduct(id: any): Observable<any> {
     // console.log(currentPage);
-    const params = new HttpParams().set('categoryId', id);
+    const params = new HttpParams().set('categoryId', id ? id : '');
 
     return this.http.get(`${this.apiUrl}api/product`, {
       headers: this.getHeaders(),

@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, inject, Input, OnInit } from '@angular/core';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { ModalComponent } from '../../components/modal/modal.component';
 import {
@@ -55,14 +55,17 @@ export class ListProductComponent implements OnInit {
   category: any;
   route = inject(ActivatedRoute);
   toaster = inject(ToastrService);
+  @Input() restriction: boolean = true;
 
   ngOnInit(): void {
     this.route.queryParamMap.subscribe((params) => {
       this.categoryId = params.get('category');
-      if (this.categoryId) {
-        this.getProduct(this.categoryId);
-      }
+      // if (this.categoryId) {
+      this.getProduct(this.categoryId);
+
+      // }
     });
+
     this.myFormFun();
     this.getCategory();
     this.user = JSON.parse(localStorage.getItem('user') || 'null');
