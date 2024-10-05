@@ -14,6 +14,7 @@ import { ProductServiceService } from '../../services/product.service.service';
 import Swal from 'sweetalert2';
 import { LazyLoadImageModule } from 'ng-lazyload-image';
 import { LoaderComponent } from '../../loader/loader.component';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-list-product',
@@ -53,34 +54,20 @@ export class ListProductComponent implements OnInit {
   categoryId: string | null = null;
   category: any;
   route = inject(ActivatedRoute);
+  toaster = inject(ToastrService);
 
   ngOnInit(): void {
+    this.route.queryParamMap.subscribe((params) => {
+      this.categoryId = params.get('category');
+      if (this.categoryId) {
+        this.getProduct(this.categoryId);
+      }
+    });
     this.myFormFun();
-    this.getProduct();
     this.getCategory();
     this.user = JSON.parse(localStorage.getItem('user') || 'null');
 
     // Get the query parameter 'post'
-    this.route.queryParamMap.subscribe((params) => {
-      this.categoryId = params.get('category');
-
-      if (this.categoryId) {
-        // Fetch product details using the product ID
-        this.loader = true;
-        console.log('Category id ', this.categoryId);
-        // this.prodcutService.getProductById(this.categoryId).subscribe(
-        //   (product: any) => {
-        //     this.category = product?.result;
-        //     console.log('get single product', this.category);
-        //     this.loader = false;
-        //   },
-        //   (err) => {
-        //     console.log(err);
-        //     this.loader = false;
-        //   }
-        // );
-      }
-    });
   }
 
   myFormFun() {
@@ -100,9 +87,9 @@ export class ListProductComponent implements OnInit {
     return this.productForm.controls;
   }
 
-  getProduct() {
+  getProduct(id: any) {
     this.loader = true;
-    this.prodcutService.getProduct(1).subscribe(
+    this.prodcutService.getProduct(id).subscribe(
       (val: any) => {
         // console.log('Product data', val?.result);
         this.data = val?.result;
@@ -141,7 +128,6 @@ export class ListProductComponent implements OnInit {
     this.imagePreview = null;
   }
   EditProduct(arg0: any) {}
-  deleteProduct(arg0: any) {}
 
   // open the modal and fill the form with the selected product data for updating it
   submit() {
@@ -171,7 +157,9 @@ export class ListProductComponent implements OnInit {
     if (this.isUpdate) {
       this.prodcutService.updateProduct(this.updateid, formData).subscribe(
         (res: any) => {
-          this.maketoster({ success: 'success', message: res?.message });
+          // this.maketoster({ success: 'success', message: res?.message });
+          this.toaster.success(res?.message);
+
           this.refreshService.triggerRefresh(res);
           this.closeModal();
           this.isLoading = false;
@@ -181,14 +169,17 @@ export class ListProductComponent implements OnInit {
           this.selectedFile = null;
         },
         (err) => {
-          this.maketoster({ success: 'error', message: err?.error?.message });
+          // this.maketoster({ success: 'error', message: err?.error?.message });
+          this.toaster.error(err?.error?.message);
+
           this.isLoading = false;
         }
       );
     } else {
       this.prodcutService.createProduct(formData).subscribe(
         (res: any) => {
-          this.maketoster({ success: 'success', message: res?.message });
+          this.toaster.success(res?.message);
+
           this.productForm.reset();
           this.selectedFile = null;
           this.imagePreview = null;
@@ -198,7 +189,7 @@ export class ListProductComponent implements OnInit {
           this.closeModal();
         },
         (err) => {
-          this.maketoster({ success: 'error', message: err?.error?.message });
+          this.toaster.error(err?.error?.message);
           this.isLoading = false;
         }
       );
@@ -215,14 +206,30 @@ export class ListProductComponent implements OnInit {
     );
   }
 
-  maketoster(...res: any) {
-    // debugger;
+  deleteProduct(data: any) {
     Swal.fire({
-      position: 'top-end',
-      icon: res[0].success,
-      title: res[0].message,
-      showConfirmButton: false,
-      timer: 1500,
+      title: 'Are you sure?',
+      text: "You won't be able to revert this!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, delete it!',
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.prodcutService.deleteProduct(data._id).subscribe(
+          (res: any) => {
+            this.data = this.data.filter((val) => {
+              return val._id != data._id;
+            });
+            this.toaster.success(res?.message);
+            console.log('after deletion', this.data);
+          },
+          (err) => {
+            console.log('error', err);
+          }
+        );
+      }
     });
   }
 }

@@ -39,15 +39,13 @@ export class ProductServiceService {
       params: params,
     });
   }
-  getProduct(currentPage: any): Observable<any> {
+  getProduct(id: any): Observable<any> {
     // console.log(currentPage);
-    // const params = new HttpParams()
-    //   .set('currentPage', currentPage)
-    //   .set('perPage', 10);
+    const params = new HttpParams().set('categoryId', id);
 
     return this.http.get(`${this.apiUrl}api/product`, {
       headers: this.getHeaders(),
-      // params: params,
+      params: params,
     });
   }
 
@@ -93,8 +91,13 @@ export class ProductServiceService {
     });
   }
 
-  deleteProduct(id: any): Observable<any> {
+  deletePost(id: any): Observable<any> {
     return this.http.delete(`${this.apiUrl}feed/post/${id}`, {
+      headers: this.getHeaders(),
+    });
+  }
+  deleteProduct(id: any): Observable<any> {
+    return this.http.delete(`${this.apiUrl}api/product/${id}`, {
       headers: this.getHeaders(),
     });
   }

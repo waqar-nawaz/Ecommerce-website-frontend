@@ -10,6 +10,8 @@ import {
 import { SharedService } from '../../services/shared.service';
 import { LoaderComponent } from '../../loader/loader.component';
 import { CommonModule } from '@angular/common';
+import { ToastrService } from 'ngx-toastr';
+import { timeout } from 'rxjs';
 
 @Component({
   selector: 'app-login',
@@ -26,6 +28,7 @@ export class LoginComponent implements OnInit {
   loginForm!: FormGroup;
   submitted: boolean = false;
   loader: boolean = false;
+  toaster = inject(ToastrService);
 
   ngOnInit(): void {
     this.loginFormFun();
@@ -56,18 +59,13 @@ export class LoginComponent implements OnInit {
         localStorage.setItem('token', res.token);
         localStorage.setItem('user', JSON.stringify(res.user));
         this.submitted = false;
-        this.sharedService.maketoster({
-          success: 'success',
-          message: res?.message,
-        });
+
+        this.toaster.success(res?.message, '');
         this.router.navigate(['/dashboard']);
       },
       (error: any) => {
         this.loader = false;
-        this.sharedService.maketoster({
-          success: 'error',
-          message: error?.error?.message,
-        });
+        this.toaster.error(error?.error?.message);
       }
     );
   }

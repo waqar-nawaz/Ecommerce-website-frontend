@@ -60,9 +60,9 @@ export class ProductCartComponent {
 
     this.cartItems.forEach((val: any) => {
       if (item == val.id) {
-        this.shareService.maketoster({
-          success: 'warning',
-          message: 'Alred in Cart',
+        this.toastr.warning('Already In Card', '', {
+          closeButton: true,
+          positionClass: 'toast-center-center',
         });
       }
     });

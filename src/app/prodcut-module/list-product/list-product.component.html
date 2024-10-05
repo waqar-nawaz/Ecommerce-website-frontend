@@ -59,7 +59,7 @@
                 VIEW
             </button>
             @if (user.role == "admin") {
-            <button (click)="deleteProduct('data')"
+            <button (click)="deleteProduct(item)"
                 class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">
                 DELETE
             </button>
@@ -73,169 +73,175 @@
     </div>
 
     }
+    @empty {
 
-</div>
+    <h2 class="text-2xl font-bold text-white mt-5">
+
+        No Products found
+    </h2>
+
+    }
+
+    <!-- *************************************** -->
+    <!-- ************************************** -->
 
 
 
-<!-- *************************************** -->
-<!-- ************************************** -->
 
 
+    <!-- Modal -->
+    @if (isModalOpen) {
+    <div class="relative z-10" aria-labelledby="modal-title" role="dialog" aria-modal="true">
+        <!-- Background backdrop -->
+        <div class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" aria-hidden="true"></div>
 
+        <div class="fixed inset-0 z-10 w-screen overflow-y-auto">
+            <div class="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
+                <div
+                    class="relative transform overflow-hidden p-5 rounded-lg bg-gray-900 text-left transition-all sm:my-8 w-full max-w-5xl">
 
+                    <!-- Close Icon -->
+                    <button class="absolute top-4 right-4 text-white hover:text-gray-400" (click)="closeModal()">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2"
+                            stroke="currentColor" class="w-6 h-6">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+                        </svg>
+                    </button>
 
-<!-- Modal -->
-@if (isModalOpen) {
-<div class="relative z-10" aria-labelledby="modal-title" role="dialog" aria-modal="true">
-    <!-- Background backdrop -->
-    <div class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" aria-hidden="true"></div>
+                    <div class="bg-gray-900 md:p-6 lg:p-6 sm:p-8 rounded-lg">
+                        <!-- Centered Title -->
+                        <h2
+                            class="text-2xl sm:text-3xl lg:text-4xl shadow-md font-semibold text-white text-center mb-6">
+                            {{ isUpdate ? "Update Product" : "Create Product" }}
+                        </h2>
 
-    <div class="fixed inset-0 z-10 w-screen overflow-y-auto">
-        <div class="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
-            <div
-                class="relative transform overflow-hidden p-5 rounded-lg bg-gray-900 text-left transition-all sm:my-8 w-full max-w-5xl">
+                        <form [formGroup]="productForm">
+                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
 
-                <!-- Close Icon -->
-                <button class="absolute top-4 right-4 text-white hover:text-gray-400" (click)="closeModal()">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2"
-                        stroke="currentColor" class="w-6 h-6">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
-                    </svg>
-                </button>
+                                <!-- Name Field -->
+                                <div class="mb-4">
+                                    <label for="name" class="block text-white">Name</label>
+                                    <input type="text" id="name" formControlName="name"
+                                        class="w-full px-4 py-2 bg-gray-800 text-white border border-gray-600 rounded-lg focus:outline-none focus:ring focus:ring-blue-300"
+                                        placeholder="Enter product Name" />
+                                </div>
 
-                <div class="bg-gray-900 md:p-6 lg:p-6 sm:p-8 rounded-lg">
-                    <!-- Centered Title -->
-                    <h2 class="text-2xl sm:text-3xl lg:text-4xl shadow-md font-semibold text-white text-center mb-6">
-                        {{ isUpdate ? "Update Product" : "Create Product" }}
-                    </h2>
+                                <!-- Price Field -->
+                                <div class="mb-4">
+                                    <label for="price" class="block text-white">Price</label>
+                                    <input type="number" id="price" formControlName="price"
+                                        class="w-full px-4 py-2 bg-gray-800 text-white border border-gray-600 rounded-lg focus:outline-none focus:ring focus:ring-blue-300"
+                                        placeholder="Enter product price" />
+                                </div>
 
-                    <form [formGroup]="productForm">
-                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                                <!-- Description Field -->
+                                <div class="mb-4 col-span-full">
+                                    <label for="description" class="block text-white">Description</label>
+                                    <textarea id="description" formControlName="description"
+                                        class="w-full px-4 py-2 bg-gray-800 text-white border border-gray-600 rounded-lg focus:outline-none focus:ring focus:ring-blue-300"
+                                        placeholder="Enter product description" rows="4"></textarea>
+                                </div>
 
-                            <!-- Name Field -->
-                            <div class="mb-4">
-                                <label for="name" class="block text-white">Name</label>
-                                <input type="text" id="name" formControlName="name"
-                                    class="w-full px-4 py-2 bg-gray-800 text-white border border-gray-600 rounded-lg focus:outline-none focus:ring focus:ring-blue-300"
-                                    placeholder="Enter product Name" />
-                            </div>
+                                <!-- Stock Field (Number input, not full width) -->
+                                <div class="mb-4">
+                                    <label for="stock" class="block text-white">Stock</label>
+                                    <input type="number" id="stock" formControlName="stock"
+                                        class="w-full px-4 py-2 bg-gray-800 text-white border border-gray-600 rounded-lg focus:outline-none focus:ring focus:ring-blue-300"
+                                        placeholder="Enter product stock" />
+                                </div>
 
-                            <!-- Price Field -->
-                            <div class="mb-4">
-                                <label for="price" class="block text-white">Price</label>
-                                <input type="number" id="price" formControlName="price"
-                                    class="w-full px-4 py-2 bg-gray-800 text-white border border-gray-600 rounded-lg focus:outline-none focus:ring focus:ring-blue-300"
-                                    placeholder="Enter product price" />
-                            </div>
+                                <!-- SKU Field -->
+                                <div class="mb-4">
+                                    <label for="sku" class="block text-white">SKU</label>
+                                    <input type="text" id="sku" formControlName="sku"
+                                        class="w-full px-4 py-2 bg-gray-800 text-white border border-gray-600 rounded-lg focus:outline-none focus:ring focus:ring-blue-300"
+                                        placeholder="Enter SKU" />
+                                </div>
 
-                            <!-- Description Field -->
-                            <div class="mb-4 col-span-full">
-                                <label for="description" class="block text-white">Description</label>
-                                <textarea id="description" formControlName="description"
-                                    class="w-full px-4 py-2 bg-gray-800 text-white border border-gray-600 rounded-lg focus:outline-none focus:ring focus:ring-blue-300"
-                                    placeholder="Enter product description" rows="4"></textarea>
-                            </div>
-
-                            <!-- Stock Field (Number input, not full width) -->
-                            <div class="mb-4">
-                                <label for="stock" class="block text-white">Stock</label>
-                                <input type="number" id="stock" formControlName="stock"
-                                    class="w-full px-4 py-2 bg-gray-800 text-white border border-gray-600 rounded-lg focus:outline-none focus:ring focus:ring-blue-300"
-                                    placeholder="Enter product stock" />
-                            </div>
-
-                            <!-- SKU Field -->
-                            <div class="mb-4">
-                                <label for="sku" class="block text-white">SKU</label>
-                                <input type="text" id="sku" formControlName="sku"
-                                    class="w-full px-4 py-2 bg-gray-800 text-white border border-gray-600 rounded-lg focus:outline-none focus:ring focus:ring-blue-300"
-                                    placeholder="Enter SKU" />
-                            </div>
-
-                            <!-- Category Field -->
-                            <div class="mb-4">
-                                <label for="category" class="block text-white">Category</label>
-                                <div class="relative">
-                                    <select id="category" formControlName="category"
-                                        class="block appearance-none customcolor w-full bg-gray-800 text-white border border-gray-600 py-2 px-4 pr-8 rounded-lg leading-tight focus:outline-none focus:ring focus:ring-blue-300">
-                                        <option value="" disabled selected hidden>Add category
-                                        </option>
-                                        <option *ngFor="let category of categorydata" [value]="category._id">
-                                            {{ category.name }}
-                                        </option>
-                                    </select>
-                                    <div
-                                        class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-white">
-                                        <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg"
-                                            viewBox="0 0 20 20">
-                                            <path
-                                                d="M5.23 7.21a.75.75 0 011.06.02L10 10.93l3.71-3.7a.75.75 0 011.06 1.06l-4 4a.75.75 0 01-1.06 0l-4-4a.75.75 0 01.02-1.06z" />
-                                        </svg>
+                                <!-- Category Field -->
+                                <div class="mb-4">
+                                    <label for="category" class="block text-white">Category</label>
+                                    <div class="relative">
+                                        <select id="category" formControlName="category"
+                                            class="block appearance-none customcolor w-full bg-gray-800 text-white border border-gray-600 py-2 px-4 pr-8 rounded-lg leading-tight focus:outline-none focus:ring focus:ring-blue-300">
+                                            <option value="" disabled selected hidden>Add category
+                                            </option>
+                                            <option *ngFor="let category of categorydata" [value]="category._id">
+                                                {{ category.name }}
+                                            </option>
+                                        </select>
+                                        <div
+                                            class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-white">
+                                            <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg"
+                                                viewBox="0 0 20 20">
+                                                <path
+                                                    d="M5.23 7.21a.75.75 0 011.06.02L10 10.93l3.71-3.7a.75.75 0 011.06 1.06l-4 4a.75.75 0 01-1.06 0l-4-4a.75.75 0 01.02-1.06z" />
+                                            </svg>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
 
 
-                            <!-- Brand Field -->
-                            <div class="mb-4">
-                                <label for="brand" class="block text-white">Brand</label>
-                                <input type="text" id="brand" formControlName="brand"
-                                    class="w-full px-4 py-2 bg-gray-800 text-white border border-gray-600 rounded-lg focus:outline-none focus:ring focus:ring-blue-300"
-                                    placeholder="Enter brand" />
-                            </div>
-
-                            <!-- Image Upload & Preview -->
-                            <div class="mb-4 col-span-full flex items-center">
-                                <div class="w-1/2">
-                                    <label for="image" class="block text-white">Image</label>
-                                    <input type="file" id="image" (change)="fileupload($event)"
-                                        class="w-full px-4 py-2 bg-gray-800 text-white border border-gray-600 rounded-lg focus:outline-none focus:ring focus:ring-blue-300" />
+                                <!-- Brand Field -->
+                                <div class="mb-4">
+                                    <label for="brand" class="block text-white">Brand</label>
+                                    <input type="text" id="brand" formControlName="brand"
+                                        class="w-full px-4 py-2 bg-gray-800 text-white border border-gray-600 rounded-lg focus:outline-none focus:ring focus:ring-blue-300"
+                                        placeholder="Enter brand" />
                                 </div>
 
-                                <div class="w-1/2 pl-4">
-                                    <img *ngIf="imagePreview" [src]="imagePreview" alt="Image Preview"
-                                        class="w-50 h-32 object-cover rounded-lg" />
-                                </div>
-                                <!-- <div class="w-full sm:w-1/2 mt-4 sm:mt-0 sm:pl-4">
+                                <!-- Image Upload & Preview -->
+                                <div class="mb-4 col-span-full flex items-center">
+                                    <div class="w-1/2">
+                                        <label for="image" class="block text-white">Image</label>
+                                        <input type="file" id="image" (change)="fileupload($event)"
+                                            class="w-full px-4 py-2 bg-gray-800 text-white border border-gray-600 rounded-lg focus:outline-none focus:ring focus:ring-blue-300" />
+                                    </div>
+
+                                    <div class="w-1/2 pl-4">
+                                        <img *ngIf="imagePreview" [src]="imagePreview" alt="Image Preview"
+                                            class="w-50 h-32 object-cover rounded-lg" />
+                                    </div>
+                                    <!-- <div class="w-full sm:w-1/2 mt-4 sm:mt-0 sm:pl-4">
                                     <img *ngIf="imagePreview" [src]="imagePreview" alt="Image Preview"
                                         class="w-full h-32 object-cover rounded-lg" />
                                 </div> -->
+                                </div>
                             </div>
-                        </div>
 
 
 
-                        <!-- Cancel and Loading Buttons -->
-                        <div class="flex justify-end gap-4 mt-6">
-                            <button type="button" (click)="closeModal()"
-                                class="bg-gray-500 text-white px-4 py-2 rounded-lg hover:bg-gray-600 focus:outline-none focus:ring focus:ring-gray-300">
-                                Cancel
-                            </button>
+                            <!-- Cancel and Loading Buttons -->
+                            <div class="flex justify-end gap-4 mt-6">
+                                <button type="button" (click)="closeModal()"
+                                    class="bg-gray-500 text-white px-4 py-2 rounded-lg hover:bg-gray-600 focus:outline-none focus:ring focus:ring-gray-300">
+                                    Cancel
+                                </button>
 
-                            <button type="submit" [disabled]="isLoading" (click)="submit()"
-                                class="bg-green-500 text-white px-4 py-2 rounded-lg hover:bg-green-600 focus:outline-none focus:ring focus:ring-green-300">
-                                <span *ngIf="!isLoading">
-                                    {{ isUpdate ? "Update" : "Submit" }}
-                                </span>
-                                <span *ngIf="isLoading" class="flex items-center">
-                                    <svg class="animate-spin h-5 w-5 mr-3 border-t-2 border-b-2 border-white rounded-full"
-                                        viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                        <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"
-                                            stroke-dasharray="80" stroke-linecap="round" class="opacity-25"></circle>
-                                        <path d="M4 12a8 8 0 018-8" stroke="currentColor" stroke-width="4"
-                                            stroke-linecap="round" class="opacity-75"></path>
-                                    </svg>
-                                    Loading...
-                                </span>
-                            </button>
-                        </div>
-                    </form>
+                                <button type="submit" [disabled]="isLoading" (click)="submit()"
+                                    class="bg-green-500 text-white px-4 py-2 rounded-lg hover:bg-green-600 focus:outline-none focus:ring focus:ring-green-300">
+                                    <span *ngIf="!isLoading">
+                                        {{ isUpdate ? "Update" : "Submit" }}
+                                    </span>
+                                    <span *ngIf="isLoading" class="flex items-center">
+                                        <svg class="animate-spin h-5 w-5 mr-3 border-t-2 border-b-2 border-white rounded-full"
+                                            viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                            <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"
+                                                stroke-dasharray="80" stroke-linecap="round" class="opacity-25">
+                                            </circle>
+                                            <path d="M4 12a8 8 0 018-8" stroke="currentColor" stroke-width="4"
+                                                stroke-linecap="round" class="opacity-75"></path>
+                                        </svg>
+                                        Loading...
+                                    </span>
+                                </button>
+                            </div>
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
 
 
-}
+    }

@@ -119,7 +119,7 @@ export class AboutComponent implements OnInit {
       confirmButtonText: 'Yes, delete it!',
     }).then((result) => {
       if (result.isConfirmed) {
-        this.products.deleteProduct(data._id).subscribe(
+        this.products.deletePost(data._id).subscribe(
           (res: any) => {
             this.data.filter((val) => {
               return val._id != data._id;
