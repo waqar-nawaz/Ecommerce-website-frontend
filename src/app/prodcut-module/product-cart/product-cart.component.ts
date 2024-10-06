@@ -1,24 +1,29 @@
 import { CommonModule } from '@angular/common';
-import { Component, inject } from '@angular/core';
+import { Component, Inject, inject } from '@angular/core';
 import { SharedService } from '../../services/shared.service';
 import { ToastrService } from 'ngx-toastr';
+import { CartService } from '../../services/cart.service';
+import { LoaderComponent } from '../../loader/loader.component';
 
 @Component({
   selector: 'app-product-cart',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, LoaderComponent],
   templateUrl: './product-cart.component.html',
   styleUrl: './product-cart.component.css',
 })
 export class ProductCartComponent {
   total: number | undefined;
-  subtotal: number | undefined;
+  subtotal!: number;
   tax: number | undefined;
   grandTotal: number | undefined;
   shareService = inject(SharedService);
+  cartService = inject(CartService);
+  data: any[] = [];
+  loader: boolean = false;
 
   constructor(private toastr: ToastrService) {
-    this.calculateTotals();
+    this.getCart();
   }
   showSuccess() {
     this.toastr.success('Hello world!', 'Toastr fun!', {
@@ -58,7 +63,7 @@ export class ProductCartComponent {
     // this.cartItems.push(item);
     // this.calculateTotals();
 
-    this.cartItems.forEach((val: any) => {
+    this.data.forEach((val: any) => {
       if (item == val.id) {
         this.toastr.warning('Already In Card', '', {
           closeButton: true,
@@ -69,60 +74,82 @@ export class ProductCartComponent {
   }
 
   clearCart() {
-    this.cartItems = [];
+    this.data = [];
     this.calculateTotals();
   }
 
-  cartItems = [
-    {
-      id: 1,
-      name: 'Pi Pizza Oven',
-      price: 5.99,
-      quantity: 1,
-      total: 5.99,
-      imageUrl:
-        'https://res.cloudinary.com/divsj2d5e/image/upload/v1727542854/Post/product_077ef2cf-1f47-42d7-83cc-f98da300d8c9.jpg',
-      shipDate: 'June 6th',
-      fuelSource: 'Wood Only',
-      stock: 3,
-    },
-    {
-      id: 2,
-      name: 'Solo Stove Grill Ultimate Bundle',
-      price: 7.99,
-      quantity: 1,
-      total: 7.99,
-      imageUrl:
-        'https://res.cloudinary.com/divsj2d5e/image/upload/v1727542854/Post/product_077ef2cf-1f47-42d7-83cc-f98da300d8c9.jpg',
-    },
-    {
-      id: 3,
-      name: 'Solo Stove Starters (4 pack)',
-      price: 12,
-      quantity: 1,
-      total: 12,
-      imageUrl:
-        'https://res.cloudinary.com/divsj2d5e/image/upload/v1727542854/Post/product_077ef2cf-1f47-42d7-83cc-f98da300d8c9.jpg',
-    },
-    {
-      id: 4,
-      name: 'Solo Stove Charcoal Grill Pack',
-      price: 10,
-      quantity: 1,
-      total: 10,
-      imageUrl:
-        'https://res.cloudinary.com/divsj2d5e/image/upload/v1727542854/Post/product_077ef2cf-1f47-42d7-83cc-f98da300d8c9.jpg',
-    },
-  ];
+  // cartItems = [
+  //   {
+  //     id: 1,
+  //     name: 'Pi Pizza Oven',
+  //     price: 5.99,
+  //     quantity: 1,
+  //     total: 5.99,
+  //     imageUrl:
+  //       'https://res.cloudinary.com/divsj2d5e/image/upload/v1727542854/Post/product_077ef2cf-1f47-42d7-83cc-f98da300d8c9.jpg',
+  //     shipDate: 'June 6th',
+  //     fuelSource: 'Wood Only',
+  //     stock: 3,
+  //   },
+  //   {
+  //     id: 2,
+  //     name: 'Solo Stove Grill Ultimate Bundle',
+  //     price: 7.99,
+  //     quantity: 1,
+  //     total: 7.99,
+  //     imageUrl:
+  //       'https://res.cloudinary.com/divsj2d5e/image/upload/v1727542854/Post/product_077ef2cf-1f47-42d7-83cc-f98da300d8c9.jpg',
+  //   },
+  //   {
+  //     id: 3,
+  //     name: 'Solo Stove Starters (4 pack)',
+  //     price: 12,
+  //     quantity: 1,
+  //     total: 12,
+  //     imageUrl:
+  //       'https://res.cloudinary.com/divsj2d5e/image/upload/v1727542854/Post/product_077ef2cf-1f47-42d7-83cc-f98da300d8c9.jpg',
+  //   },
+  //   {
+  //     id: 4,
+  //     name: 'Solo Stove Charcoal Grill Pack',
+  //     price: 10,
+  //     quantity: 1,
+  //     total: 10,
+  //     imageUrl:
+  //       'https://res.cloudinary.com/divsj2d5e/image/upload/v1727542854/Post/product_077ef2cf-1f47-42d7-83cc-f98da300d8c9.jpg',
+  //   },
+  // ];
 
   removeItem(itemId: number) {
-    this.cartItems = this.cartItems.filter((item) => item.id !== itemId);
+    this.data = this.data.filter((item) => item?.product?._id !== itemId);
     this.calculateTotals();
   }
 
   calculateTotals() {
-    this.subtotal = this.cartItems.reduce((acc, item) => acc + item.total, 0);
-    this.tax = this.subtotal * 0.1; // Example tax calculation
-    this.grandTotal = this.subtotal + this.tax;
+    if (this.data) {
+      this.subtotal = this.data.reduce((acc, item) => acc + item.total, 0);
+      this.tax = this.subtotal * 0.1; // Example tax calculation
+      this.grandTotal = this.subtotal + this.tax;
+    }
+  }
+
+  itemCount!: number;
+  getCart() {
+    this.loader = true;
+    this.cartService.getCart().subscribe(
+      (res: any) => {
+        this.data = res.result[0].items;
+        this.itemCount = res.result[0].items.length;
+        console.log('cart data ', this.data);
+        this.calculateTotals();
+        this.loader = false;
+      },
+      (err) => {
+        this.loader = false;
+        if (err.error.error == 'jwt expired') {
+          localStorage.removeItem('token');
+        }
+      }
+    );
   }
 }

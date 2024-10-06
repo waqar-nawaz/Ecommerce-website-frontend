@@ -1,9 +1,8 @@
 <div class="flex flex-wrap justify-center gap-x-8 gap-y-6 px-4">
-    <div class="w-80 rounded overflow-hidden shadow-lg bg-gradient-to-b from-gray-900 to-gray-800 text-center mt-4">
-        <!-- <img class="w-full h-48 object-cover transform transition-transform duration-300 hover:scale-105"
-            [src]="fileUrl + data?.imageUrl" alt="Sample Image"> -->
-        <img class="w-full h-48 object-cover transform transition-transform duration-300 hover:scale-105"
-            [defaultImage]="defaultImage" [lazyLoad]="data?.imageUrl" [useSrcset]="false" />
+    <div
+        class="relative w-80 rounded-lg overflow-hidden shadow-xl bg-gradient-to-br from-gray-800 to-gray-700 text-center mt-6 transform transition duration-500 hover:scale-105">
+        <img class="w-full h-48 object-cover transform transition-transform duration-300 rounded-t-lg"
+            [defaultImage]="defaultImage" [lazyLoad]="data?.imageUrl" [useSrcset]="false" alt="Sample Image" />
         <div class="px-6 py-4">
             <!-- Truncated title -->
             <h2 class="text-lg font-bold text-white mb-2 truncate overflow-hidden whitespace-nowrap">
@@ -18,19 +17,25 @@
             </p>
         </div>
 
-        <div class="px-6 pt-4 pb-2 flex justify-around space-x-4">
+
+        <div class="flex justify-around  pb-4">
             <button [routerLink]="['/product-detail']" [queryParams]="{post: data?._id}"
-                class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                class="bg-blue-600 hover:bg-blue-800 text-white font-bold py-2 px-6 rounded-full shadow-lg transition duration-300 ease-in-out transform hover:scale-105">
                 VIEW
             </button>
+
+            <!-- Show additional buttons only for admin role -->
+
             <button (click)="deleteProduct(data)"
-                class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">
+                class="bg-red-600 hover:bg-red-800 text-white font-bold py-2 px-6 rounded-full shadow-lg transition duration-300 ease-in-out transform hover:scale-105">
                 DELETE
             </button>
+
             <button (click)="EditProduct(data)"
-                class="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded">
+                class="bg-gray-600 hover:bg-gray-800 text-white font-bold py-2 px-6 rounded-full shadow-lg transition duration-300 ease-in-out transform hover:scale-105">
                 EDIT
             </button>
+
         </div>
     </div>
 

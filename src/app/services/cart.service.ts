@@ -26,8 +26,7 @@ export class CartService {
     return headers;
   }
 
-  getCategory(currentPage: any): Observable<any> {
-    // console.log(currentPage);
+  getCart(): Observable<any> {
     // const params = new HttpParams()
     //   .set('currentPage', currentPage)
     //   .set('perPage', 10);

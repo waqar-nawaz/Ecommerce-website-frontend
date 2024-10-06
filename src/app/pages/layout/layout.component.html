@@ -1,5 +1,5 @@
-<nav class="bg-gray-800">
-    <div class="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
+<nav class="bg-gray-800 border-b-2 border-gray-700">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div class="relative flex h-16 items-center justify-between">
             <!-- Mobile menu button -->
             <div class="absolute inset-y-0 left-0 flex items-center sm:hidden">
@@ -8,12 +8,12 @@
                     aria-controls="mobile-menu" aria-expanded="false" (click)="toggleMobileMenu()">
                     <span class="sr-only">Open main menu</span>
                     <svg *ngIf="!isMobileMenuOpen" class="block h-6 w-6" fill="none" viewBox="0 0 24 24"
-                        stroke-width="1.5" stroke="currentColor" aria-hidden="true">
+                        stroke-width="2" stroke="currentColor" aria-hidden="true">
                         <path stroke-linecap="round" stroke-linejoin="round"
                             d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
                     </svg>
-                    <svg *ngIf="isMobileMenuOpen" class="block h-6 w-6" fill="none" viewBox="0 0 24 24"
-                        stroke-width="1.5" stroke="currentColor" aria-hidden="true">
+                    <svg *ngIf="isMobileMenuOpen" class="block h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="2"
+                        stroke="currentColor" aria-hidden="true">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
                     </svg>
                 </button>
@@ -21,25 +21,21 @@
 
             <!-- Logo and navigation for larger screens -->
             <div class="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start">
-                <div class="flex flex-shrink-0 items-center rounded-full">
-                    <img class="h-12 w-12 rounded-full" src="../../../assets/logoPic.png" alt="Your Company">
-
+                <div class="flex-shrink-0">
+                    <img class="h-10 w-10 rounded-full" src="../../../assets/logoPic.png" alt="Your Company">
                 </div>
                 <div class="hidden sm:ml-6 sm:block">
                     <div class="flex space-x-4">
                         <a routerLink="dashboard" routerLinkActive="bg-gray-900"
-                            class="rounded-md  px-3 py-2 text-sm font-medium text-white">Dashboard</a>
+                            class="text-white px-3 py-2 rounded-md text-sm font-medium hover:bg-gray-700">Dashboard</a>
                         <a [routerLink]="['/about']" routerLinkActive="bg-gray-900"
-                            class="rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white">Post</a>
+                            class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Post</a>
                         <a [routerLink]="['/product/category']" routerLinkActive="bg-gray-900"
-                            class="rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white">Products</a>
+                            class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Products</a>
                         <a [routerLink]="['/product/product-cart']" routerLinkActive="bg-gray-900"
-                            class="rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white">Cart</a>
+                            class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Cart</a>
                         <a [routerLink]="['/contact']" routerLinkActive="bg-gray-900"
-                            class="rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white">Contact</a>
-                        <!-- <a [routerLink]="['/prodcut/create-product']" routerLinkActive="bg-gray-900"
-                            class="rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white">Product</a> -->
-
+                            class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Contact</a>
                     </div>
                 </div>
             </div>
@@ -47,12 +43,12 @@
             <!-- User profile dropdown -->
             <div class="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
                 <a *ngIf="!token" routerLink="login"
-                    class="rounded-md px-3 py-2 text-sm cursor-pointer font-medium text-gray-300 hover:bg-gray-700 hover:text-white">Login</a>
+                    class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium cursor-pointer">Login</a>
 
                 <!-- Profile dropdown -->
                 <div class="relative ml-3" (click)="toggleDropdown()">
                     <button type="button"
-                        class="relative flex rounded-full bg-gray-800 text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800"
+                        class="flex rounded-full bg-gray-800 text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800"
                         aria-expanded="false" aria-haspopup="true">
                         <span class="sr-only">Open user menu</span>
                         <img class="h-8 w-8 rounded-full"
@@ -61,7 +57,7 @@
                     </button>
                     <!-- Dropdown menu -->
                     <div *ngIf="isDropdownOpen"
-                        class="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5"
+                        class="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-2 shadow-lg ring-1 ring-black ring-opacity-5"
                         role="menu" aria-orientation="vertical">
                         <a class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 cursor-pointer"
                             role="menuitem">User Info</a>
@@ -72,7 +68,7 @@
                 </div>
 
                 <a *ngIf="user"
-                    class="rounded-md px-3 py-2 text-sm cursor-pointer font-medium text-gray-300 hover:bg-gray-700 hover:text-white">{{user.name}}</a>
+                    class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium cursor-pointer">{{user.name}}</a>
             </div>
         </div>
     </div>
@@ -80,17 +76,16 @@
     <!-- Mobile menu -->
     <div *ngIf="isMobileMenuOpen" class="sm:hidden" id="mobile-menu">
         <div class="space-y-1 px-2 pb-3 pt-2">
-            <a routerLink="dashboard" routerLinkActive="dashboard"
-                class="block rounded-md bg-gray-900 px-3 py-2 text-base font-medium text-white">Dashboard</a>
-            <a routerLink="about" routerLinkActive="about"
-                class="block rounded-md px-3 py-2 text-base font-medium text-gray-300 hover:bg-gray-700 hover:text-white">Post</a>
+            <a routerLink="dashboard" routerLinkActive="bg-gray-900"
+                class="block bg-gray-900 text-white px-3 py-2 rounded-md text-base font-medium">Dashboard</a>
+            <a routerLink="about" routerLinkActive="bg-gray-900"
+                class="block text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-base font-medium">Post</a>
             <a [routerLink]="['/product/category']"
-                class="block rounded-md px-3 py-2 text-base font-medium text-gray-300 hover:bg-gray-700 hover:text-white">Products</a>
+                class="block text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-base font-medium">Products</a>
             <a [routerLink]="['/product/product-cart']"
-                class="block rounded-md px-3 py-2 text-base font-medium text-gray-300 hover:bg-gray-700 hover:text-white">Cart</a>
+                class="block text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-base font-medium">Cart</a>
             <a routerLink="contact"
-                class="block rounded-md px-3 py-2 text-base font-medium text-gray-300 hover:bg-gray-700 hover:text-white">Contact</a>
-
+                class="block text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-base font-medium">Contact</a>
         </div>
     </div>
 </nav>
