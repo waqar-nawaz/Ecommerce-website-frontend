@@ -1,8 +1,9 @@
 <div class="container mx-auto mt-5 p-4 bg-gray-900 rounded-lg text-white">
-    <h1 class="text-2xl flex justify-center mt-5 font-semibold mb-4">Your Cart ( {{itemCount}} items)</h1>
-    @if (loader) {
-    <app-loader />
-    }
+    <h1 class="text-2xl flex justify-center mt-5 font-semibold mb-4">Your Cart ({{ itemCount }} items)</h1>
+    <div *ngIf="loader">
+        <app-loader />
+    </div>
+
     <!-- Cart table -->
     <div class="overflow-x-auto">
         <table class="w-full table-auto">
@@ -18,18 +19,20 @@
                 <!-- Item 1 -->
 
                 @for (item of data; track $index) {
+                <!-- <ng-container *ngFor="let item of data; trackBy: trackByIndex"> -->
                 <tr class="border-b border-gray-700">
                     <td class="p-3 flex items-center">
-                        <img src={{item?.product?.imageUrl}} alt="Pizza Oven" class="w-20 h-20 object-cover mr-4">
+                        <img src="{{ item?.product?.imageUrl }}" alt="{{ item?.product?.name }}"
+                            class="w-20 h-20 object-cover mr-4">
                         <div>
-                            <h2 class="text-lg font-semibold">{{item?.product?.name}}</h2>
-                            <p class="text-orange-400">{{item?.product?.description}}</p>
-                            <p class="text-sm text-gray-400">{{item?.product?.brand}}</p>
+                            <h2 class="text-lg font-semibold">{{ item?.product?.name }}</h2>
+                            <p class="text-orange-400">{{ item?.product?.description }}</p>
+                            <p class="text-sm text-gray-400">{{ item?.product?.brand }}</p>
                         </div>
                     </td>
 
-                    <!-- price -->
-                    <td class="text-center text-lg">${{item?.price}}</td>
+                    <!-- Price -->
+                    <td class="text-center text-lg">${{ item?.price | number: '1.0-3' }}</td>
 
                     <!-- Quantity -->
                     <td class="text-center">
@@ -44,45 +47,37 @@
                     </td>
 
                     <!-- Total -->
-                    <td class="text-right text-lg pr-2">${{ item?.total ? (item.total | number: '1.0-3') : '0.000' }}
-                    </td>
+                    <td class="text-right text-lg pr-2">${{ item?.total | number: '1.0-3' }}</td>
+
+                    <!-- Remove Button -->
                     <td class="text-right">
                         <button (click)="removeItem(item?.product?._id)"
-                            class="text-red-500 bg-gray-800 p-2 w-8 h-8 flex items-center justify-center rounded-full hover:underline">x
-                        </button>
+                            class="text-red-500 bg-gray-800 p-2 w-8 h-8 flex items-center justify-center rounded-full hover:underline">x</button>
                     </td>
-
                 </tr>
+                <!-- </ng-container> -->
                 }
-
-
-                <!-- More items here as needed -->
             </tbody>
         </table>
     </div>
 
     <!-- Summary Section -->
-    <div class="w-full lg:w-1/4 mt-5 bg-gray-900  justify-end rounded-lg p-4 ml-auto">
+    <div class="w-full lg:w-1/4 mt-5 bg-gray-900 rounded-lg p-4 ml-auto">
         <div class="text-lg font-semibold mb-4">Order Summary</div>
         <div class="flex justify-between text-lg font-semibold">
             <p>Subtotal:</p>
-            <p>${{ subtotal ? (subtotal | number: '1.0-3') : '0.000' }}</p>
+            <p>${{ subtotal | number: '1.0-3' }}</p>
         </div>
         <div class="flex justify-between text-lg font-semibold">
             <p>Sales Tax:</p>
-            <p>$ {{ tax ? (tax | number: '1.0-3') : '0.000' }}</p>
+            <p>${{ tax | number: '1.0-3' }}</p>
         </div>
-        <!-- <div class="flex justify-between text-lg font-semibold">
-            <p>Coupon Code:</p>
-            <button class="text-blue-400 hover:underline">Add Coupon</button>
-        </div> -->
         <div class="flex justify-between text-2xl font-bold mt-4">
             <p>Grand Total:</p>
-            <p>$ {{ grandTotal ? (grandTotal | number: '1.0-3') : '0.000' }}</p>
+            <p>${{ grandTotal | number: '1.0-3' }}</p>
         </div>
         <p *ngIf="false" class="text-green-400 mt-2">Congrats, you're eligible for Free Shipping</p>
         <button (click)="addItem(1)"
             class="bg-gray-700 text-white px-4 rounded py-2 mt-4 w-full hover:bg-gray-600">Check out</button>
     </div>
-
 </div>
