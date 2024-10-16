@@ -9,11 +9,18 @@ import {
   Validators,
 } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { ShowIfRoleDirective } from '../../shared/show-if-admin.directive';
 
 @Component({
   selector: 'app-contact',
   standalone: true,
-  imports: [ModalComponent, FormsModule, CommonModule, ReactiveFormsModule],
+  imports: [
+    ModalComponent,
+    FormsModule,
+    CommonModule,
+    ReactiveFormsModule,
+    ShowIfRoleDirective,
+  ],
   templateUrl: './contact.component.html',
   styleUrl: './contact.component.css',
 })

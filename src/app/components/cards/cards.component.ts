@@ -11,11 +11,12 @@ import { ProductServiceService } from '../../services/product.service.service';
 import { RefreshService } from '../../services/refresh-service.service';
 import { RouterLink } from '@angular/router';
 import { LazyLoadImageModule } from 'ng-lazyload-image';
+import { ShowIfRoleDirective } from '../../shared/show-if-admin.directive';
 
 @Component({
   selector: 'app-cards',
   standalone: true,
-  imports: [RouterLink, LazyLoadImageModule],
+  imports: [RouterLink, LazyLoadImageModule, ShowIfRoleDirective],
   templateUrl: './cards.component.html',
   styleUrl: './cards.component.css',
 })

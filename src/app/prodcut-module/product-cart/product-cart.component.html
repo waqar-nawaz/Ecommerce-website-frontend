@@ -22,7 +22,7 @@
                 <!-- <ng-container *ngFor="let item of data; trackBy: trackByIndex"> -->
                 <tr class="border-b border-gray-700">
                     <td class="p-3 flex items-center">
-                        <img src="{{ item?.product?.imageUrl }}" alt="{{ item?.product?.name }}"
+                        <img src="{{ item?.product?.imageUrl }}" loading="lazy" alt="{{ item?.product?.name }}"
                             class="w-20 h-20 object-cover mr-4">
                         <div>
                             <h2 class="text-lg font-semibold">{{ item?.product?.name }}</h2>

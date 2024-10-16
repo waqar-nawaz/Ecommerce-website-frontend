@@ -138,11 +138,11 @@ export class ProductCartComponent {
     this.loader = true;
     this.cartService.getCart().subscribe(
       (res: any) => {
+        this.loader = false;
         this.data = res.result[0].items;
         this.itemCount = res.result[0].items.length;
         console.log('cart data ', this.data);
         this.calculateTotals();
-        this.loader = false;
       },
       (err) => {
         this.loader = false;

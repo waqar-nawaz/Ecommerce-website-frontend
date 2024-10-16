@@ -15,6 +15,7 @@ import Swal from 'sweetalert2';
 import { LazyLoadImageModule } from 'ng-lazyload-image';
 import { LoaderComponent } from '../../loader/loader.component';
 import { ToastrService } from 'ngx-toastr';
+import { ShowIfRoleDirective } from '../../shared/show-if-admin.directive';
 
 @Component({
   selector: 'app-list-product',
@@ -26,6 +27,7 @@ import { ToastrService } from 'ngx-toastr';
     ReactiveFormsModule,
     LazyLoadImageModule,
     LoaderComponent,
+    ShowIfRoleDirective,
   ],
   templateUrl: './list-product.component.html',
   styleUrl: './list-product.component.css',
@@ -68,7 +70,6 @@ export class ListProductComponent implements OnInit {
 
     this.myFormFun();
     this.getCategory();
-    this.user = JSON.parse(localStorage.getItem('user') || 'null');
 
     // Get the query parameter 'post'
   }
