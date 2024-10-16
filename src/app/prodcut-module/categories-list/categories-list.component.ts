@@ -19,6 +19,7 @@ import { LazyLoadImageModule } from 'ng-lazyload-image';
 import { environment } from '../../../../environments/environment';
 import { LoaderComponent } from '../../loader/loader.component';
 import { ListProductComponent } from '../list-product/list-product.component';
+import { ShowIfRoleDirective } from '../../shared/show-if-admin.directive';
 
 @Component({
   selector: 'app-categories-list',
@@ -30,6 +31,7 @@ import { ListProductComponent } from '../list-product/list-product.component';
     LazyLoadImageModule,
     LoaderComponent,
     ListProductComponent,
+    ShowIfRoleDirective,
   ],
   templateUrl: './categories-list.component.html',
   styleUrl: './categories-list.component.css',

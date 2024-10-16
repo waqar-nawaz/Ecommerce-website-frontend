@@ -21,19 +21,17 @@ export class ProductCartComponent {
   cartService = inject(CartService);
   data: any[] = [];
   loader: boolean = false;
+  cartItems: any[] = [];
+  itemCount!: number;
 
   constructor(private toastr: ToastrService) {
-    this.getCart();
+    // this.getCart();
   }
-  showSuccess() {
-    this.toastr.success('Hello world!', 'Toastr fun!', {
-      closeButton: true,
-      // positionClass: 'toast-top-left',
-      timeOut: 3000,
-      progressBar: true,
-      progressAnimation: 'decreasing',
-      // toastClass: 'bg-gray-500 text-white rounded-lg shadow-md w-full p-2',
-    });
+
+  ngOnInit(): void {
+    this.cartItems = JSON.parse(localStorage.getItem('cart') || '[]');
+    this.itemCount = this.cartItems.length;
+    this.calculateTotals();
   }
 
   countProduct(event: any, price: number) {
@@ -46,6 +44,7 @@ export class ProductCartComponent {
   incrementQuantity(item: any) {
     item.quantity++;
     item.total = item.price * item.quantity;
+    this.addToLocalStorage(this.cartItems);
     this.calculateTotals();
   }
 
@@ -53,16 +52,12 @@ export class ProductCartComponent {
     if (item.quantity > 1) {
       item.quantity--;
       item.total = item.price * item.quantity;
+      this.addToLocalStorage(this.cartItems);
       this.calculateTotals();
     }
   }
 
   addItem(item: any) {
-    // item.quantity = 1;
-    // item.total = item.price * item.quantity;
-    // this.cartItems.push(item);
-    // this.calculateTotals();
-
     this.data.forEach((val: any) => {
       if (item == val.id) {
         this.toastr.warning('Already In Card', '', {
@@ -74,66 +69,28 @@ export class ProductCartComponent {
   }
 
   clearCart() {
-    this.data = [];
+    this.cartItems = [];
     this.calculateTotals();
   }
 
-  // cartItems = [
-  //   {
-  //     id: 1,
-  //     name: 'Pi Pizza Oven',
-  //     price: 5.99,
-  //     quantity: 1,
-  //     total: 5.99,
-  //     imageUrl:
-  //       'https://res.cloudinary.com/divsj2d5e/image/upload/v1727542854/Post/product_077ef2cf-1f47-42d7-83cc-f98da300d8c9.jpg',
-  //     shipDate: 'June 6th',
-  //     fuelSource: 'Wood Only',
-  //     stock: 3,
-  //   },
-  //   {
-  //     id: 2,
-  //     name: 'Solo Stove Grill Ultimate Bundle',
-  //     price: 7.99,
-  //     quantity: 1,
-  //     total: 7.99,
-  //     imageUrl:
-  //       'https://res.cloudinary.com/divsj2d5e/image/upload/v1727542854/Post/product_077ef2cf-1f47-42d7-83cc-f98da300d8c9.jpg',
-  //   },
-  //   {
-  //     id: 3,
-  //     name: 'Solo Stove Starters (4 pack)',
-  //     price: 12,
-  //     quantity: 1,
-  //     total: 12,
-  //     imageUrl:
-  //       'https://res.cloudinary.com/divsj2d5e/image/upload/v1727542854/Post/product_077ef2cf-1f47-42d7-83cc-f98da300d8c9.jpg',
-  //   },
-  //   {
-  //     id: 4,
-  //     name: 'Solo Stove Charcoal Grill Pack',
-  //     price: 10,
-  //     quantity: 1,
-  //     total: 10,
-  //     imageUrl:
-  //       'https://res.cloudinary.com/divsj2d5e/image/upload/v1727542854/Post/product_077ef2cf-1f47-42d7-83cc-f98da300d8c9.jpg',
-  //   },
-  // ];
-
   removeItem(itemId: number) {
-    this.data = this.data.filter((item) => item?.product?._id !== itemId);
+    this.cartItems = this.cartItems.filter((item) => item?.id !== itemId);
+    this.addToLocalStorage(this.cartItems);
     this.calculateTotals();
+  }
+
+  addToLocalStorage(cart: any) {
+    localStorage.setItem('cart', JSON.stringify(this.cartItems));
   }
 
   calculateTotals() {
-    if (this.data) {
-      this.subtotal = this.data.reduce((acc, item) => acc + item.total, 0);
+    if (this.cartItems) {
+      this.subtotal = this.cartItems.reduce((acc, item) => acc + item.total, 0);
       this.tax = this.subtotal * 0.1; // Example tax calculation
       this.grandTotal = this.subtotal + this.tax;
     }
   }
 
-  itemCount!: number;
   getCart() {
     this.loader = true;
     this.cartService.getCart().subscribe(

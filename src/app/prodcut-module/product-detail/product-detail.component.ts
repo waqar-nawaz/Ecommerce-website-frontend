@@ -19,6 +19,7 @@ export class ProductDetailComponent {
   productObject: string | null = null;
   product: any;
   route = inject(ActivatedRoute);
+  router = inject(Router);
   prodcutService = inject(ProductServiceService);
   fileUrl: any = environment.fileUrl;
   loader: boolean = false;
@@ -70,15 +71,19 @@ export class ProductDetailComponent {
     );
 
     if (productExists) {
-      // Show a warning if the product is already in the cart
       this.toaster.warning('Already In The Cart, Update Quantity', '', {
         timeOut: 5000,
-        positionClass: 'toast-center-center',
         progressBar: false,
       });
-      Inject(Router).navigate(['product', 'product-cart']);
+
+      // this.router.navigate(['product', 'product-cart']);
       return; // Exit the function
     }
+
+    this.toaster.success('Add To Cart', '', {
+      timeOut: 3000,
+      progressBar: false,
+    });
 
     // If the product is not in the cart, add it to the array
     productArrayFromLocal.push(productObject);
@@ -86,6 +91,6 @@ export class ProductDetailComponent {
     // Save the updated cart back to local storage
     localStorage.setItem('cart', JSON.stringify(productArrayFromLocal));
 
-    Inject(Router).navigate(['product', 'product-cart']);
+    // this.router.navigate(['product', 'product-cart']);
   }
 }
