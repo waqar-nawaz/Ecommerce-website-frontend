@@ -49,8 +49,10 @@ export class ProductDetailComponent {
   // This method is called when the user clicks the "Add to Cart" button
   productArray: any[] = [];
   addToCart(product: any) {
+    console.log(product);
     const productObject = {
       name: product?.name,
+      category: product?.category,
       quantity: 1,
       brand: product?.brand,
       total: product?.price,
@@ -58,6 +60,7 @@ export class ProductDetailComponent {
       price: product?.price,
       image: product?.imageUrl,
       description: product?.description,
+      stock: product?.stock,
     };
 
     // Retrieve the cart items from local storage, or initialize with an empty array

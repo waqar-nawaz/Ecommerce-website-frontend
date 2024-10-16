@@ -42,6 +42,15 @@ export class ProductCartComponent {
 
   isDisabled: boolean = false;
   incrementQuantity(item: any) {
+    if (item?.quantity >= item?.stock) {
+      // this.isDisabled = true;
+      this.toastr.warning('Going out of stock', '', {
+        closeButton: true,
+      });
+      return;
+    }
+
+    // this.isDisabled = false;
     item.quantity++;
     item.total = item.price * item.quantity;
     this.addToLocalStorage(this.cartItems);
