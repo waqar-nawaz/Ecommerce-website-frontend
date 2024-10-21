@@ -26,12 +26,15 @@ export class CartService {
     return headers;
   }
 
-  getCart(): Observable<any> {
-    // const params = new HttpParams()
-    //   .set('currentPage', currentPage)
-    //   .set('perPage', 10);
+  getCart(userId: number): Observable<any> {
+    return this.http.get(`${this.apiUrl}api/cart/${userId}`, {
+      headers: this.getHeaders(),
+      // params: params,
+    });
+  }
 
-    return this.http.get(`${this.apiUrl}api/cart`, {
+  addToCart(data: any): Observable<any> {
+    return this.http.post(`${this.apiUrl}api/cart`, data, {
       headers: this.getHeaders(),
       // params: params,
     });

@@ -21,17 +21,17 @@ export class ProductCartComponent {
   cartService = inject(CartService);
   data: any[] = [];
   loader: boolean = false;
-  cartItems: any[] = [];
   itemCount!: number;
-
+  userId: any;
   constructor(private toastr: ToastrService) {
     // this.getCart();
   }
 
   ngOnInit(): void {
-    this.cartItems = JSON.parse(localStorage.getItem('cart') || '[]');
-    this.itemCount = this.cartItems.length;
+    this.userId = JSON.parse(localStorage.getItem('user') || '{}');
+    console.log('usr id ', this.userId);
     this.calculateTotals();
+    this.getCart();
   }
 
   countProduct(event: any, price: number) {
@@ -53,7 +53,6 @@ export class ProductCartComponent {
     // this.isDisabled = false;
     item.quantity++;
     item.total = item.price * item.quantity;
-    this.addToLocalStorage(this.cartItems);
     this.calculateTotals();
   }
 
@@ -61,7 +60,6 @@ export class ProductCartComponent {
     if (item.quantity > 1) {
       item.quantity--;
       item.total = item.price * item.quantity;
-      this.addToLocalStorage(this.cartItems);
       this.calculateTotals();
     }
   }
@@ -78,23 +76,18 @@ export class ProductCartComponent {
   }
 
   clearCart() {
-    this.cartItems = [];
     this.calculateTotals();
   }
 
   removeItem(itemId: number) {
-    this.cartItems = this.cartItems.filter((item) => item?.id !== itemId);
-    this.addToLocalStorage(this.cartItems);
+    console.log(itemId);
+    this.data = this.data.filter((item) => item?.product?._id !== itemId);
     this.calculateTotals();
   }
 
-  addToLocalStorage(cart: any) {
-    localStorage.setItem('cart', JSON.stringify(this.cartItems));
-  }
-
   calculateTotals() {
-    if (this.cartItems) {
-      this.subtotal = this.cartItems.reduce((acc, item) => acc + item.total, 0);
+    if (this.data) {
+      this.subtotal = this.data.reduce((acc, item) => acc + item.total, 0);
       this.tax = this.subtotal * 0.1; // Example tax calculation
       this.grandTotal = this.subtotal + this.tax;
     }
@@ -102,12 +95,11 @@ export class ProductCartComponent {
 
   getCart() {
     this.loader = true;
-    this.cartService.getCart().subscribe(
+    this.cartService.getCart(this.userId._id).subscribe(
       (res: any) => {
         this.loader = false;
-        this.data = res.result[0].items;
-        this.itemCount = res.result[0].items.length;
-        console.log('cart data ', this.data);
+        this.data = res.cart.items;
+        this.itemCount = res.cart.items.length;
         this.calculateTotals();
       },
       (err) => {

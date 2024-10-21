@@ -18,21 +18,21 @@
             <tbody>
                 <!-- Item 1 -->
 
-                @for (item of cartItems; track $index) {
+                @for (item of data; track $index) {
                 <!-- <ng-container *ngFor="let item of data; trackBy: trackByIndex"> -->
                 <tr class="border-b border-gray-700">
                     <td class="p-3 flex items-center">
-                        <img src="{{ item?.image }}" loading="lazy" alt="{{ item?.product?.name }}"
+                        <img src="{{ item?.product?.imageUrl }}" loading="lazy" alt="{{ item?.product?.name }}"
                             class="w-20 h-20 object-cover mr-4">
                         <div>
-                            <h2 class="text-lg font-semibold">{{ item?.name }}</h2>
-                            <p class="text-orange-400">{{ item?.description }}</p>
-                            <p class="text-sm text-gray-400">{{ item?.brand }}</p>
+                            <h2 class="text-lg font-semibold">{{ item?.product?.name }}</h2>
+                            <p class="text-orange-400">{{ item?.product?.product?.description }}</p>
+                            <p class="text-sm text-gray-400">{{ item?.product?.brand }}</p>
                         </div>
                     </td>
 
                     <!-- Price -->
-                    <td class="text-center text-lg">${{ item?.price | number: '1.0-3' }}</td>
+                    <td class="text-center text-lg">${{ item?.product?.price | number: '1.0-3' }}</td>
 
                     <!-- Quantity -->
                     <td class="text-center">
@@ -51,7 +51,7 @@
 
                     <!-- Remove Button -->
                     <td class="text-right">
-                        <button (click)="removeItem(item?.id)"
+                        <button (click)="removeItem(item?.product?._id)"
                             class="text-red-500 bg-gray-800 p-2 w-8 h-8 flex items-center justify-center rounded-full hover:underline">x</button>
                     </td>
                 </tr>
