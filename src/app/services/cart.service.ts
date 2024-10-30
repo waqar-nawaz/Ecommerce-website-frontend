@@ -39,4 +39,16 @@ export class CartService {
       // params: params,
     });
   }
+  updateCart(data: any): Observable<any> {
+    return this.http.put(`${this.apiUrl}api/cart`, data, {
+      headers: this.getHeaders(),
+    });
+  }
+
+  deleteCartItem(data: any): Observable<any> {
+    return this.http.delete(`${this.apiUrl}api/cart`, {
+      headers: this.getHeaders(),
+      body: data, // Pass data here as 'body'
+    });
+  }
 }

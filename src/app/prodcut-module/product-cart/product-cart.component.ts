@@ -4,11 +4,13 @@ import { SharedService } from '../../services/shared.service';
 import { ToastrService } from 'ngx-toastr';
 import { CartService } from '../../services/cart.service';
 import { LoaderComponent } from '../../loader/loader.component';
+import { environment } from '../../../../environments/environment';
+import { LazyLoadImageModule } from 'ng-lazyload-image';
 
 @Component({
   selector: 'app-product-cart',
   standalone: true,
-  imports: [CommonModule, LoaderComponent],
+  imports: [CommonModule, LoaderComponent, LazyLoadImageModule],
   templateUrl: './product-cart.component.html',
   styleUrl: './product-cart.component.css',
 })
@@ -23,6 +25,7 @@ export class ProductCartComponent {
   loader: boolean = false;
   itemCount!: number;
   userId: any;
+  defaultImage: any = environment.defaultImage;
   constructor(private toastr: ToastrService) {
     // this.getCart();
   }
@@ -42,26 +45,44 @@ export class ProductCartComponent {
 
   isDisabled: boolean = false;
   incrementQuantity(item: any) {
-    if (item?.quantity >= item?.stock) {
+    console.log('item', item);
+    if (item?.quantity >= item?.product?.stock) {
       // this.isDisabled = true;
       this.toastr.warning('Going out of stock', '', {
         closeButton: true,
+        progressBar: false,
+        timeOut: 6000,
       });
       return;
     }
 
-    // this.isDisabled = false;
     item.quantity++;
-    item.total = item.price * item.quantity;
+    item.total = item?.product?.price * item.quantity;
     this.calculateTotals();
+    this.updateCartItem(item?.product?._id, item?.quantity);
   }
 
   decrementQuantity(item: any) {
     if (item.quantity > 1) {
       item.quantity--;
-      item.total = item.price * item.quantity;
+      item.total = item?.product?.price * item.quantity;
       this.calculateTotals();
+      this.updateCartItem(item?.product?._id, item?.quantity);
     }
+  }
+
+  updateCartItem(productId: any, quantity: number) {
+    let data = {
+      productId: productId,
+      userId: this.userId?._id,
+      quantity: quantity,
+    };
+    this.cartService.updateCart(data).subscribe(
+      (res: any) => {
+        console.log(res);
+      },
+      (err) => {}
+    );
   }
 
   addItem(item: any) {
@@ -80,9 +101,26 @@ export class ProductCartComponent {
   }
 
   removeItem(itemId: number) {
-    console.log(itemId);
     this.data = this.data.filter((item) => item?.product?._id !== itemId);
+    this.deleteFromTheCart(itemId);
     this.calculateTotals();
+    this.itemCount = this.itemCount - 1;
+  }
+
+  deleteFromTheCart(productId: any) {
+    let data = {
+      productId: productId,
+      userId: this.userId?._id,
+    };
+    this.cartService.deleteCartItem(data).subscribe(
+      (res: any) => {
+        console.log(res);
+        //this.toaster.success(res.message);
+      },
+      (err) => {
+        //this.toaster.error(err.error.message);
+      }
+    );
   }
 
   calculateTotals() {

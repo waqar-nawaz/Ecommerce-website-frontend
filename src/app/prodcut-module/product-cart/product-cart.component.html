@@ -22,8 +22,8 @@
                 <!-- <ng-container *ngFor="let item of data; trackBy: trackByIndex"> -->
                 <tr class="border-b border-gray-700">
                     <td class="p-3 flex items-center">
-                        <img src="{{ item?.product?.imageUrl }}" loading="lazy" alt="{{ item?.product?.name }}"
-                            class="w-20 h-20 object-cover mr-4">
+                        <img [defaultImage]="defaultImage" [lazyLoad]="item?.product?.imageUrl" [useSrcset]="false"
+                            loading="lazy" alt="{{ item?.product?.name }}" class="w-20 h-20 object-cover mr-4">
                         <div>
                             <h2 class="text-lg font-semibold">{{ item?.product?.name }}</h2>
                             <p class="text-orange-400">{{ item?.product?.product?.description }}</p>
@@ -40,7 +40,7 @@
                             <button (click)="decrementQuantity(item)"
                                 class="border border-gray-500 text-white px-2">-</button>
                             <input type="text" [value]="item?.quantity"
-                                class="w-12 text-center border border-gray-500 mx-2 bg-gray-800 text-white" readonly>
+                                class="w-12 text-center border border-gray-500 mx-2 bg-gray-800 text-white">
                             <button (click)="incrementQuantity(item)" [disabled]="isDisabled"
                                 class="border border-gray-500 text-white px-2">+</button>
                         </div>

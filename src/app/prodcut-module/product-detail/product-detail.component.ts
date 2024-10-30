@@ -5,8 +5,7 @@ import { ProductServiceService } from '../../services/product.service.service';
 import { LoaderComponent } from '../../loader/loader.component';
 import { CommonModule } from '@angular/common';
 import { ToastrService } from 'ngx-toastr';
-import { timeStamp } from 'console';
-import { timeout } from 'rxjs';
+import { CartService } from '../../services/cart.service';
 
 @Component({
   selector: 'app-product-detail',
@@ -21,10 +20,11 @@ export class ProductDetailComponent {
   route = inject(ActivatedRoute);
   router = inject(Router);
   prodcutService = inject(ProductServiceService);
+  cartService = inject(CartService);
   fileUrl: any = environment.fileUrl;
   loader: boolean = false;
   toaster = inject(ToastrService);
-
+  userId: any;
   ngOnInit(): void {
     // Get the query parameter 'post'
     this.route.queryParamMap.subscribe((params) => {
@@ -45,55 +45,25 @@ export class ProductDetailComponent {
         );
       }
     });
+
+    // Get the user ID from local storage
+    this.userId = JSON.parse(localStorage.getItem('user') || '{}');
   }
   // This method is called when the user clicks the "Add to Cart" button
-  productArray: any[] = [];
   addToCart(product: any) {
-    console.log(product);
-    const productObject = {
-      name: product?.name,
-      category: product?.category,
+    let data = {
+      productId: product?._id,
+      userId: this.userId?._id,
       quantity: 1,
-      brand: product?.brand,
-      total: product?.price,
-      id: product?._id,
-      price: product?.price,
-      image: product?.imageUrl,
-      description: product?.description,
-      stock: product?.stock,
     };
-
-    // Retrieve the cart items from local storage, or initialize with an empty array
-    let productArrayFromLocal = JSON.parse(
-      localStorage.getItem('cart') || '[]'
+    this.cartService.addToCart(data).subscribe(
+      (res: any) => {
+        console.log(res);
+        this.router.navigateByUrl('/product/product-cart');
+      },
+      (err) => {
+        this.toaster.error(err.error.message);
+      }
     );
-
-    // Check if the product already exists in the cart
-    const productExists = productArrayFromLocal.some(
-      (val: any) => val.id === productObject.id
-    );
-
-    if (productExists) {
-      this.toaster.warning('Already In The Cart, Update Quantity', '', {
-        timeOut: 5000,
-        progressBar: false,
-      });
-
-      // this.router.navigate(['product', 'product-cart']);
-      return; // Exit the function
-    }
-
-    this.toaster.success('Add To Cart', '', {
-      timeOut: 3000,
-      progressBar: false,
-    });
-
-    // If the product is not in the cart, add it to the array
-    productArrayFromLocal.push(productObject);
-
-    // Save the updated cart back to local storage
-    localStorage.setItem('cart', JSON.stringify(productArrayFromLocal));
-
-    // this.router.navigate(['product', 'product-cart']);
   }
 }
