@@ -5,16 +5,7 @@ import Swal from 'sweetalert2';
   providedIn: 'root',
 })
 export class SharedService {
-  user: any;
-
-  constructor() {
-    // Check if window and localStorage are available
-    if (typeof window !== 'undefined' && localStorage) {
-      this.user = JSON.parse(localStorage.getItem('user') || '{}');
-    } else {
-      this.user = {}; // Default empty user object for server-side rendering
-    }
-  }
+  constructor() {}
 
   maketoster(...res: any) {
     // debugger;
@@ -25,5 +16,13 @@ export class SharedService {
       showConfirmButton: false,
       timer: 2000,
     });
+  }
+
+  getUserDetail() {
+    // Check if window and localStorage are available
+    if (typeof window !== 'undefined' && localStorage) {
+      return JSON.parse(localStorage.getItem('user') || '{}');
+    } else {
+    }
   }
 }

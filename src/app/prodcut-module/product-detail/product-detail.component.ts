@@ -53,7 +53,7 @@ export class ProductDetailComponent {
     this.isLoading = true;
     let data = {
       productId: product?._id,
-      userId: this.shareServie.user?._id,
+      userId: this.shareServie.getUserDetail()?._id,
       quantity: 1,
     };
     this.cartService.addToCart(data).subscribe(

@@ -245,7 +245,7 @@ export class ListProductComponent implements OnInit {
     product.isloading = true;
     let data = {
       productId: product?._id,
-      userId: this.shareService?.user?._id,
+      userId: this.shareService?.getUserDetail()?._id,
       quantity: 1,
     };
     this.cartService.addToCart(data).subscribe(
