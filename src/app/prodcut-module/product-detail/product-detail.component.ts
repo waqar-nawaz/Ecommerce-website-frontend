@@ -60,7 +60,7 @@ export class ProductDetailComponent {
       (res: any) => {
         console.log(res);
         this.isLoading = false;
-        this.toaster.success(res.message.message);
+        this.toaster.success(res.message);
         // this.router.navigateByUrl('/product/product-cart');
       },
       (err) => {

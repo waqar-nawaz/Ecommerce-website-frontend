@@ -11,6 +11,7 @@ import Swal from 'sweetalert2';
 import { SharedService } from '../../services/shared.service';
 import { LoaderComponent } from '../../loader/loader.component';
 import { CommonModule } from '@angular/common';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-signup',
@@ -23,6 +24,7 @@ export class SignupComponent implements OnInit {
   authService = inject(AuthService);
   sharedService = inject(SharedService);
   fb = inject(FormBuilder);
+  toaster = inject(ToastrService);
   router = inject(Router);
   signUpForm!: FormGroup;
   submitted: boolean = false;
@@ -58,19 +60,14 @@ export class SignupComponent implements OnInit {
       (res: any) => {
         // console.log(res);
         this.loader = false;
-        this.sharedService.maketoster({
-          success: 'success',
-          message: res?.message,
-        });
+        this.toaster.success(res.message);
+
         this.submitted = false;
         this.router.navigate(['/login']);
       },
       (error) => {
         this.loader = false;
-        this.sharedService.maketoster({
-          success: 'error',
-          message: error?.error?.message,
-        });
+        this.toaster.error(error?.error?.message);
       }
     );
   }
