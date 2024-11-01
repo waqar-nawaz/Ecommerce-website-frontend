@@ -16,6 +16,8 @@ import { LazyLoadImageModule } from 'ng-lazyload-image';
 import { LoaderComponent } from '../../loader/loader.component';
 import { ToastrService } from 'ngx-toastr';
 import { ShowIfRoleDirective } from '../../shared/show-if-admin.directive';
+import { CartService } from '../../services/cart.service';
+import { SharedService } from '../../services/shared.service';
 
 @Component({
   selector: 'app-list-product',
@@ -42,6 +44,7 @@ export class ListProductComponent implements OnInit {
   isLoading: boolean = false;
   defaultImage: any = environment.defaultImage;
   refreshService = inject(RefreshService);
+  shareService = inject(SharedService);
   prodcutService = inject(ProductServiceService);
   fb = inject(FormBuilder);
   selectedFile: any;
@@ -52,7 +55,7 @@ export class ListProductComponent implements OnInit {
   user: any;
   loader: boolean = false;
   categorydata: any;
-
+  cartService = inject(CartService);
   categoryId: string | null = null;
   category: any;
   route = inject(ActivatedRoute);
@@ -235,5 +238,26 @@ export class ListProductComponent implements OnInit {
         );
       }
     });
+  }
+
+  addToCart(product: any) {
+    // this.loadingProductIds.add(product._id);
+    product.isloading = true;
+    let data = {
+      productId: product?._id,
+      userId: this.shareService?.user?._id,
+      quantity: 1,
+    };
+    this.cartService.addToCart(data).subscribe(
+      (res: any) => {
+        console.log(res);
+        this.toaster.success(res?.message);
+        product.isloading = false;
+      },
+      (err) => {
+        this.toaster.error(err.error.message);
+        product.isloading = false;
+      }
+    );
   }
 }

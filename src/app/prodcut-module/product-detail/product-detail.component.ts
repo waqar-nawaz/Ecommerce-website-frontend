@@ -6,6 +6,7 @@ import { LoaderComponent } from '../../loader/loader.component';
 import { CommonModule } from '@angular/common';
 import { ToastrService } from 'ngx-toastr';
 import { CartService } from '../../services/cart.service';
+import { SharedService } from '../../services/shared.service';
 
 @Component({
   selector: 'app-product-detail',
@@ -20,11 +21,12 @@ export class ProductDetailComponent {
   route = inject(ActivatedRoute);
   router = inject(Router);
   prodcutService = inject(ProductServiceService);
+  shareServie = inject(SharedService);
   cartService = inject(CartService);
   fileUrl: any = environment.fileUrl;
   loader: boolean = false;
   toaster = inject(ToastrService);
-  userId: any;
+  isLoading: boolean = false;
   ngOnInit(): void {
     // Get the query parameter 'post'
     this.route.queryParamMap.subscribe((params) => {
@@ -45,23 +47,24 @@ export class ProductDetailComponent {
         );
       }
     });
-
-    // Get the user ID from local storage
-    this.userId = JSON.parse(localStorage.getItem('user') || '{}');
   }
   // This method is called when the user clicks the "Add to Cart" button
   addToCart(product: any) {
+    this.isLoading = true;
     let data = {
       productId: product?._id,
-      userId: this.userId?._id,
+      userId: this.shareServie.user?._id,
       quantity: 1,
     };
     this.cartService.addToCart(data).subscribe(
       (res: any) => {
         console.log(res);
-        this.router.navigateByUrl('/product/product-cart');
+        this.isLoading = false;
+        this.toaster.success(res.message.message);
+        // this.router.navigateByUrl('/product/product-cart');
       },
       (err) => {
+        this.isLoading = false;
         this.toaster.error(err.error.message);
       }
     );

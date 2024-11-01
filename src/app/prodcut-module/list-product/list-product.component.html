@@ -57,26 +57,53 @@
             </p>
         </div>
 
-        <!-- Buttons container -->
-        <div class="flex justify-around  pb-4">
+        <div class="flex flex-wrap justify-around gap-4 pb-4">
+            <!-- View Button -->
             <button [routerLink]="['/product/product-detail']" [queryParams]="{product: item._id}"
-                class="bg-blue-600 hover:bg-blue-800 text-white font-bold py-2 px-6 rounded-full shadow-lg transition duration-300 ease-in-out transform hover:scale-105">
-                VIEW
+                class="bg-blue-600 hover:bg-blue-800 text-white font-bold p-3 rounded-md shadow-lg transition duration-300 ease-in-out transform hover:scale-105">
+                <i class="fas fa-eye"></i> <!-- Font Awesome Eye Icon for VIEW -->
             </button>
 
-            <!-- Show additional buttons only for admin role -->
+            <!-- Add to Cart Button -->
+            <!-- <button (click)="addToCart(item)"
+                class="bg-green-600 hover:bg-green-800 text-white font-bold p-3 rounded-md shadow-lg transition duration-300 ease-in-out transform hover:scale-105">
+                <i class="fas fa-shopping-cart"></i> 
+            </button> -->
 
+            <!-- Add to Cart Button -->
+            <button type="submit" (click)="addToCart(item)" [disabled]="item.isloading"
+                class="bg-green-500 text-white px-4 py-2 rounded-lg hover:bg-green-600 focus:outline-none focus:ring focus:ring-green-300">
+                <span *ngIf="!item.isloading">
+                    <i class="fas fa-shopping-cart"></i>
+                </span>
+                <span *ngIf="item.isloading" class="flex items-center">
+                    <svg class="animate-spin h-5 w-5 mr-3 border-t-2 border-b-2 border-white rounded-full"
+                        viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4" stroke-dasharray="80"
+                            stroke-linecap="round" class="opacity-25"></circle>
+                        <path d="M4 12a8 8 0 018-8" stroke="currentColor" stroke-width="4" stroke-linecap="round"
+                            class="opacity-75"></path>
+                    </svg>
+
+                </span>
+            </button>
+
+
+
+            <!-- Show additional buttons only for admin role -->
             <button (click)="deleteProduct(item)" *roles="'admin'"
-                class="bg-red-600 hover:bg-red-800 text-white font-bold py-2 px-6 rounded-full shadow-lg transition duration-300 ease-in-out transform hover:scale-105">
-                DELETE
+                class="bg-red-600 hover:bg-red-800 text-white font-bold p-3 rounded-md shadow-lg transition duration-300 ease-in-out transform hover:scale-105">
+                <i class="fas fa-trash-alt"></i> <!-- Font Awesome Trash Icon for DELETE -->
             </button>
 
             <button (click)="EditProduct('data')" *roles="'admin'"
-                class="bg-gray-600 hover:bg-gray-800 text-white font-bold py-2 px-6 rounded-full shadow-lg transition duration-300 ease-in-out transform hover:scale-105">
-                EDIT
+                class="bg-gray-600 hover:bg-gray-800 text-white font-bold p-3 rounded-md shadow-lg transition duration-300 ease-in-out transform hover:scale-105">
+                <i class="fas fa-edit"></i> <!-- Font Awesome Edit Icon for EDIT -->
             </button>
-
         </div>
+
+
+
     </div>
 
 

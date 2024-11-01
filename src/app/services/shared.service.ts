@@ -5,7 +5,16 @@ import Swal from 'sweetalert2';
   providedIn: 'root',
 })
 export class SharedService {
-  constructor() {}
+  user: any;
+
+  constructor() {
+    // Check if window and localStorage are available
+    if (typeof window !== 'undefined' && localStorage) {
+      this.user = JSON.parse(localStorage.getItem('user') || '{}');
+    } else {
+      this.user = {}; // Default empty user object for server-side rendering
+    }
+  }
 
   maketoster(...res: any) {
     // debugger;
