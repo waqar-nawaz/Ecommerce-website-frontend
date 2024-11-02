@@ -8,6 +8,7 @@ import { AuthGuard } from './guards/auth.guard';
 import { SignupComponent } from './components/signup/signup.component';
 import { ProductDetailComponent } from './pages/post-detail/post-detail.component';
 import { FormdesignComponent } from './pages/formdesign/formdesign.component';
+import { UserListComponent } from './components/user-list/user-list.component';
 
 export const routes: Routes = [
   {
@@ -36,6 +37,11 @@ export const routes: Routes = [
       {
         path: 'calendar',
         component: FormdesignComponent,
+        canActivate: [AuthGuard],
+      },
+      {
+        path: 'user-list',
+        component: UserListComponent,
         canActivate: [AuthGuard],
       },
       {

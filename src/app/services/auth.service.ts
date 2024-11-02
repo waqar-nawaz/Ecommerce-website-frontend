@@ -19,6 +19,15 @@ export class AuthService {
   signup(data: object) {
     return this.http.put(`${this.apiUrl}auth/signup`, data);
   }
+  updateUser(data: object, id: string) {
+    return this.http.put(`${this.apiUrl}auth/user/${id}`, data);
+  }
+  getuser() {
+    return this.http.get(`${this.apiUrl}auth/user`);
+  }
+  deleteUser(id: string) {
+    return this.http.delete(`${this.apiUrl}auth/user/${id}`);
+  }
 
   isAuthenticated(): boolean {
     if (typeof localStorage !== 'undefined') {
