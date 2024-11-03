@@ -1,4 +1,4 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, HostListener, inject, OnInit } from '@angular/core';
 import {
   Router,
   RouterLink,
@@ -38,7 +38,26 @@ export class LayoutComponent implements OnInit {
   toggleMobileMenu() {
     this.isMobileMenuOpen = !this.isMobileMenuOpen;
   }
+
   toggleDropdown() {
     this.isDropdownOpen = !this.isDropdownOpen;
+  }
+
+  @HostListener('document:click', ['$event'])
+  closeDropdownOnClickOutside(event: Event) {
+    const target = event.target as HTMLElement;
+    const dropdown = document.getElementById('dropdownMenu');
+    const trigger = document.getElementById('dropdownTrigger');
+
+    // Check if the click is outside the dropdown and trigger elements
+    if (
+      this.isDropdownOpen &&
+      dropdown &&
+      trigger &&
+      !dropdown.contains(target) &&
+      !trigger.contains(target)
+    ) {
+      this.isDropdownOpen = false;
+    }
   }
 }

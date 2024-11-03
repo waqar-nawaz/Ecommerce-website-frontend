@@ -21,9 +21,10 @@
 
             <!-- Logo and navigation for larger screens -->
             <div class="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start">
-                <div class="flex-shrink-0">
+                <div class="flex-shrink-0 hidden sm:block">
                     <img class="h-10 w-10 rounded-full" src="../../../assets/logoPic.png" alt="Your Company">
                 </div>
+
                 <div class="hidden sm:ml-6 sm:block">
                     <div class="flex space-x-4">
                         <a routerLink="dashboard" routerLinkActive="bg-gray-900"
@@ -46,7 +47,7 @@
                     class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium cursor-pointer">Login</a>
 
                 <!-- Profile dropdown -->
-                <div class="relative ml-3" (click)="toggleDropdown()">
+                <div id="dropdownTrigger" class="relative ml-3" (click)="toggleDropdown()">
                     <button type="button"
                         class="flex rounded-full bg-gray-800 text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800"
                         aria-expanded="false" aria-haspopup="true">
@@ -56,17 +57,18 @@
                             alt="User avatar">
                     </button>
                     <!-- Dropdown menu -->
-                    <div *ngIf="isDropdownOpen"
-                        class="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-2 shadow-lg ring-1 ring-black ring-opacity-5"
+                    <div *ngIf="isDropdownOpen" id="dropdownMenu"
+                        class="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-gray-800 py-2 shadow-lg ring-1 ring-black ring-opacity-5"
                         role="menu" aria-orientation="vertical">
                         <a [routerLink]="['/user-list']"
-                            class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 cursor-pointer"
+                            class="block px-4 py-2 text-sm text-white hover:bg-gray-700 cursor-pointer"
                             role="menuitem">User Info</a>
                         <a (click)="logout()"
-                            class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 cursor-pointer"
+                            class="block px-4 py-2 text-sm text-white hover:bg-gray-700 cursor-pointer"
                             role="menuitem">Logout</a>
                     </div>
                 </div>
+
 
                 <a *ngIf="user"
                     class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium cursor-pointer">{{user.name}}</a>
