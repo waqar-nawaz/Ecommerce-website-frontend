@@ -14,11 +14,12 @@ import {
 } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import Swal from 'sweetalert2';
+import { LoaderComponent } from '../../loader/loader.component';
 
 @Component({
   selector: 'app-user-list',
   standalone: true,
-  imports: [ReactiveFormsModule, CommonModule],
+  imports: [ReactiveFormsModule, CommonModule, LoaderComponent],
   templateUrl: './user-list.component.html',
   styleUrl: './user-list.component.css',
 })
@@ -27,7 +28,8 @@ export class UserListComponent implements OnInit {
   fb = inject(FormBuilder);
   userForm!: FormGroup;
   isLoading: boolean = false;
-
+  loader: boolean = false;
+  userId: any;
   users: any[] = [];
   @ViewChild('myDialogRef') dialogRef!: ElementRef<HTMLDialogElement>;
 
@@ -45,13 +47,18 @@ export class UserListComponent implements OnInit {
   }
 
   getUser() {
-    this.authService.getuser().subscribe((res: any) => {
-      this.users = res;
-      console.log(res);
-    });
+    this.loader = true;
+    this.authService.getuser().subscribe(
+      (res: any) => {
+        this.users = res;
+        this.loader = false;
+      },
+      (err) => {
+        this.loader = false;
+      }
+    );
   }
 
-  userId: any;
   openModel(user: any) {
     this.dialogRef.nativeElement.showModal();
     this.userForm.patchValue(user);

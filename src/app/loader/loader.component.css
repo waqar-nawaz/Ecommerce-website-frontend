@@ -81,3 +81,49 @@
 .loader-text {
   margin-top: 1rem; /* Adjusts space between loader and text */
 }
+
+.text-loader::after {
+  content: "";
+  font-weight: 600;
+  font-size: 40px;
+  color: rgb(186, 216, 240);
+  animation-name: animatingtext;
+  animation-duration: 1200ms;
+  animation-iteration-count: infinite;
+}
+
+@keyframes animatingtext {
+  0% {
+    content: "L";
+  }
+  10% {
+    content: "Lo";
+  }
+  20% {
+    content: "Loa";
+  }
+  30% {
+    content: "Load";
+  }
+  40% {
+    content: "Loadi";
+  }
+  50% {
+    content: "Loadin";
+  }
+  60% {
+    content: "Loading";
+  }
+  70% {
+    content: "Loading.";
+  }
+  80% {
+    content: "Loading..";
+  }
+  90% {
+    content: "Loading...";
+  }
+  100% {
+    content: "Loading....";
+  }
+}

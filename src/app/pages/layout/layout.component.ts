@@ -7,11 +7,18 @@ import {
 } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
 import { CommonModule } from '@angular/common';
+import { ShowIfRoleDirective } from '../../shared/show-if-admin.directive';
 
 @Component({
   selector: 'app-layout',
   standalone: true,
-  imports: [RouterOutlet, RouterLink, RouterLinkActive, CommonModule],
+  imports: [
+    RouterOutlet,
+    RouterLink,
+    RouterLinkActive,
+    CommonModule,
+    ShowIfRoleDirective,
+  ],
   templateUrl: './layout.component.html',
   styleUrl: './layout.component.css',
 })

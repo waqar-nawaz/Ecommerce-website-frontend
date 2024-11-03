@@ -1,38 +1,37 @@
 <div class="container mx-auto mt-5 p-4 bg-gray-900 rounded-lg text-white">
-    <h1 class="text-2xl flex justify-center mt-5 font-semibold mb-4">Your Cart ({{ itemCount }} items)</h1>
-    <div *ngIf="loader">
-        <app-loader />
+    <h1 class="text-xl lg:text-2xl text-center mt-5 font-semibold mb-4">Your Cart ({{ itemCount }} items)</h1>
+    <div *ngIf="loader" class="flex justify-center">
+        <app-loader></app-loader>
     </div>
 
     <!-- Cart table -->
     <div class="overflow-x-auto">
-        <table class="w-full table-auto">
+        <table class="w-full table-auto text-sm lg:text-base">
             <thead>
                 <tr class="border-b border-gray-700">
-                    <th class="text-left p-3 text-gray-300">Product Name</th>
-                    <th class="text-center p-3 text-gray-300">Price</th>
-                    <th class="text-center p-3 text-gray-300">Quantity</th>
-                    <th class="text-right p-3 text-gray-300">Total</th>
+                    <th class="text-left p-2 lg:p-3 text-gray-300">Product Name</th>
+                    <th class="text-center p-2 lg:p-3 text-gray-300">Price</th>
+                    <th class="text-center p-2 lg:p-3 text-gray-300">Quantity</th>
+                    <th class="text-right p-2 lg:p-3 text-gray-300">Total</th>
                 </tr>
             </thead>
             <tbody>
-                <!-- Item 1 -->
-
+                <!-- Loop through each item in the cart -->
                 @for (item of data; track $index) {
-                <!-- <ng-container *ngFor="let item of data; trackBy: trackByIndex"> -->
                 <tr class="border-b border-gray-700">
-                    <td class="p-3 flex items-center">
+                    <td class="p-2 lg:p-3 flex flex-col lg:flex-row items-center">
                         <img [defaultImage]="defaultImage" [lazyLoad]="item?.product?.imageUrl" [useSrcset]="false"
-                            loading="lazy" alt="{{ item?.product?.name }}" class="w-20 h-20 object-cover mr-4">
+                            loading="lazy" alt="{{ item?.product?.name }}"
+                            class="w-16 h-16 lg:w-20 lg:h-20 object-cover mr-0 lg:mr-4 mb-2 lg:mb-0">
                         <div>
-                            <h2 class="text-lg font-semibold">{{ item?.product?.name }}</h2>
-                            <p class="text-orange-400">{{ item?.product?.product?.description }}</p>
-                            <p class="text-sm text-gray-400">{{ item?.product?.brand }}</p>
+                            <h2 class="text-base lg:text-lg font-semibold">{{ item?.product?.name }}</h2>
+                            <p class="text-orange-400 text-sm lg:text-base">{{ item?.product?.description }}</p>
+                            <p class="text-xs lg:text-sm text-gray-400">{{ item?.product?.brand }}</p>
                         </div>
                     </td>
 
                     <!-- Price -->
-                    <td class="text-center text-lg">${{ item?.product?.price | number: '1.0-3' }}</td>
+                    <td class="text-center text-sm lg:text-lg">${{ item?.product?.price | number: '1.0-3' }}</td>
 
                     <!-- Quantity -->
                     <td class="text-center">
@@ -40,14 +39,14 @@
                             <button (click)="decrementQuantity(item)"
                                 class="border border-gray-500 text-white px-2">-</button>
                             <input type="text" [value]="item?.quantity"
-                                class="w-12 text-center border border-gray-500 mx-2 bg-gray-800 text-white">
+                                class="w-10 lg:w-12 text-center border border-gray-500 mx-2 bg-gray-800 text-white">
                             <button (click)="incrementQuantity(item)" [disabled]="isDisabled"
                                 class="border border-gray-500 text-white px-2">+</button>
                         </div>
                     </td>
 
                     <!-- Total -->
-                    <td class="text-right text-lg pr-2">${{ item?.total | number: '1.0-3' }}</td>
+                    <td class="text-right text-sm lg:text-lg pr-2">${{ item?.total | number: '1.0-3' }}</td>
 
                     <!-- Remove Button -->
                     <td class="text-right">
@@ -55,7 +54,6 @@
                             class="text-red-500 bg-gray-800 p-2 w-8 h-8 flex items-center justify-center rounded-full hover:underline">x</button>
                     </td>
                 </tr>
-                <!-- </ng-container> -->
                 }
             </tbody>
         </table>
@@ -64,15 +62,15 @@
     <!-- Summary Section -->
     <div class="w-full lg:w-1/4 mt-5 bg-gray-900 rounded-lg p-4 ml-auto">
         <div class="text-lg font-semibold mb-4">Order Summary</div>
-        <div class="flex justify-between text-lg font-semibold">
+        <div class="flex justify-between text-sm lg:text-lg font-semibold">
             <p>Subtotal:</p>
             <p>${{ subtotal | number: '1.0-3' }}</p>
         </div>
-        <div class="flex justify-between text-lg font-semibold">
+        <div class="flex justify-between text-sm lg:text-lg font-semibold">
             <p>Sales Tax:</p>
             <p>${{ tax | number: '1.0-3' }}</p>
         </div>
-        <div class="flex justify-between text-2xl font-bold mt-4">
+        <div class="flex justify-between text-lg lg:text-2xl font-bold mt-4">
             <p>Grand Total:</p>
             <p>${{ grandTotal | number: '1.0-3' }}</p>
         </div>

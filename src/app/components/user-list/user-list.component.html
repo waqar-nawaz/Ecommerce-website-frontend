@@ -1,4 +1,4 @@
-<div class="bg-gray-800 shadow-md rounded m-5 p-6">
+<div class="max-w-5xl mx-auto bg-gray-800 shadow-md rounded mt-20 p-6">
     <div class="flex flex-col md:flex-row justify-between items-center mb-4 space-y-4 md:space-y-0">
         <!-- Heading -->
         <h2 class="text-xl md:text-2xl font-bold text-gray-100">User List</h2>
@@ -15,7 +15,6 @@
             </button>
         </div>
     </div>
-
 
     <!-- Product Table -->
     <div class="overflow-x-auto">
@@ -38,20 +37,24 @@
                     <td class="py-3 px-4 text-gray-200">{{item?.email}}</td>
                     <td class="py-3 px-4 text-gray-200">{{item?.status}}</td>
                     <td class="py-3 px-4 text-center">
-                        <button (click)="openModel(item)" class="text-green-400 hover:text-green-500 mr-2">Edit</button>
-                        <button (click)="deleteUser(item)" class="text-red-400 hover:text-red-500">Delete</button>
+                        <button (click)="openModel(item)" class="text-green-400 hover:text-green-500 mr-3">
+                            <i class="fas fa-edit"></i> <!-- Font Awesome Edit Icon -->
+                        </button>
+                        <button (click)="deleteUser(item)" class="text-red-400 hover:text-red-500">
+                            <i class="fas fa-trash-alt"></i> <!-- Font Awesome Trash Icon -->
+                        </button>
                     </td>
                 </tr>
                 }
-                <!-- <button *roles="'admin'" (click)="openDialog()"
-                class="bg-blue-600 text-white px-6 py-3 rounded-full shadow-lg hover:bg-teal-600 hover:shadow-xl transition-all duration-300 ease-in-out focus:outline-none focus:ring-4 focus:ring-blue-300">
-                Add Category
-            </button> -->
-                <!-- Add more products here -->
             </tbody>
         </table>
     </div>
 </div>
+
+@if(loader){
+<app-loader />
+}
+
 
 
 

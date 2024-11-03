@@ -6,11 +6,12 @@ import { RefreshService } from '../../services/refresh-service.service';
 import Swal from 'sweetalert2';
 import { environment } from '../../../../environments/environment';
 import { CommonModule } from '@angular/common';
+import { ShowIfRoleDirective } from '../../shared/show-if-admin.directive';
 
 @Component({
   selector: 'app-modal',
   standalone: true,
-  imports: [ReactiveFormsModule, CommonModule],
+  imports: [ReactiveFormsModule, CommonModule, ShowIfRoleDirective],
   templateUrl: './modal.component.html',
   styleUrl: './modal.component.css',
 })

@@ -12,6 +12,7 @@ import { debounceTime, distinctUntilChanged, iif, of, switchMap } from 'rxjs';
 import { SharedService } from '../../services/shared.service';
 import socketClient from 'socket.io-client';
 import { environment } from '../../../../environments/environment';
+import { ShowIfRoleDirective } from '../../shared/show-if-admin.directive';
 
 @Component({
   selector: 'app-about',
@@ -22,6 +23,7 @@ import { environment } from '../../../../environments/environment';
     CommonModule,
     LoaderComponent,
     ReactiveFormsModule,
+    ShowIfRoleDirective,
   ],
   templateUrl: './about.component.html',
   styleUrl: './about.component.css',
