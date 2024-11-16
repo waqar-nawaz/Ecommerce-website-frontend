@@ -61,7 +61,7 @@
                         <a [routerLink]="['/user-list']" *roles="'admin'"
                             class="block px-4 py-2 text-sm text-white hover:bg-gray-700 cursor-pointer"
                             role="menuitem">User Info</a>
-                        <a (click)="logout()"
+                        <a (click)="authService.logout()"
                             class="block px-4 py-2 text-sm text-white hover:bg-gray-700 cursor-pointer"
                             role="menuitem">Logout</a>
                     </div>
