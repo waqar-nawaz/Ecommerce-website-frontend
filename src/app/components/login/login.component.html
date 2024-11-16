@@ -1,195 +1,132 @@
-<!-- <div class="container max-w-full">
+<div *ngIf="authService.isLoading" else notloading>
 
+</div>
 
-    <form [formGroup]="loginForm" class="form">
-        <div class="flex justify-center">
-            <h1 class="text-3xl mb-5 font-bold">Login</h1>
-        </div>
+<ng-template #notloading>
+    <div class="min-h-screen flex items-center justify-center bg-gray-900">
+        <div class="bg-gray-800 p-8 rounded-lg shadow-lg max-w-md w-full">
+            <h2 class="text-3xl font-bold text-center text-white mb-6">Login</h2>
 
-        <div class="flex-column mt-3">
-            <label>Email </label>
-        </div>
-        <div class="inputForm"
-            [class.in-valid]="submitted && formControl['email'].errors?.['required'] ||formControl['email'].errors?.['email']">
-            <svg height="20" viewBox="0 0 32 32" width="20" xmlns="http://www.w3.org/2000/svg">
-                <g id="Layer_3" data-name="Layer 3">
-                    <path
-                        d="m30.853 13.87a15 15 0 0 0 -29.729 4.082 15.1 15.1 0 0 0 12.876 12.918 15.6 15.6 0 0 0 2.016.13 14.85 14.85 0 0 0 7.715-2.145 1 1 0 1 0 -1.031-1.711 13.007 13.007 0 1 1 5.458-6.529 2.149 2.149 0 0 1 -4.158-.759v-10.856a1 1 0 0 0 -2 0v1.726a8 8 0 1 0 .2 10.325 4.135 4.135 0 0 0 7.83.274 15.2 15.2 0 0 0 .823-7.455zm-14.853 8.13a6 6 0 1 1 6-6 6.006 6.006 0 0 1 -6 6z">
-                    </path>
-                </g>
-            </svg>
-            <input type="text" formControlName="email" class="input" placeholder="Enter your Email" />
-        </div>
-        <div *ngIf="loader" class="flex justify-center items-center">
-            <app-loader></app-loader>
-        </div>
-        @if (submitted && formControl['email'].errors?.['required']) {
-        <p class="text-red-700 text-sm peer-invalid:block">
-            This field is required
-        </p>
-        }
-        @if (submitted && formControl['email'].errors?.['email']) {
-        <p class="text-red-700 text-sm peer-invalid:block">
-            Invalid Email Format
-        </p>
-        }
+            <!-- Form Start -->
+            <form [formGroup]="loginForm">
+                <!-- Email Input -->
+                <div class="mb-4">
+                    <label for="email" class="block text-sm font-medium text-gray-300">Email</label>
+                    <div class="relative mt-1">
+                        <span class="absolute inset-y-0 left-0 flex items-center pl-3">
+                            <svg class="w-5 h-5 text-gray-400 hover:text-white transition-colors duration-300"
+                                xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round"
+                                    d="M16.5 12a4.5 4.5 0 1 1-9 0 4.5 4.5 0 0 1 9 0Zm0 0c0 1.657 1.007 3 2.25 3S21 13.657 21 12a9 9 0 1 0-2.636 6.364M16.5 12V8.25" />
+                            </svg>
+                        </span>
+                        <input id="email" type="email" formControlName="email" placeholder="Enter your Email"
+                            [class.border-red-500]="submitted && formControl['email'].errors?.['required'] ||formControl['email'].errors?.['email']"
+                            class="block w-full pl-10 pr-3 py-2 text-gray-300 bg-gray-700 border border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500" />
+                        <span
+                            *ngIf="submitted && (formControl['email'].errors?.['required'] || formControl['email'].errors?.['email'])"
+                            class="absolute  inset-y-0 right-0 flex items-center pr-3">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                                stroke="currentColor" class="size-6 text-red-500">
+                                <path stroke-linecap="round" stroke-linejoin="round"
+                                    d="M12 9v3.75m9-.75a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9 3.75h.008v.008H12v-.008Z" />
+                            </svg>
 
-        <div class="flex-column mt-3">
-            <label>Password </label>
-        </div>
-        <div class="inputForm" [class.in-valid]="submitted && formControl['password'].errors?.['required']">
-            <svg height="20" viewBox="-64 0 512 512" width="20" xmlns="http://www.w3.org/2000/svg">
-                <path
-                    d="m336 512h-288c-26.453125 0-48-21.523438-48-48v-224c0-26.476562 21.546875-48 48-48h288c26.453125 0 48 21.523438 48 48v224c0 26.476562-21.546875 48-48 48zm-288-288c-8.8125 0-16 7.167969-16 16v224c0 8.832031 7.1875 16 16 16h288c8.8125 0 16-7.167969 16-16v-224c0-8.832031-7.1875-16-16-16zm0 0">
-                </path>
-                <path
-                    d="m304 224c-8.832031 0-16-7.167969-16-16v-80c0-52.929688-43.070312-96-96-96s-96 43.070312-96 96v80c0 8.832031-7.167969 16-16 16s-16-7.167969-16-16v-80c0-70.59375 57.40625-128 128-128s128 57.40625 128 128v80c0 8.832031-7.167969 16-16 16zm0 0">
-                </path>
-            </svg>
-            <input type="password" formControlName="password" class="input" placeholder="Enter your Password" />
-        </div>
-        @if (submitted && formControl['password'].errors?.['required']) {
-        <p class="text-red-700 text-sm peer-invalid:block">
-            This field is required
-        </p>
-        }
-        <div class="flex-row">
-            <div>
-                <input type="radio" />
-                <label class="ml-3">Remember me </label>
-            </div>
-            <span class="span">Forgot password?</span>
-        </div>
-        <button (click)="login()" routerLinkActive="router-link-active" class="button-submit">Sign
-            In</button>
-        <p class="p">Don't have an account? <span routerLink="/signup" class="span">Sign Up</span></p>
-
-    </form>
-</div> -->
+                        </span>
+                    </div>
 
 
 
 
-<div class="min-h-screen flex items-center justify-center bg-gray-900">
-    <div class="bg-gray-800 p-8 rounded-lg shadow-lg max-w-md w-full">
-        <h2 class="text-3xl font-bold text-center text-white mb-6">Login</h2>
-
-        <!-- Form Start -->
-        <form [formGroup]="loginForm">
-            <!-- Email Input -->
-            <div class="mb-4">
-                <label for="email" class="block text-sm font-medium text-gray-300">Email</label>
-                <div class="relative mt-1">
-                    <span class="absolute inset-y-0 left-0 flex items-center pl-3">
-                        <svg class="w-5 h-5 text-gray-400 hover:text-white transition-colors duration-300"
-                            xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round"
-                                d="M16.5 12a4.5 4.5 0 1 1-9 0 4.5 4.5 0 0 1 9 0Zm0 0c0 1.657 1.007 3 2.25 3S21 13.657 21 12a9 9 0 1 0-2.636 6.364M16.5 12V8.25" />
-                        </svg>
-                    </span>
-                    <input id="email" type="email" formControlName="email" placeholder="Enter your Email"
-                        [class.border-red-500]="submitted && formControl['email'].errors?.['required'] ||formControl['email'].errors?.['email']"
-                        class="block w-full pl-10 pr-3 py-2 text-gray-300 bg-gray-700 border border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500" />
-                    <span
-                        *ngIf="submitted && (formControl['email'].errors?.['required'] || formControl['email'].errors?.['email'])"
-                        class="absolute  inset-y-0 right-0 flex items-center pr-3">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
-                            stroke="currentColor" class="size-6 text-red-500">
-                            <path stroke-linecap="round" stroke-linejoin="round"
-                                d="M12 9v3.75m9-.75a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9 3.75h.008v.008H12v-.008Z" />
-                        </svg>
-
-                    </span>
+                    <div *ngIf="loader" class="flex justify-center items-center">
+                        <app-loader></app-loader>
+                    </div>
+                    @if (submitted && formControl['email'].errors?.['required']) {
+                    <p class="text-red-700 text-sm peer-invalid:block">
+                        Email is Required
+                    </p>
+                    }
+                    @if (submitted && formControl['email'].errors?.['email']) {
+                    <p class="text-red-700 text-sm peer-invalid:block">
+                        Invalid Email Format
+                    </p>
+                    }
                 </div>
 
+                <!-- Password Input -->
+                <div class="mb-4">
+                    <label for="password" class="block text-sm font-medium text-gray-300">Password</label>
+                    <div class="relative mt-1">
+                        <span class="absolute inset-y-0 left-0 flex items-center pl-3">
+                            <svg class="w-5 h-5 text-gray-400 hover:text-white transition-colors duration-300"
+                                xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round"
+                                    d="M16.5 10.5V6.75a4.5 4.5 0 1 0-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 0 0 2.25-2.25v-6.75a2.25 2.25 0 0 0-2.25-2.25H6.75a2.25 2.25 0 0 0-2.25 2.25v6.75a2.25 2.25 0 0 0 2.25 2.25Z" />
+                            </svg>
 
 
 
-                <div *ngIf="loader" class="flex justify-center items-center">
-                    <app-loader></app-loader>
+                        </span>
+                        <input id="password" type="password" formControlName="password"
+                            placeholder="Enter your Password"
+                            [class.border-red-500]="submitted && formControl['password'].errors?.['required']"
+                            autocomplete="false"
+                            class="block w-full pl-10 pr-3 py-2 text-gray-300 bg-gray-700 border border-gray-600 rounded-lg  focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500" />
+                        <span
+                            *ngIf="submitted && (formControl['password'].errors?.['required'] || formControl['password'].errors?.['password'])"
+                            class="absolute  inset-y-0 right-0 flex items-center pr-3">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                                stroke="currentColor" class="size-6 text-red-500">
+                                <path stroke-linecap="round" stroke-linejoin="round"
+                                    d="M12 9v3.75m9-.75a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9 3.75h.008v.008H12v-.008Z" />
+                            </svg>
+
+                        </span>
+                    </div>
+                    @if (submitted && formControl['password'].errors?.['required']) {
+                    <p class="text-red-700 text-sm peer-invalid:block">
+                        Password is Required
+                    </p>
+                    }
+                    @if (submitted && formControl['password'].errors?.['minlength']) {
+                    <p class="text-red-700 text-sm peer-invalid:block">
+                        Minimum length is {{ formControl['password'].errors?.['minlength'].requiredLength }}
+                        characters
+                    </p>
+                    }
+
                 </div>
-                @if (submitted && formControl['email'].errors?.['required']) {
-                <p class="text-red-700 text-sm peer-invalid:block">
-                    Email is Required
+
+                <!-- Remember me and Forgot Password -->
+                <div class="flex items-center justify-between mb-6">
+                    <div class="flex items-center">
+                        <input id="remember-me" type="checkbox"
+                            class="h-4 w-4 text-blue-600 bg-gray-700 border-gray-600 rounded focus:ring-blue-500" />
+                        <label for="remember-me" class="ml-2 block text-sm text-gray-300">Remember me</label>
+                    </div>
+
+                    <div class="text-sm">
+                        <a class="font-medium text-blue-500 cursor-pointer hover:underline">Forgot password?</a>
+                    </div>
+                </div>
+
+                <!-- Sign In Button -->
+                <div>
+                    <button type="submit" (click)="login()"
+                        class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg transition duration-300">
+                        Sign In
+                    </button>
+                </div>
+            </form>
+
+            <!-- Sign Up Link -->
+            <div class="mt-6 text-center">
+                <p class="text-gray-400">Don't have an account?
+                    <a routerLink="/signup" class="text-blue-500 font-medium hover:underline">Sign Up</a>
                 </p>
-                }
-                @if (submitted && formControl['email'].errors?.['email']) {
-                <p class="text-red-700 text-sm peer-invalid:block">
-                    Invalid Email Format
-                </p>
-                }
             </div>
-
-            <!-- Password Input -->
-            <div class="mb-4">
-                <label for="password" class="block text-sm font-medium text-gray-300">Password</label>
-                <div class="relative mt-1">
-                    <span class="absolute inset-y-0 left-0 flex items-center pl-3">
-                        <svg class="w-5 h-5 text-gray-400 hover:text-white transition-colors duration-300"
-                            xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round"
-                                d="M16.5 10.5V6.75a4.5 4.5 0 1 0-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 0 0 2.25-2.25v-6.75a2.25 2.25 0 0 0-2.25-2.25H6.75a2.25 2.25 0 0 0-2.25 2.25v6.75a2.25 2.25 0 0 0 2.25 2.25Z" />
-                        </svg>
-
-
-
-                    </span>
-                    <input id="password" type="password" formControlName="password" placeholder="Enter your Password"
-                        [class.border-red-500]="submitted && formControl['password'].errors?.['required']"
-                        autocomplete="false"
-                        class="block w-full pl-10 pr-3 py-2 text-gray-300 bg-gray-700 border border-gray-600 rounded-lg  focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500" />
-                    <span
-                        *ngIf="submitted && (formControl['password'].errors?.['required'] || formControl['password'].errors?.['password'])"
-                        class="absolute  inset-y-0 right-0 flex items-center pr-3">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
-                            stroke="currentColor" class="size-6 text-red-500">
-                            <path stroke-linecap="round" stroke-linejoin="round"
-                                d="M12 9v3.75m9-.75a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9 3.75h.008v.008H12v-.008Z" />
-                        </svg>
-
-                    </span>
-                </div>
-                @if (submitted && formControl['password'].errors?.['required']) {
-                <p class="text-red-700 text-sm peer-invalid:block">
-                    Password is Required
-                </p>
-                }
-                @if (submitted && formControl['password'].errors?.['minlength']) {
-                <p class="text-red-700 text-sm peer-invalid:block">
-                    Minimum length is {{ formControl['password'].errors?.['minlength'].requiredLength }}
-                    characters
-                </p>
-                }
-
-            </div>
-
-            <!-- Remember me and Forgot Password -->
-            <div class="flex items-center justify-between mb-6">
-                <div class="flex items-center">
-                    <input id="remember-me" type="checkbox"
-                        class="h-4 w-4 text-blue-600 bg-gray-700 border-gray-600 rounded focus:ring-blue-500" />
-                    <label for="remember-me" class="ml-2 block text-sm text-gray-300">Remember me</label>
-                </div>
-
-                <div class="text-sm">
-                    <a class="font-medium text-blue-500 cursor-pointer hover:underline">Forgot password?</a>
-                </div>
-            </div>
-
-            <!-- Sign In Button -->
-            <div>
-                <button type="submit" (click)="login()"
-                    class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg transition duration-300">
-                    Sign In
-                </button>
-            </div>
-        </form>
-
-        <!-- Sign Up Link -->
-        <div class="mt-6 text-center">
-            <p class="text-gray-400">Don't have an account?
-                <a routerLink="/signup" class="text-blue-500 font-medium hover:underline">Sign Up</a>
-            </p>
         </div>
     </div>
-</div>
+</ng-template>

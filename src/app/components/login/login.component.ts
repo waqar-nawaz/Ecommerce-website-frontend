@@ -11,7 +11,6 @@ import { SharedService } from '../../services/shared.service';
 import { LoaderComponent } from '../../loader/loader.component';
 import { CommonModule } from '@angular/common';
 import { ToastrService } from 'ngx-toastr';
-import { timeout } from 'rxjs';
 
 @Component({
   selector: 'app-login',
