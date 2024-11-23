@@ -32,7 +32,7 @@ export class ProductCartComponent {
 
   ngOnInit(): void {
     this.userId = JSON.parse(localStorage.getItem('user') || '{}');
-    console.log('usr id ', this.userId);
+    // console.log('usr id ', this.userId);
     this.calculateTotals();
     this.getCart();
   }
@@ -45,7 +45,7 @@ export class ProductCartComponent {
 
   isDisabled: boolean = false;
   incrementQuantity(item: any) {
-    console.log('item', item);
+    // console.log('item', item);
     if (item?.quantity >= item?.product?.stock) {
       // this.isDisabled = true;
       this.toastr.warning('Going out of stock', '', {
@@ -79,7 +79,7 @@ export class ProductCartComponent {
     };
     this.cartService.updateCart(data).subscribe(
       (res: any) => {
-        console.log(res);
+        // console.log(res);
       },
       (err) => {}
     );
@@ -114,7 +114,7 @@ export class ProductCartComponent {
     };
     this.cartService.deleteCartItem(data).subscribe(
       (res: any) => {
-        console.log(res);
+        // console.log(res);
         //this.toaster.success(res.message);
       },
       (err) => {
@@ -142,9 +142,6 @@ export class ProductCartComponent {
       },
       (err) => {
         this.loader = false;
-        if (err.error.error == 'jwt expired') {
-          localStorage.removeItem('token');
-        }
       }
     );
   }

@@ -9,22 +9,12 @@ import { Observable, of } from 'rxjs';
 })
 export class AuthService {
   apiUrl: any = environment.apiUrl;
-  private loading = true; // Loading state to track authentication status check
-
-  constructor() {
-    this.checkAuthentication(); // Check authentication status on service initialization
-  }
+  constructor() {}
 
   http = inject(HttpClient);
   router = inject(Router);
 
   // Simulate checking authentication status
-  private checkAuthentication() {
-    // Simulate a delay for checking authentication status
-    setTimeout(() => {
-      this.loading = false; // Set loading to false after the check
-    }, 100); // Simulated delay
-  }
 
   login(data: object) {
     return this.http.post(`${this.apiUrl}auth/login`, data);
@@ -55,8 +45,13 @@ export class AuthService {
     return false; // Not authenticated if localStorage is not available
   }
 
-  isLoading(): boolean {
-    return this.loading;
+  getToken() {
+    if (typeof window !== 'undefined' && typeof localStorage !== 'undefined') {
+      const token = localStorage.getItem('token');
+      return token;
+    }
+
+    return false;
   }
 
   logout() {

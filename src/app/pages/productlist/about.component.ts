@@ -12,7 +12,6 @@ import { debounceTime, distinctUntilChanged, iif, of, switchMap } from 'rxjs';
 import { SharedService } from '../../services/shared.service';
 import socketClient from 'socket.io-client';
 import { environment } from '../../../../environments/environment';
-import { ShowIfRoleDirective } from '../../shared/show-if-admin.directive';
 
 @Component({
   selector: 'app-about',
@@ -23,7 +22,6 @@ import { ShowIfRoleDirective } from '../../shared/show-if-admin.directive';
     CommonModule,
     LoaderComponent,
     ReactiveFormsModule,
-    ShowIfRoleDirective,
   ],
   templateUrl: './about.component.html',
   styleUrl: './about.component.css',
@@ -102,10 +100,6 @@ export class AboutComponent implements OnInit {
       },
       (err) => {
         this.loader = false;
-
-        if (err.error.error == 'jwt expired') {
-          this.authService.logout();
-        }
       }
     );
   }
@@ -168,11 +162,7 @@ export class AboutComponent implements OnInit {
         }, 1000);
       },
       (err) => {
-        // this.loader = false;
-
-        if (err.error.error == 'jwt expired') {
-          this.authService.logout();
-        }
+        // this.loader = false
       }
     );
   }
