@@ -10,8 +10,7 @@ import { SharedService } from '../../services/shared.service';
 
 @Component({
   selector: 'app-product-detail',
-  standalone: true,
-  imports: [LoaderComponent, CommonModule, RouterLink],
+  imports: [LoaderComponent, CommonModule],
   templateUrl: './product-detail.component.html',
   styleUrl: './product-detail.component.css',
 })

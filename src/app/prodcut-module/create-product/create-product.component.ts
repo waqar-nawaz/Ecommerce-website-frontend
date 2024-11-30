@@ -12,13 +12,7 @@ import { environment } from '../../../../environments/environment';
 
 @Component({
   selector: 'app-create-product',
-  standalone: true,
-  imports: [
-    CommonModule,
-    CategoriesListComponent,
-    ReactiveFormsModule,
-    FormsModule,
-  ],
+  imports: [CommonModule, ReactiveFormsModule, FormsModule],
   templateUrl: './create-product.component.html',
   styleUrl: './create-product.component.css',
 })

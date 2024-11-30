@@ -17,11 +17,10 @@ import Swal from 'sweetalert2';
 import { LoaderComponent } from '../../loader/loader.component';
 
 @Component({
-  selector: 'app-user-list',
-  standalone: true,
-  imports: [ReactiveFormsModule, CommonModule, LoaderComponent],
-  templateUrl: './user-list.component.html',
-  styleUrl: './user-list.component.css',
+    selector: 'app-user-list',
+    imports: [ReactiveFormsModule, CommonModule, LoaderComponent],
+    templateUrl: './user-list.component.html',
+    styleUrl: './user-list.component.css'
 })
 export class UserListComponent implements OnInit {
   authService = inject(AuthService);

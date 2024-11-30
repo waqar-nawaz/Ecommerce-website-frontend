@@ -9,11 +9,10 @@ import { CommonModule } from '@angular/common';
 import { ShowIfRoleDirective } from '../../shared/show-if-admin.directive';
 
 @Component({
-  selector: 'app-modal',
-  standalone: true,
-  imports: [ReactiveFormsModule, CommonModule, ShowIfRoleDirective],
-  templateUrl: './modal.component.html',
-  styleUrl: './modal.component.css',
+    selector: 'app-modal',
+    imports: [ReactiveFormsModule, CommonModule, ShowIfRoleDirective],
+    templateUrl: './modal.component.html',
+    styleUrl: './modal.component.css'
 })
 export class ModalComponent {
   isModalOpen = false;

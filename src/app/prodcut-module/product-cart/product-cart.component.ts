@@ -8,11 +8,10 @@ import { environment } from '../../../../environments/environment';
 import { LazyLoadImageModule } from 'ng-lazyload-image';
 
 @Component({
-  selector: 'app-product-cart',
-  standalone: true,
-  imports: [CommonModule, LoaderComponent, LazyLoadImageModule],
-  templateUrl: './product-cart.component.html',
-  styleUrl: './product-cart.component.css',
+    selector: 'app-product-cart',
+    imports: [CommonModule, LoaderComponent, LazyLoadImageModule],
+    templateUrl: './product-cart.component.html',
+    styleUrl: './product-cart.component.css'
 })
 export class ProductCartComponent {
   total: number | undefined;

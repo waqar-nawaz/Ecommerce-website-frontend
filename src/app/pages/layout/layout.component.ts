@@ -10,17 +10,16 @@ import { CommonModule } from '@angular/common';
 import { ShowIfRoleDirective } from '../../shared/show-if-admin.directive';
 
 @Component({
-  selector: 'app-layout',
-  standalone: true,
-  imports: [
-    RouterOutlet,
-    RouterLink,
-    RouterLinkActive,
-    CommonModule,
-    ShowIfRoleDirective,
-  ],
-  templateUrl: './layout.component.html',
-  styleUrl: './layout.component.css',
+    selector: 'app-layout',
+    imports: [
+        RouterOutlet,
+        RouterLink,
+        RouterLinkActive,
+        CommonModule,
+        ShowIfRoleDirective,
+    ],
+    templateUrl: './layout.component.html',
+    styleUrl: './layout.component.css'
 })
 export class LayoutComponent implements OnInit {
   token: any;

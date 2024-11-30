@@ -6,11 +6,10 @@ import { LoaderComponent } from '../../loader/loader.component';
 import { CommonModule } from '@angular/common';
 
 @Component({
-  selector: 'app-product-detail',
-  standalone: true,
-  imports: [LoaderComponent, CommonModule],
-  templateUrl: './post-detail.component.html',
-  styleUrl: './post-detail.component.css',
+    selector: 'app-product-detail',
+    imports: [LoaderComponent, CommonModule],
+    templateUrl: './post-detail.component.html',
+    styleUrl: './post-detail.component.css'
 })
 export class ProductDetailComponent implements OnInit {
   postId: string | null = null;

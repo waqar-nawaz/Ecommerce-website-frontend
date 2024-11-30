@@ -14,17 +14,16 @@ import socketClient from 'socket.io-client';
 import { environment } from '../../../../environments/environment';
 
 @Component({
-  selector: 'app-about',
-  standalone: true,
-  imports: [
-    CardsComponent,
-    ModalComponent,
-    CommonModule,
-    LoaderComponent,
-    ReactiveFormsModule,
-  ],
-  templateUrl: './about.component.html',
-  styleUrl: './about.component.css',
+    selector: 'app-about',
+    imports: [
+        CardsComponent,
+        ModalComponent,
+        CommonModule,
+        LoaderComponent,
+        ReactiveFormsModule,
+    ],
+    templateUrl: './about.component.html',
+    styleUrl: './about.component.css'
 })
 export class AboutComponent implements OnInit {
   data: any[] = [];

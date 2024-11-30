@@ -1,5 +1,4 @@
 import { Component, inject, OnInit } from '@angular/core';
-import { ModalComponent } from '../../components/modal/modal.component';
 import jsonarray from '../../../../dummy.json';
 import {
   FormBuilder,
@@ -9,18 +8,10 @@ import {
   Validators,
 } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { ShowIfRoleDirective } from '../../shared/show-if-admin.directive';
 
 @Component({
   selector: 'app-contact',
-  standalone: true,
-  imports: [
-    ModalComponent,
-    FormsModule,
-    CommonModule,
-    ReactiveFormsModule,
-    ShowIfRoleDirective,
-  ],
+  imports: [FormsModule, CommonModule, ReactiveFormsModule],
   templateUrl: './contact.component.html',
   styleUrl: './contact.component.css',
 })

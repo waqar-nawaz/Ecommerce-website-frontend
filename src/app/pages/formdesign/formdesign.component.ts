@@ -6,12 +6,10 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-import { CategoriesListComponent } from '../../prodcut-module/categories-list/categories-list.component';
 
 @Component({
   selector: 'app-formdesign',
-  standalone: true,
-  imports: [ReactiveFormsModule, CommonModule, CategoriesListComponent],
+  imports: [ReactiveFormsModule, CommonModule],
   templateUrl: './formdesign.component.html',
   styleUrl: './formdesign.component.css',
 })

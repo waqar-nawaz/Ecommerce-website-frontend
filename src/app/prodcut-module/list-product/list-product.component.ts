@@ -1,7 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, inject, Input, OnInit } from '@angular/core';
 import { ActivatedRoute, RouterLink } from '@angular/router';
-import { ModalComponent } from '../../components/modal/modal.component';
 import {
   FormBuilder,
   FormGroup,
@@ -21,11 +20,9 @@ import { SharedService } from '../../services/shared.service';
 
 @Component({
   selector: 'app-list-product',
-  standalone: true,
   imports: [
     CommonModule,
     RouterLink,
-    ModalComponent,
     ReactiveFormsModule,
     LazyLoadImageModule,
     LoaderComponent,

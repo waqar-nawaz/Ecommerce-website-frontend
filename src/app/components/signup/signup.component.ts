@@ -14,11 +14,10 @@ import { CommonModule } from '@angular/common';
 import { ToastrService } from 'ngx-toastr';
 
 @Component({
-  selector: 'app-signup',
-  standalone: true,
-  templateUrl: './signup.component.html',
-  styleUrl: './signup.component.css',
-  imports: [RouterLink, ReactiveFormsModule, LoaderComponent, CommonModule],
+    selector: 'app-signup',
+    templateUrl: './signup.component.html',
+    styleUrl: './signup.component.css',
+    imports: [RouterLink, ReactiveFormsModule, LoaderComponent, CommonModule]
 })
 export class SignupComponent implements OnInit {
   authService = inject(AuthService);

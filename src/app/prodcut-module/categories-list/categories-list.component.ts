@@ -22,19 +22,18 @@ import { ListProductComponent } from '../list-product/list-product.component';
 import { ShowIfRoleDirective } from '../../shared/show-if-admin.directive';
 
 @Component({
-  selector: 'app-categories-list',
-  standalone: true,
-  imports: [
-    CommonModule,
-    RouterLink,
-    ReactiveFormsModule,
-    LazyLoadImageModule,
-    LoaderComponent,
-    ListProductComponent,
-    ShowIfRoleDirective,
-  ],
-  templateUrl: './categories-list.component.html',
-  styleUrl: './categories-list.component.css',
+    selector: 'app-categories-list',
+    imports: [
+        CommonModule,
+        RouterLink,
+        ReactiveFormsModule,
+        LazyLoadImageModule,
+        LoaderComponent,
+        ListProductComponent,
+        ShowIfRoleDirective,
+    ],
+    templateUrl: './categories-list.component.html',
+    styleUrl: './categories-list.component.css'
 })
 export class CategoriesListComponent implements OnInit {
   @ViewChild('myDialogRef') dialogRef!: ElementRef<HTMLDialogElement>;
