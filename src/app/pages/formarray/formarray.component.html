@@ -1,0 +1,58 @@
+<div class="justify-center flex">
+    <form [formGroup]="quizForm" (ngSubmit)="onSubmit()"
+        class="bg-dark-900 text-white p-6 rounded-lg max-w-4xl  shadow-lg">
+        <h1 class="text-2xl font-bold mb-6 text-center">Quiz Form</h1>
+
+        <!-- Questions Form Array -->
+        <div formArrayName="questions" class="space-y-6">
+            <div *ngFor="let question of quizForm.controls.questions.controls; let questionIndex = index"
+                [formGroupName]="questionIndex" class="p-4 border border-gray-700 rounded-lg bg-gray-800">
+                <!-- Question Input -->
+                <div class="flex items-center space-x-4">
+                    <input type="text" formControlName="questionName" placeholder="Question name"
+                        class="flex-1 p-2 rounded-md bg-gray-700 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500" />
+                    <button type="button" (click)="removeQuestion(questionIndex)"
+                        class="text-red-500 hover:text-red-700">
+                        ✗
+                    </button>
+                </div>
+
+                <!-- Answers Form Array -->
+                <div formArrayName="answers" class="mt-4 space-y-3">
+                    <h2 class="text-lg font-medium">Answers</h2>
+
+                    <div *ngFor="let answer of quizForm.controls.questions.controls[questionIndex]?.controls?.answers?.controls; let answerIndex = index"
+                        [formGroupName]="answerIndex" class="flex items-center space-x-4">
+                        <input type="text" formControlName="text" placeholder="Answer"
+                            class="flex-1 p-2 rounded-md bg-gray-700 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500" />
+                        <button type="button" (click)="removeAnswer(questionIndex, answerIndex)"
+                            class="text-red-500 hover:text-red-700">
+                            ✗
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Add Answer Button -->
+                <button type="button" (click)="addAnswer(questionIndex)"
+                    class="mt-4 px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700">
+                    Add Answer
+                </button>
+            </div>
+        </div>
+
+        <!-- Add Question Button -->
+        <div class="mt-6 text-center">
+            <button type="button" (click)="addQuestion()"
+                class="px-4 py-2 bg-green-600 text-white rounded-md hover:bg-green-700">
+                Add Question
+            </button>
+        </div>
+
+        <!-- Submit Button -->
+        <div class="mt-6 text-center">
+            <button type="submit" class="w-full px-4 py-2 bg-purple-600 text-white rounded-md hover:bg-purple-700">
+                Submit
+            </button>
+        </div>
+    </form>
+</div>

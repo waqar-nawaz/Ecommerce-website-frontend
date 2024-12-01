@@ -1,6 +1,7 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, inject, OnInit, signal } from '@angular/core';
 import jsonarray from '../../../../dummy.json';
 import {
+  FormArray,
   FormBuilder,
   FormGroup,
   FormsModule,
@@ -8,19 +9,26 @@ import {
   Validators,
 } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { QuizFormComponent } from '../formarray/formarray.component';
 
+interface UserInterface {
+  name: string;
+  email: string;
+}
 @Component({
   selector: 'app-contact',
-  imports: [FormsModule, CommonModule, ReactiveFormsModule],
+  imports: [FormsModule, CommonModule, ReactiveFormsModule, QuizFormComponent],
   templateUrl: './contact.component.html',
   styleUrl: './contact.component.css',
 })
 export class ContactComponent implements OnInit {
-  data: any[] = jsonarray;
-  list: string = '';
   contactForm!: FormGroup;
   successMessage: string | null = null;
   fb = inject(FormBuilder);
+
+  title = signal('khan');
+
+  user = signal<UserInterface[]>([{ name: 'asif', email: 'asif@gmail.com' }]);
 
   ngOnInit(): void {
     this.contactFrom();
@@ -37,14 +45,16 @@ export class ContactComponent implements OnInit {
   }
 
   onSubmit() {
+    this.title.set('jamal');
+    this.user.update((prevUser) => {
+      return [...prevUser, { name: 'waqar', email: 'waqar@gmail.com' }];
+    });
+
     if (this.contactForm.valid) {
-      // Perform form submission logic here (e.g., send the contact details to a backend server)
       this.successMessage = 'Thank you! Your message has been sent.';
 
-      // Reset the form after submission
       this.contactForm.reset();
     } else {
-      // Handle form errors
       this.successMessage = null;
     }
   }
