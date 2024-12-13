@@ -1,0 +1,122 @@
+/* General Reset */
+body,
+html {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  height: 100%;
+  width: 100%;
+  font-family: Arial, sans-serif;
+  overflow: hidden;
+  background-color: #1e293b; /* Tailwind bg-gray-800 equivalent */
+  color: #ffffff; /* Text white */
+}
+
+/* Sidebar styles */
+.sidenav {
+  width: 250px; /* Full-width for expanded state */
+  position: fixed;
+  height: 100%;
+  background-color: #1e293b; /* bg-gray-800 */
+  color: #ffffff; /* Text white */
+  transition: width 0.3s ease;
+  overflow: hidden;
+}
+
+.sidenav-collapsed {
+  width: 80px; /* Narrow width for collapsed state */
+}
+
+/* Sidebar Logo and Toggle */
+.logo-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px;
+  background-color: #2d3748; /* Tailwind bg-gray-700 */
+}
+
+.logo {
+  color: #ffffff;
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+}
+
+.logo-text {
+  font-size: 1.2rem;
+  font-weight: bold;
+  margin-left: 10px;
+  white-space: nowrap;
+}
+
+.btn-close {
+  background: none;
+  border: none;
+  color: #ffffff;
+  font-size: 1.2rem;
+  cursor: pointer;
+}
+
+/* Sidebar Navigation */
+.sidenav-nav {
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+
+.sidenav-nav-item {
+  padding: 15px;
+}
+
+.sidenav-nav-link {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  color: #ffffff;
+  transition: background 0.3s ease;
+}
+
+.sidenav-nav-link:hover {
+  background-color: #374151; /* Tailwind bg-gray-600 */
+}
+
+.sidenav-link-icon {
+  font-size: 1.2rem;
+}
+
+.sidenav-link-text {
+  margin-left: 10px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Main Content */
+.main-content {
+  margin-left: 250px; /* Matches the expanded sidebar width */
+  /* padding: 20px; */
+  transition: margin-left 0.3s ease;
+  background-color: #f1f5f9; /* Tailwind bg-gray-100 equivalent */
+}
+
+.content-expanded {
+  margin-left: 80px; /* Matches the collapsed sidebar width */
+}
+
+.content-collapsed {
+  margin-left: 250px; /* Matches the expanded sidebar width */
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .sidenav {
+    position: absolute;
+    z-index: 1000;
+  }
+
+  .main-content {
+    margin-left: 0; /* Full width on smaller screens */
+  }
+}

@@ -9,16 +9,17 @@ import { SignupComponent } from './components/signup/signup.component';
 import { ProductDetailComponent } from './pages/post-detail/post-detail.component';
 import { FormdesignComponent } from './pages/formdesign/formdesign.component';
 import { UserListComponent } from './components/user-list/user-list.component';
+import { SideBarComponent } from './pages/side-bar/side-bar.component';
 
 export const routes: Routes = [
   {
     path: '',
-    redirectTo: 'dashboard',
+    redirectTo: 'login',
     pathMatch: 'full',
   },
   {
     path: '',
-    component: LayoutComponent,
+    component: LayoutComponent, //component: SideBarComponent
     canActivate: [AuthGuard], // Use HeaderLayoutComponent for these routes
     children: [
       { path: 'dashboard', component: HomeComponent, canActivate: [AuthGuard] },
