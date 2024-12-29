@@ -1,54 +1,5 @@
-/* Ensure the map takes full height */
 #map {
   height: 100vh;
   width: 100%;
   position: relative;
-}
-
-/* Custom marker styles */
-.custom-icon {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-direction: column;
-}
-
-.marker-pin {
-  width: 20px;
-  height: 20px;
-  background-color: #ff5722;
-  border-radius: 50%;
-  border: 2px solid white;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
-}
-
-.marker-label {
-  background-color: white;
-  padding: 2px 5px;
-  border-radius: 3px;
-  font-size: 12px;
-  text-align: center;
-  color: #333;
-  margin-top: 5px;
-}
-
-/* Custom zoom control styles */
-.leaflet-control-zoom {
-  background-color: #333;
-  color: white;
-  border: none;
-  box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
-  border-radius: 4px;
-}
-
-.leaflet-control-zoom a {
-  color: white;
-  text-decoration: none;
-}
-
-/* Custom attribution styles */
-.leaflet-control-attribution {
-  background-color: rgba(255, 255, 255, 0.8);
-  padding: 5px;
-  border-radius: 3px;
 }

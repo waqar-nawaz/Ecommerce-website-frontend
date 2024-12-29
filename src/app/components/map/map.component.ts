@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import * as L from 'leaflet';
 
 @Component({
   selector: 'app-map',
@@ -6,34 +7,69 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./map.component.css']
 })
 export class MapComponent implements OnInit {
-  private map: any;
+  private map!: L.Map;
+
+  locations = [
+    { lat: 30.3753, lng: 69.3451, title: "Pakistan" },
+    { lat: 20.5937, lng: 78.9629, title: "India" },
+    { lat: -25.2744, lng: 133.7751, title: "Australia" },
+    { lat: 35.8617, lng: 104.1954, title: "China" },
+    { lat: 51.1657, lng: 10.4515, title: "Germany" }
+  ];
 
   ngOnInit(): void {
     if (typeof window !== 'undefined') {
-      this.loadLeaflet();
+      this.initializeLeaflet();
     }
   }
 
-  private loadLeaflet(): void {
+  private initializeLeaflet(): void {
     import('leaflet').then(L => {
-      this.initMap(L);
+      this.initializeMap(L);
     });
   }
 
-  private initMap(L: any): void {
-    this.map = L.map('map').setView([51.505, -0.09], 13);
+  private initializeMap(L: any): void {
+    this.map = L.map('map', {
+      center: [20.5937, 78.9629], // Centered on India
+      zoom: 2,
+      zoomControl: false, // Disable default zoom control
+      attributionControl: false // Disable default attribution control
+    });
+    L.Icon.Default.mergeOptions({
+      shadowUrl: null  // Disable the default shadow image
+    });
 
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-      maxZoom: 19,
-      attribution: '© OpenStreetMap'
+    L.tileLayer('https://{s}.google.com/vt/lyrs=m&x={x}&y={y}&z={z}', {
+      subdomains: ['mt0', 'mt1', 'mt2', 'mt3']
     }).addTo(this.map);
 
-    this.addMarker(L);
+    // Custom zoom control
+    L.control.zoom({
+      position: 'bottomright'
+    }).addTo(this.map);
+
+    // Custom attribution
+    L.control.attribution({
+      position: 'bottomleft'
+    }).addAttribution('Map data &copy; <a href="https://www.google.com/intl/en_ALL/mapfiles/terms.html">Google</a>');
+
+    this.addMarkers(L);
   }
 
-  private addMarker(L: any): void {
-    const marker = L.marker([51.5, -0.09]).addTo(this.map)
-      .bindPopup('A pretty CSS3 popup.<br> Easily customizable.')
-      .openPopup();
+  private addMarkers(L: any): void {
+    this.locations.forEach(location => {
+      L.marker([location.lat, location.lng], {
+        title: location.title,
+        alt: location.title,
+        popupbinding: location.title,
+      }).addTo(this.map);
+      L.circle([location.lat, location.lng], {
+        color: 'red',
+        fillColor: '#f03',
+        fillOpacity: 0.5,
+        radius: 500000,
+      }).addTo(this.map);
+    });
   }
 }
