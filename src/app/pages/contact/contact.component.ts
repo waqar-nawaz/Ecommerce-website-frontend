@@ -9,6 +9,7 @@ import {
   Validators,
 } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { MapComponent } from '../../components/map/map.component';
 // import { QuizFormComponent } from '../formarray/formarray.component';
 
 interface UserInterface {
@@ -17,7 +18,7 @@ interface UserInterface {
 }
 @Component({
   selector: 'app-contact',
-  imports: [FormsModule, CommonModule, ReactiveFormsModule],
+  imports: [FormsModule, CommonModule, ReactiveFormsModule, MapComponent],
   templateUrl: './contact.component.html',
   styleUrl: './contact.component.css',
 })
