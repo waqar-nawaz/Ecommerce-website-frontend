@@ -40,19 +40,16 @@ export class MapComponent implements OnInit {
       shadowUrl: null  // Disable the default shadow image
     });
 
-    L.tileLayer('https://{s}.google.com/vt/lyrs=m&x={x}&y={y}&z={z}', {
-      subdomains: ['mt0', 'mt1', 'mt2', 'mt3']
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap contributors</a>',
     }).addTo(this.map);
+
 
     // Custom zoom control
     L.control.zoom({
       position: 'bottomright'
     }).addTo(this.map);
 
-    // Custom attribution
-    L.control.attribution({
-      position: 'bottomleft'
-    }).addAttribution('Map data &copy; <a href="https://www.google.com/intl/en_ALL/mapfiles/terms.html">Google</a>');
 
     this.addMarkers(L);
   }
