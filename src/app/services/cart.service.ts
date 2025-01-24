@@ -27,28 +27,32 @@ export class CartService {
   }
 
   getCart(userId: number): Observable<any> {
-    return this.http.get(`${this.apiUrl}api/cart/${userId}`, {
+    return this.http.get(`${this.apiUrl}/cart/${userId}`, {
       headers: this.getHeaders(),
       // params: params,
     });
   }
 
   addToCart(data: any): Observable<any> {
-    return this.http.post(`${this.apiUrl}api/cart`, data, {
+    return this.http.post(`${this.apiUrl}/cart`, data, {
       headers: this.getHeaders(),
       // params: params,
     });
   }
   updateCart(data: any): Observable<any> {
-    return this.http.put(`${this.apiUrl}api/cart`, data, {
+    return this.http.put(`${this.apiUrl}/cart`, data, {
       headers: this.getHeaders(),
     });
   }
 
   deleteCartItem(data: any): Observable<any> {
-    return this.http.delete(`${this.apiUrl}api/cart`, {
+    return this.http.delete(`${this.apiUrl}/cart`, {
       headers: this.getHeaders(),
       body: data, // Pass data here as 'body'
     });
+  }
+
+  checkout(data: any): Observable<any> {
+    return this.http.post(`${this.apiUrl}/order`, data)
   }
 }

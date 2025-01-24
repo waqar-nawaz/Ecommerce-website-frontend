@@ -8,10 +8,10 @@ import { environment } from '../../../../environments/environment';
 import { LazyLoadImageModule } from 'ng-lazyload-image';
 
 @Component({
-    selector: 'app-product-cart',
-    imports: [CommonModule, LoaderComponent, LazyLoadImageModule],
-    templateUrl: './product-cart.component.html',
-    styleUrl: './product-cart.component.css'
+  selector: 'app-product-cart',
+  imports: [CommonModule, LoaderComponent, LazyLoadImageModule],
+  templateUrl: './product-cart.component.html',
+  styleUrl: './product-cart.component.css'
 })
 export class ProductCartComponent {
   total: number | undefined;
@@ -80,7 +80,7 @@ export class ProductCartComponent {
       (res: any) => {
         // console.log(res);
       },
-      (err) => {}
+      (err) => { }
     );
   }
 
@@ -141,6 +141,28 @@ export class ProductCartComponent {
       },
       (err) => {
         this.loader = false;
+      }
+    );
+  }
+
+  checkout() {
+    this.loader = true;
+    const payload = {
+      tax: this.tax,
+      grandTotal: this.grandTotal,
+      subtotal: this.subtotal,
+    }
+    this.cartService.checkout(payload).subscribe(
+      (res: any) => {
+        console.log(res);
+        this.loader = false;
+        this.toastr.success(res.message);
+        this.getCart();
+        this.calculateTotals();
+      },
+      (err) => {
+        this.loader = false;
+        this.toastr.error(err.error.message);
       }
     );
   }

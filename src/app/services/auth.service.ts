@@ -9,7 +9,7 @@ import { Observable, of } from 'rxjs';
 })
 export class AuthService {
   apiUrl: any = environment.apiUrl;
-  constructor() {}
+  constructor() { }
 
   http = inject(HttpClient);
   router = inject(Router);
@@ -17,23 +17,23 @@ export class AuthService {
   // Simulate checking authentication status
 
   login(data: object) {
-    return this.http.post(`${this.apiUrl}auth/login`, data);
+    return this.http.post(`${this.apiUrl}/auth/login`, data);
   }
 
   signup(data: object): Observable<any> {
-    return this.http.put(`${this.apiUrl}auth/signup`, data);
+    return this.http.put(`${this.apiUrl}/auth/signup`, data);
   }
 
   updateUser(data: object, id: string): Observable<any> {
-    return this.http.put(`${this.apiUrl}auth/user/${id}`, data);
+    return this.http.put(`${this.apiUrl}/auth/user/${id}`, data);
   }
 
   getuser(): Observable<any> {
-    return this.http.get(`${this.apiUrl}auth/user`);
+    return this.http.get(`${this.apiUrl}/auth/user`);
   }
 
   deleteUser(id: string): Observable<any> {
-    return this.http.delete(`${this.apiUrl}auth/user/${id}`);
+    return this.http.delete(`${this.apiUrl}/auth/user/${id}`);
   }
 
   isAuthenticated(): boolean {
