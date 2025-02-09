@@ -3,6 +3,7 @@ import { provideRouter } from '@angular/router';
 import { provideAnimations } from '@angular/platform-browser/animations';
 
 import { provideToastr } from 'ngx-toastr';
+import { SocialLoginModule, SocialAuthServiceConfig, GoogleLoginProvider } from '@abacritt/angularx-social-login';
 
 import { routes } from './app.routes';
 import { provideClientHydration } from '@angular/platform-browser';
@@ -13,6 +14,7 @@ import {
   withInterceptors,
 } from '@angular/common/http';
 import { authInterceptor } from './core/intercepter/auth.interceptor';
+import { environment } from '../../environments/environment';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -29,5 +31,19 @@ export const appConfig: ApplicationConfig = {
       preventDuplicates: true,
       closeButton: true,
     }),
+
+    {
+      provide: 'SocialAuthServiceConfig',
+      useValue: {
+        autoLogin: false,
+        providers: [
+          {
+            id: GoogleLoginProvider.PROVIDER_ID,
+            provider: new GoogleLoginProvider(environment.googleClientId),
+          },
+        ],
+        onError: (err) => console.error(err),
+      } as SocialAuthServiceConfig,
+    },
   ],
 };
