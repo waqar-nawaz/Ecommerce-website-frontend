@@ -6,6 +6,8 @@ import { CartService } from '../../services/cart.service';
 import { LoaderComponent } from '../../loader/loader.component';
 import { environment } from '../../../../environments/environment';
 import { LazyLoadImageModule } from 'ng-lazyload-image';
+import Swal from 'sweetalert2';
+
 
 @Component({
   selector: 'app-product-cart',
@@ -146,24 +148,41 @@ export class ProductCartComponent {
   }
 
   checkout() {
+
     this.loader = true;
-    const payload = {
-      tax: this.tax,
-      grandTotal: this.grandTotal,
-      subtotal: this.subtotal,
-    }
-    this.cartService.checkout(payload).subscribe(
-      (res: any) => {
-        console.log(res);
+    Swal.fire({
+      title: 'Are you sure?',
+      text: "Do you want to proceed with the checkout?",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, checkout!'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        const payload = {
+          tax: this.tax,
+          grandTotal: this.grandTotal,
+          subtotal: this.subtotal,
+        };
+        this.cartService.checkout(payload).subscribe(
+          (res: any) => {
+            console.log(res);
+            this.loader = false;
+            this.toastr.success(res.message);
+            this.getCart();
+            this.calculateTotals();
+          },
+          (err) => {
+            this.loader = false;
+            this.toastr.error(err.error.message);
+          }
+        );
+      } else {
         this.loader = false;
-        this.toastr.success(res.message);
-        this.getCart();
-        this.calculateTotals();
-      },
-      (err) => {
-        this.loader = false;
-        this.toastr.error(err.error.message);
       }
-    );
+    });
+
+
   }
 }
