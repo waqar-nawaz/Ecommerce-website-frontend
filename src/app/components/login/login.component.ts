@@ -109,19 +109,16 @@ export class LoginComponent implements OnInit {
 
   handleGoogleLogin(response: any) {
     const idToken = response.credential;
-    this.loader = true;
     this.authService.googleLogin(idToken).subscribe(
       (res) => {
         localStorage.setItem('token', res.token);
         localStorage.setItem('user', JSON.stringify(res.user));
-        this.submitted = false;
         this.toaster.success(res?.message, '');
-        this.router.navigate(['/dashboard']);
+        // this.router.navigate(['/dashboard']);
+        window.location.href = '/dashboard';
       },
       (error) => {
-        console.error('Google login failed', error);
-        this.loader = false;
-        this.toaster.error('Google login failed. Please try again.');
+        this.toaster.error('Google login failed. Please try again.', error);
       }
     );
   }

@@ -14,10 +14,10 @@ import { CommonModule } from '@angular/common';
 import { ToastrService } from 'ngx-toastr';
 
 @Component({
-    selector: 'app-signup',
-    templateUrl: './signup.component.html',
-    styleUrl: './signup.component.css',
-    imports: [RouterLink, ReactiveFormsModule, LoaderComponent, CommonModule]
+  selector: 'app-signup',
+  templateUrl: './signup.component.html',
+  styleUrl: './signup.component.css',
+  imports: [RouterLink, ReactiveFormsModule, LoaderComponent, CommonModule]
 })
 export class SignupComponent implements OnInit {
   authService = inject(AuthService);
@@ -57,12 +57,12 @@ export class SignupComponent implements OnInit {
     this.loader = true;
     this.authService.signup(this.signUpForm.value).subscribe(
       (res: any) => {
-        // console.log(res);
         this.loader = false;
-        this.toaster.success(res.message);
-
+        localStorage.setItem('token', res.token);
+        localStorage.setItem('user', JSON.stringify(res.user));
         this.submitted = false;
-        this.router.navigate(['/login']);
+        this.toaster.success(res?.message, '');
+        this.router.navigate(['/dashboard']);
       },
       (error) => {
         this.loader = false;
