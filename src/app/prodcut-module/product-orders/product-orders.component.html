@@ -1,0 +1,70 @@
+<div class="container mx-auto p-6">
+    <!-- Page Header -->
+    <h2
+        class="text-3xl font-bold text-white mb-6 bg-gradient-to-r from-purple-600 to-blue-500 p-4 rounded-lg shadow-lg">
+        Order List
+    </h2>
+
+    <!-- Order List -->
+    @if (orders$ | async; as orders) {
+    <div class="space-y-6">
+        <!-- Loop through each order -->
+        @for (order of orders.order; track order._id) {
+        <div class="bg-gray-900 text-white p-6 rounded-lg shadow-2xl transform transition-transform hover:scale-105">
+            <!-- Order Header -->
+            <div class="flex justify-between items-center mb-4">
+                <h3 class="text-xl font-semibold text-purple-400">Order ID: {{ order._id }}</h3>
+                <span class="px-3 py-1 rounded-full text-sm font-medium {{ getStatusBadgeColor(order.status) }}">
+                    {{ order.status }}
+                </span>
+            </div>
+
+            <!-- Order Metadata -->
+            <div class="text-sm text-gray-300 mb-6">
+                <p>Date: {{ order.createdAt | date:'medium' }}</p>
+            </div>
+
+            <!-- Items Table -->
+            <div class="overflow-x-auto">
+                <table class="w-full border-collapse">
+                    <thead>
+                        <tr class="bg-gray-800">
+                            <th class="px-6 py-3 text-left text-sm font-medium text-gray-300 uppercase">Product</th>
+                            <th class="px-6 py-3 text-left text-sm font-medium text-gray-300 uppercase">Image</th>
+                            <th class="px-6 py-3 text-left text-sm font-medium text-gray-300 uppercase">Price</th>
+                            <th class="px-6 py-3 text-left text-sm font-medium text-gray-300 uppercase">Quantity</th>
+                            <th class="px-6 py-3 text-left text-sm font-medium text-gray-300 uppercase">Total</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @for (item of order.items; track item.product._id) {
+                        <tr class="hover:bg-gray-800 transition-colors">
+                            <td class="px-6 py-4 text-sm text-gray-200">{{ item.product.name }}</td>
+                            <td class="px-6 py-4">
+                                <img [src]="item.product.imageUrl" alt="{{ item.product.name }}"
+                                    class="h-12 w-12 rounded-lg object-cover shadow-sm">
+                            </td>
+                            <td class="px-6 py-4 text-sm text-gray-200">${{ item.product.price }}</td>
+                            <td class="px-6 py-4 text-sm text-gray-200">{{ item.quantity }}</td>
+                            <td class="px-6 py-4 text-sm font-bold text-green-400">${{ item.total }}</td>
+                        </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Order Summary -->
+            <div class="mt-6 pt-4 border-t border-gray-700">
+                <div class="flex justify-between items-center">
+                    <p class="text-lg text-gray-300">Subtotal: <span class="font-bold text-white">${{ order.subtotal
+                            }}</span></p>
+                    <p class="text-lg text-gray-300">Tax: <span class="font-bold text-white">${{ order.tax }}</span></p>
+                    <p class="text-lg text-green-400">Grand Total: <span class="font-bold">${{ order.grandTotal
+                            }}</span></p>
+                </div>
+            </div>
+        </div>
+        }
+    </div>
+    }
+</div>

@@ -55,4 +55,8 @@ export class CartService {
   checkout(data: any): Observable<any> {
     return this.http.post(`${this.apiUrl}/order`, data)
   }
+
+  getOrder(): Observable<any> {
+    return this.http.get(`${this.apiUrl}/order`);
+  }
 }

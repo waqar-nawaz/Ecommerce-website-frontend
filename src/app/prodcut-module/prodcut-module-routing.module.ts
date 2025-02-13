@@ -6,6 +6,7 @@ import { CategoriesListComponent } from './categories-list/categories-list.compo
 import { ProductCartComponent } from './product-cart/product-cart.component';
 import { ProductDetailComponent } from './product-detail/product-detail.component';
 import { AuthGuard } from '../guards/auth.guard';
+import { ProductOrdersComponent } from './product-orders/product-orders.component';
 
 const routes: Routes = [
   {
@@ -28,11 +29,16 @@ const routes: Routes = [
   {
     path: 'product-detail',
     component: ProductDetailComponent,
+  }, {
+    path: 'product-order',
+    component: ProductOrdersComponent,
+    canActivate: [AuthGuard],
   },
+
 ];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule],
 })
-export class ProdcutModuleRoutingModule {}
+export class ProdcutModuleRoutingModule { }

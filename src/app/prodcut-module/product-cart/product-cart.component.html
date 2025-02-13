@@ -1,10 +1,17 @@
-<div class="container mx-auto mt-5 p-4 bg-gray-900 rounded-lg text-white">
-    <h1 class="text-xl lg:text-2xl text-center mt-5 font-semibold mb-4">Your Cart ({{ itemCount }} items)</h1>
+@if (itemCount > 0) {
+<div class="container mx-auto mt-5 p-4 bg-gray-900 rounded-lg text-white shadow-2xl">
+    <!-- Cart Header -->
+    <h1
+        class="text-xl lg:text-2xl text-center mt-5 font-semibold mb-4 bg-gradient-to-r from-purple-600 to-blue-500 p-4 rounded-lg">
+        Your Cart ({{ itemCount }} items)
+    </h1>
+
+    <!-- Loader -->
     <div *ngIf="loader" class="flex justify-center">
         <app-loader></app-loader>
     </div>
 
-    <!-- Cart table -->
+    <!-- Cart Table -->
     <div class="overflow-x-auto">
         <table class="w-full table-auto text-sm lg:text-base">
             <thead>
@@ -13,16 +20,18 @@
                     <th class="text-center p-2 lg:p-3 text-gray-300">Price</th>
                     <th class="text-center p-2 lg:p-3 text-gray-300">Quantity</th>
                     <th class="text-right p-2 lg:p-3 text-gray-300">Total</th>
+                    <th class="text-right p-2 lg:p-3 text-gray-300">Action</th>
                 </tr>
             </thead>
             <tbody>
                 <!-- Loop through each item in the cart -->
                 @for (item of data; track $index) {
-                <tr class="border-b border-gray-700">
+                <tr class="border-b border-gray-700 hover:bg-gray-800 transition-colors">
+                    <!-- Product Details -->
                     <td class="p-2 lg:p-3 flex flex-col lg:flex-row items-center">
                         <img [defaultImage]="defaultImage" [lazyLoad]="item?.product?.imageUrl" [useSrcset]="false"
                             loading="lazy" alt="{{ item?.product?.name }}"
-                            class="w-16 h-16 lg:w-20 lg:h-20 object-cover mr-0 lg:mr-4 mb-2 lg:mb-0">
+                            class="w-16 h-16 lg:w-20 lg:h-20 object-cover mr-0 lg:mr-4 mb-2 lg:mb-0 rounded-lg shadow-sm">
                         <div>
                             <h2 class="text-base lg:text-lg font-semibold">{{ item?.product?.name }}</h2>
                             <p class="text-orange-400 text-sm lg:text-base">{{ item?.product?.description }}</p>
@@ -37,11 +46,11 @@
                     <td class="text-center">
                         <div class="flex items-center justify-center">
                             <button (click)="decrementQuantity(item)"
-                                class="border border-gray-500 text-white px-2">-</button>
+                                class="border border-gray-500 text-white px-2 hover:bg-gray-700 transition-colors">-</button>
                             <input type="text" [value]="item?.quantity"
-                                class="w-10 lg:w-12 text-center border border-gray-500 mx-2 bg-gray-800 text-white">
+                                class="w-10 lg:w-12 text-center border border-gray-500 mx-2 bg-gray-800 text-white rounded-lg">
                             <button (click)="incrementQuantity(item)" [disabled]="isDisabled"
-                                class="border border-gray-500 text-white px-2">+</button>
+                                class="border border-gray-500 text-white px-2 hover:bg-gray-700 transition-colors">+</button>
                         </div>
                     </td>
 
@@ -51,7 +60,7 @@
                     <!-- Remove Button -->
                     <td class="text-right">
                         <button (click)="removeItem(item?.product?._id)"
-                            class="text-red-500 bg-gray-800 p-2 w-8 h-8 flex items-center justify-center rounded-full hover:underline">x</button>
+                            class="text-red-500 bg-gray-800 p-2 w-8 h-8 flex items-center justify-center rounded-full hover:bg-red-500 hover:text-white transition-colors">x</button>
                     </td>
                 </tr>
                 }
@@ -60,7 +69,7 @@
     </div>
 
     <!-- Summary Section -->
-    <div class="w-full lg:w-1/4 mt-5 bg-gray-900 rounded-lg p-4 ml-auto">
+    <div class="w-full lg:w-1/4 mt-5 bg-gray-800 rounded-lg p-4 ml-auto shadow-lg">
         <div class="text-lg font-semibold mb-4">Order Summary</div>
         <div class="flex justify-between text-sm lg:text-lg font-semibold">
             <p>Subtotal:</p>
@@ -76,7 +85,17 @@
         </div>
         <p *ngIf="false" class="text-green-400 mt-2">Congrats, you're eligible for Free Shipping</p>
         <button (click)="checkout()" [disabled]="!data.length"
-            [ngStyle]="{ 'background-color': data.length ? '#4CAF50' : '#aaa' }"
-            class="bg-gray-700 text-white px-4 rounded py-2 mt-4 w-full hover:bg-gray-600">Check out</button>
+            class="bg-green-600 text-white px-4 rounded py-2 mt-4 w-full hover:bg-green-700 transition-colors disabled:bg-gray-600 disabled:cursor-not-allowed">
+            Check out
+        </button>
     </div>
 </div>
+}
+@else {
+<div class="container mx-auto mt-5 p-4 bg-gray-900 rounded-lg text-white shadow-2xl">
+    <h1
+        class="text-xl lg:text-2xl text-center mt-5 font-semibold mb-4 bg-gradient-to-r from-purple-600 to-blue-500 p-4 rounded-lg">
+        Your Cart is Empty
+    </h1>
+</div>
+}
