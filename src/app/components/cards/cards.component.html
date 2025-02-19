@@ -1,43 +1,47 @@
-<div class="flex flex-wrap justify-center gap-x-8 gap-y-6 px-4">
+<div class="flex flex-wrap justify-center gap-6 px-4">
     <div
-        class="relative w-80 rounded-lg overflow-hidden shadow-xl bg-gradient-to-br from-gray-800 to-gray-700 text-center mt-6 transform transition duration-500 hover:scale-105">
-        <img class="w-full h-48 object-cover transform transition-transform duration-300 rounded-t-lg"
-            [defaultImage]="defaultImage" [lazyLoad]="data?.imageUrl" [useSrcset]="false" alt="Sample Image" />
-        <div class="px-6 py-4">
-            <!-- Truncated title -->
-            <h2 class="text-lg font-bold text-white mb-2 truncate overflow-hidden whitespace-nowrap">
+        class="relative w-80 rounded-lg overflow-hidden shadow-xl bg-gradient-to-br from-gray-900 via-gray-800 to-gray-700 text-center mt-6 transform transition duration-500 hover:scale-105 hover:shadow-2xl">
+
+        <!-- Product Image with Hover Zoom -->
+        <div class="overflow-hidden rounded-t-lg">
+            <img class="w-full h-48 object-cover transition-transform duration-300 hover:scale-110"
+                [defaultImage]="defaultImage" [lazyLoad]="data?.imageUrl" [useSrcset]="false" alt="Sample Image" />
+        </div>
+
+        <!-- Product Details -->
+        <div class="px-6 py-5">
+            <!-- Title -->
+            <h2 class="text-lg font-semibold text-white mb-2 truncate overflow-hidden whitespace-nowrap tracking-wide">
                 {{ data?.title }}
             </h2>
 
-            <p class="text-3xl font-extrabold text-white mb-4">${{ data?.price }}</p>
+            <!-- Price -->
+            <p class="text-2xl font-extrabold text-green-400 mb-3">$ {{ data?.price }}</p>
 
-            <!-- Truncated description with consistent width -->
-            <p class="text-gray-300 text-sm  truncate overflow-hidden whitespace-nowrap max-w-full">
+            <!-- Description -->
+            <p class="text-gray-400 text-sm truncate overflow-hidden whitespace-nowrap max-w-full">
                 {{ data?.description }}
             </p>
         </div>
 
-
-        <div class="flex justify-around  pb-4">
-            <button [routerLink]="['/product-detail']" [queryParams]="{post: data?._id}"
-                class="bg-blue-600 hover:bg-blue-800 text-white font-bold py-2 px-6 rounded-full shadow-lg transition duration-300 ease-in-out transform hover:scale-105">
-                VIEW
+        <!-- Action Buttons -->
+        <div class="flex justify-around pb-5">
+            <!-- View Button -->
+            <button [routerLink]="['/product-detail']" [queryParams]="{ post: data?._id }"
+                class="flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-5 rounded-full shadow-lg transition duration-300 ease-in-out transform hover:scale-105">
+                <i class="fas fa-eye"></i> VIEW
             </button>
 
-            <!-- Show additional buttons only for admin role -->
-
+            <!-- Admin Buttons -->
             <button (click)="deleteProduct(data)" *roles="'admin'"
-                class="bg-red-600 hover:bg-red-800 text-white font-bold py-2 px-6 rounded-full shadow-lg transition duration-300 ease-in-out transform hover:scale-105">
-                DELETE
+                class="flex items-center gap-2 bg-red-600 hover:bg-red-700 text-white font-semibold py-2 px-5 rounded-full shadow-lg transition duration-300 ease-in-out transform hover:scale-105">
+                <i class="fas fa-trash-alt"></i> DELETE
             </button>
 
             <button (click)="EditProduct(data)" *roles="'admin'"
-                class="bg-gray-600 hover:bg-gray-800 text-white font-bold py-2 px-6 rounded-full shadow-lg transition duration-300 ease-in-out transform hover:scale-105">
-                EDIT
+                class="flex items-center gap-2 bg-gray-600 hover:bg-gray-700 text-white font-semibold py-2 px-5 rounded-full shadow-lg transition duration-300 ease-in-out transform hover:scale-105">
+                <i class="fas fa-edit"></i> EDIT
             </button>
-
         </div>
     </div>
-
-    <!-- Add more cards, and they'll automatically appear next to each other -->
 </div>

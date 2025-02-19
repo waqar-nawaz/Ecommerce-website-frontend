@@ -1,17 +1,19 @@
 import { Component, OnInit } from '@angular/core';
 import { CartService } from '../../services/cart.service';
-import { Observable } from 'rxjs';
+import { finalize, Observable } from 'rxjs';
 import { CommonModule } from '@angular/common';
+import { LoaderComponent } from "../../loader/loader.component";
 
 @Component({
   selector: 'app-product-orders',
-  imports: [CommonModule], // ✅ Removed imports
+  imports: [CommonModule, LoaderComponent], // ✅ Removed imports
   templateUrl: './product-orders.component.html',
   styleUrls: ['./product-orders.component.css'] // ✅ Fixed styleUrls
 })
 export class ProductOrdersComponent implements OnInit {
 
   orders$: Observable<any> | undefined;
+  loader: boolean = false;
 
   constructor(private cartService: CartService) { }
 
@@ -20,7 +22,10 @@ export class ProductOrdersComponent implements OnInit {
   }
 
   getOrder(): Observable<any> {
-    return this.cartService.getOrder();
+    this.loader = true;
+    return this.cartService.getOrder().pipe(
+      finalize(() => this.loader = false)
+    );
   }
 
 

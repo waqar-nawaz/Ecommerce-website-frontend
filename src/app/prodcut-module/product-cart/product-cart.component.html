@@ -1,3 +1,7 @@
+@if (loader) {
+<app-loader></app-loader>
+
+}
 @if (itemCount > 0) {
 <div class="container mx-auto mt-5 p-4 bg-gray-900 rounded-lg text-white shadow-2xl">
     <!-- Cart Header -->
@@ -7,9 +11,10 @@
     </h1>
 
     <!-- Loader -->
-    <div *ngIf="loader" class="flex justify-center">
-        <app-loader></app-loader>
-    </div>
+    <!-- <div *ngIf="loader" class="flex justify-center">
+    </div> -->
+
+
 
     <!-- Cart Table -->
     <div class="overflow-x-auto">

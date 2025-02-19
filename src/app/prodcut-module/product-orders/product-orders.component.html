@@ -5,6 +5,11 @@
         Order List
     </h2>
 
+    @if (loader) {
+    <app-loader></app-loader>
+    }
+
+
     <!-- Order List -->
     @if (orders$ | async; as orders) {
     <div class="space-y-6">
