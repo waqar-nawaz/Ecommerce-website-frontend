@@ -72,11 +72,17 @@ export class ListProductComponent implements OnInit {
       // }
     });
 
+
+
     this.myFormFun();
     this.getCategory();
 
     // Get the query parameter 'post' from the URL      
     this.setupSearchSubscription();
+
+    this.productForm.patchValue({
+      category: this.categoryId,
+    });
 
   }
 
@@ -151,6 +157,7 @@ export class ListProductComponent implements OnInit {
     this.productForm.reset();
     this.imagePreview = null;
   }
+
   EditProduct(arg0: any) { }
 
   // open the modal and fill the form with the selected product data for updating it

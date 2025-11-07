@@ -1,4 +1,4 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, inject, OnInit, OnDestroy } from '@angular/core';
 import { CardsComponent } from '../../components/cards/cards.component';
 import { ProductServiceService } from '../../services/product.service.service';
 import { ModalComponent } from '../../components/modal/modal.component';
@@ -8,10 +8,9 @@ import { AuthService } from '../../services/auth.service';
 import { CommonModule } from '@angular/common';
 import { LoaderComponent } from '../../loader/loader.component';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
-import { debounceTime, distinctUntilChanged, iif, of, switchMap } from 'rxjs';
+import { debounceTime, distinctUntilChanged, switchMap } from 'rxjs';
 import { SharedService } from '../../services/shared.service';
-import socketClient from 'socket.io-client';
-import { environment } from '../../../../environments/environment';
+import { SocketService } from '../../services/socket.service';
 
 @Component({
   selector: 'app-about',
@@ -25,68 +24,67 @@ import { environment } from '../../../../environments/environment';
   templateUrl: './about.component.html',
   styleUrl: './about.component.css'
 })
-export class AboutComponent implements OnInit {
+export class AboutComponent implements OnInit, OnDestroy {
   data: any[] = [];
-  products = inject(ProductServiceService);
-  refreshService = inject(RefreshService);
-  authService = inject(AuthService);
-  sharedService = inject(SharedService);
-  loader: boolean = false;
-  search: FormControl = new FormControl();
+  loader = false;
+  totalpages: any;
+  page = 2;
+  loading = false;
+  search = new FormControl();
+
+  private products = inject(ProductServiceService);
+  private refreshService = inject(RefreshService);
+  private authService = inject(AuthService);
+  private sharedService = inject(SharedService);
+  private socketService = inject(SocketService);
 
   ngOnInit() {
+    // Handle refresh logic
+    debugger
     this.refreshService.getRefreshObservable().subscribe((data: any) => {
-      if (data?.status == 'update') {
-      } else {
-        this.data = this.data.filter((val: any) => {
-          return val._id != data.result._id;
-        });
+      if (data?.status !== 'update') {
+        this.data = this.data.filter((val: any) => val._id != data.result._id);
         this.data.push(data?.result);
       }
-      console.log('final data', this.data);
     });
+
     this.getProduct();
-    // const io = socketClient('http://localhost:8080/');
-    const io = socketClient(environment.domainPath);
 
-    io.on('posts', (socketdata: any) => {
-      if (socketdata.action == 'create') {
-        this.data.push(socketdata?.result);
-      }
-      if (socketdata.action == 'delete') {
-        // alert('delete is called');
-        this.data = this.data.filter((val: any) => {
-          return val._id != socketdata?.result._id;
-        });
-      }
-      if (socketdata.action == 'update') {
-        this.data = this.data.map((val: any) => {
-          if (val._id == socketdata?.result._id) {
-            return socketdata?.result;
-          } else {
-            return val;
-          }
-        });
-      }
+    this.getSocketData();
 
-      // this.getProduct();
-    });
-
-    //
+    // Search handler
     this.search.valueChanges
       .pipe(
         debounceTime(500),
         distinctUntilChanged(),
-        switchMap((query) => {
-          return this.products.searchPost(query);
-        })
+        switchMap((query) => this.products.searchPost(query))
       )
       .subscribe((data: any) => {
         this.data = data?.result;
       });
   }
 
-  totalpages: any;
+  getSocketData() {
+    // 👇 Listen to socket updates
+    this.socketService.listen('posts').subscribe((socketData: any) => {
+      if (socketData.action === 'create') {
+        this.data.push(socketData.result);
+      }
+
+      if (socketData.action === 'delete') {
+        this.data = this.data.filter(
+          (val: any) => val._id !== socketData.result._id
+        );
+      }
+
+      if (socketData.action === 'update') {
+        this.data = this.data.map((val: any) =>
+          val._id === socketData.result._id ? socketData.result : val
+        );
+      }
+    });
+  }
+
   getProduct() {
     this.data = [];
     this.loader = true;
@@ -94,12 +92,9 @@ export class AboutComponent implements OnInit {
       (data: any) => {
         this.data = data?.result;
         this.totalpages = data.totalPages;
-
         this.loader = false;
       },
-      (err) => {
-        this.loader = false;
-      }
+      () => (this.loader = false)
     );
   }
 
@@ -116,27 +111,19 @@ export class AboutComponent implements OnInit {
       if (result.isConfirmed) {
         this.products.deletePost(data._id).subscribe(
           (res: any) => {
-            this.data.filter((val) => {
-              return val._id != data._id;
-            });
+            this.data = this.data.filter((val) => val._id != data._id);
             this.sharedService.maketoster({
               success: 'success',
               message: res?.message,
             });
-
-            // this.getProduct();
           },
-          (err) => {
-            console.log('error', err);
-          }
+          (err) => console.log('error', err)
         );
       }
     });
   }
 
-  loading = false;
   onScroll(event: any) {
-    // console.log(event.target);
     const element = event.target;
     if (
       element.scrollHeight - element.scrollTop === element.clientHeight &&
@@ -147,22 +134,21 @@ export class AboutComponent implements OnInit {
       }
     }
   }
-  page: number = 2;
 
   loadMoreItems() {
-    // this.loader = true;
     this.products.getProduct(this.page).subscribe(
       (data: any) => {
         setTimeout(() => {
           this.data = [...this.data, ...data?.result];
-          // this.data = data?.result;
-          this.loader = false;
           this.page++;
         }, 1000);
       },
-      (err) => {
-        // this.loader = false
-      }
+      (err) => console.error(err)
     );
+  }
+
+  ngOnDestroy() {
+    // Optionally disconnect socket when leaving component
+    this.socketService.disconnect();
   }
 }
