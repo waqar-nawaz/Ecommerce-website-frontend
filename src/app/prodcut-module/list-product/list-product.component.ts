@@ -3,6 +3,7 @@ import { Component, inject, Input, OnInit } from '@angular/core';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import {
   FormBuilder,
+  FormControl,
   FormGroup,
   ReactiveFormsModule,
   Validators,
@@ -17,6 +18,7 @@ import { ToastrService } from 'ngx-toastr';
 import { ShowIfRoleDirective } from '../../shared/show-if-admin.directive';
 import { CartService } from '../../services/cart.service';
 import { SharedService } from '../../services/shared.service';
+import { debounceTime, distinctUntilChanged, switchMap } from 'rxjs';
 
 @Component({
   selector: 'app-list-product',
@@ -42,7 +44,7 @@ export class ListProductComponent implements OnInit {
   defaultImage: any = environment.defaultImage;
   refreshService = inject(RefreshService);
   shareService = inject(SharedService);
-  prodcutService = inject(ProductServiceService);
+  productService = inject(ProductServiceService);
   fb = inject(FormBuilder);
   selectedFile: any;
   updateid: any;
@@ -58,6 +60,8 @@ export class ListProductComponent implements OnInit {
   route = inject(ActivatedRoute);
   toaster = inject(ToastrService);
   @Input() restriction: boolean = true;
+  search: FormControl = new FormControl();
+
 
   ngOnInit(): void {
     this.route.queryParamMap.subscribe((params) => {
@@ -71,8 +75,24 @@ export class ListProductComponent implements OnInit {
     this.myFormFun();
     this.getCategory();
 
-    // Get the query parameter 'post'
+    // Get the query parameter 'post' from the URL      
+    this.setupSearchSubscription();
+
   }
+
+  setupSearchSubscription() {
+    this.search.valueChanges
+      .pipe(
+        debounceTime(500),
+        distinctUntilChanged(),
+        switchMap(query => this.productService.searchProduct(query))
+      )
+      .subscribe((data: any) => {
+        this.data = data?.result;
+      });
+  }
+
+
 
   myFormFun() {
     this.productForm = this.fb.group({
@@ -93,7 +113,7 @@ export class ListProductComponent implements OnInit {
 
   getProduct(id: any) {
     this.loader = true;
-    this.prodcutService.getProduct(id).subscribe(
+    this.productService.getProduct(id).subscribe(
       (val: any) => {
         // console.log('Product data', val?.result);
         this.data = val?.result;
@@ -131,7 +151,7 @@ export class ListProductComponent implements OnInit {
     this.productForm.reset();
     this.imagePreview = null;
   }
-  EditProduct(arg0: any) {}
+  EditProduct(arg0: any) { }
 
   // open the modal and fill the form with the selected product data for updating it
   submit() {
@@ -159,7 +179,7 @@ export class ListProductComponent implements OnInit {
     }
 
     if (this.isUpdate) {
-      this.prodcutService.updateProduct(this.updateid, formData).subscribe(
+      this.productService.updateProduct(this.updateid, formData).subscribe(
         (res: any) => {
           // this.maketoster({ success: 'success', message: res?.message });
           this.toaster.success(res?.message);
@@ -180,7 +200,7 @@ export class ListProductComponent implements OnInit {
         }
       );
     } else {
-      this.prodcutService.createProduct(formData).subscribe(
+      this.productService.createProduct(formData).subscribe(
         (res: any) => {
           this.toaster.success(res?.message);
 
@@ -201,12 +221,12 @@ export class ListProductComponent implements OnInit {
   }
 
   getCategory() {
-    this.prodcutService.getCategory(1).subscribe(
+    this.productService.getCategory(1).subscribe(
       (res: any) => {
         this.categorydata = res?.result;
         // console.log('response of the category', res);
       },
-      (error) => {}
+      (error) => { }
     );
   }
 
@@ -221,7 +241,7 @@ export class ListProductComponent implements OnInit {
       confirmButtonText: 'Yes, delete it!',
     }).then((result) => {
       if (result.isConfirmed) {
-        this.prodcutService.deleteProduct(data._id).subscribe(
+        this.productService.deleteProduct(data._id).subscribe(
           (res: any) => {
             this.data = this.data.filter((val) => {
               return val._id != data._id;

@@ -14,16 +14,16 @@ import socketClient from 'socket.io-client';
 import { environment } from '../../../../environments/environment';
 
 @Component({
-    selector: 'app-about',
-    imports: [
-        CardsComponent,
-        ModalComponent,
-        CommonModule,
-        LoaderComponent,
-        ReactiveFormsModule,
-    ],
-    templateUrl: './about.component.html',
-    styleUrl: './about.component.css'
+  selector: 'app-about',
+  imports: [
+    CardsComponent,
+    ModalComponent,
+    CommonModule,
+    LoaderComponent,
+    ReactiveFormsModule,
+  ],
+  templateUrl: './about.component.html',
+  styleUrl: './about.component.css'
 })
 export class AboutComponent implements OnInit {
   data: any[] = [];
@@ -78,7 +78,7 @@ export class AboutComponent implements OnInit {
         debounceTime(500),
         distinctUntilChanged(),
         switchMap((query) => {
-          return this.products.searchProducts(query);
+          return this.products.searchPost(query);
         })
       )
       .subscribe((data: any) => {
