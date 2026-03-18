@@ -29,18 +29,18 @@
             <!-- View Button -->
             <button [routerLink]="['/product-detail']" [queryParams]="{ post: data?._id }"
                 class="flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-5 rounded-full shadow-lg transition duration-300 ease-in-out transform hover:scale-105">
-                <i class="fas fa-eye"></i> VIEW
+                <i class="fas fa-eye"></i>
             </button>
 
             <!-- Admin Buttons -->
             <button (click)="deleteProduct(data)" *roles="'admin'"
                 class="flex items-center gap-2 bg-red-600 hover:bg-red-700 text-white font-semibold py-2 px-5 rounded-full shadow-lg transition duration-300 ease-in-out transform hover:scale-105">
-                <i class="fas fa-trash-alt"></i> DELETE
+                <i class="fas fa-trash-alt"></i>
             </button>
 
             <button (click)="EditProduct(data)" *roles="'admin'"
                 class="flex items-center gap-2 bg-gray-600 hover:bg-gray-700 text-white font-semibold py-2 px-5 rounded-full shadow-lg transition duration-300 ease-in-out transform hover:scale-105">
-                <i class="fas fa-edit"></i> EDIT
+                <i class="fas fa-edit"></i>
             </button>
         </div>
     </div>

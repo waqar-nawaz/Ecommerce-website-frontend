@@ -13,7 +13,7 @@ import { SharedService } from '../../services/shared.service';
 import { SocketService } from '../../services/socket.service';
 
 @Component({
-  selector: 'app-about',
+  selector: 'app-postlist',
   imports: [
     CardsComponent,
     ModalComponent,
@@ -21,8 +21,8 @@ import { SocketService } from '../../services/socket.service';
     LoaderComponent,
     ReactiveFormsModule,
   ],
-  templateUrl: './about.component.html',
-  styleUrl: './about.component.css'
+  templateUrl: './postlist.html',
+  styleUrl: './postlist.css'
 })
 export class AboutComponent implements OnInit, OnDestroy {
   data: any[] = [];
@@ -40,7 +40,6 @@ export class AboutComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     // Handle refresh logic
-    debugger
     this.refreshService.getRefreshObservable().subscribe((data: any) => {
       if (data?.status !== 'update') {
         this.data = this.data.filter((val: any) => val._id != data.result._id);
