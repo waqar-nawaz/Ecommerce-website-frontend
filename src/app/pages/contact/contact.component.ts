@@ -46,6 +46,7 @@ export class ContactComponent implements OnInit {
   }
 
   onSubmit() {
+    console.log(this.contactForm.value);
     this.title.set('jamal');
     this.user.update((prevUser) => {
       return [...prevUser, { name: 'waqar', email: 'waqar@gmail.com' }];
